@@ -10,14 +10,14 @@ export default function HomePage() {
 
   if (isLoading || !ingredients) return <h1>Loading...</h1>;
   if (error) return <h1>ERROR</h1>;
-
+  console.log(ingredients);
   return (
     <div>
       <h1>Hello from Next.js</h1>
       <ul>
         {ingredients.map((ingredient) => (
           <li key={ingredient._id}>
-            {ingredient.name}({ingredient.nameDe})
+            {ingredient.name} ({ingredient.nameDe})
           </li>
         ))}
       </ul>
