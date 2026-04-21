@@ -3,6 +3,7 @@ import IngredientFields from "./IngredientFields";
 import StepFields from "./StepsFields";
 import { createRecipeDataObject } from "@/lib/helper";
 import { addRecipie } from "@/services/recipeService";
+import styled from "styled-components";
 
 export default function RecipeForm({ ingredients, units }) {
   const [selectedShape, setSelectedShape] = useState("round");
@@ -59,13 +60,13 @@ export default function RecipeForm({ ingredients, units }) {
   }
 
   return (
-    <form onSubmit={(event) => handleSubmitForm(event)}>
+    <StyledForm onSubmit={(event) => handleSubmitForm(event)}>
       <label htmlFor="title">Title</label>
       <input type="text" id="title" name="title" />
       <label htmlFor="description">Description</label>
       <textarea id="description" name="description" rows={5} maxLength={255} />
 
-      <fieldset>
+      <StyledFieldSets>
         <legend>Baking Form</legend>
         <label htmlFor="shape">Shape</label>
         <select
@@ -91,9 +92,9 @@ export default function RecipeForm({ ingredients, units }) {
             <input type="number" id="height" name="height" />
           </>
         )}
-      </fieldset>
+      </StyledFieldSets>
 
-      <fieldset>
+      <StyledFieldSets>
         <legend>Ingredients</legend>
 
         {recipeIngredients.map((recipeIngredient, index) => (
@@ -115,9 +116,9 @@ export default function RecipeForm({ ingredients, units }) {
         >
           +
         </button>
-      </fieldset>
+      </StyledFieldSets>
 
-      <fieldset>
+      <StyledFieldSets>
         <legend>Baking Steps</legend>
 
         {recipeSteps.map((recipeStep, index) => (
@@ -135,8 +136,22 @@ export default function RecipeForm({ ingredients, units }) {
         >
           +
         </button>
-      </fieldset>
+      </StyledFieldSets>
       <button type="submit"> Save Recipe</button>
-    </form>
+    </StyledForm>
   );
 }
+
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+`;
+
+const StyledFieldSets = styled.fieldset`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 15px;
+`;

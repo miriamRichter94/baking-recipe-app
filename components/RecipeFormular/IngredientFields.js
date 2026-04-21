@@ -1,3 +1,5 @@
+import styled from "styled-components";
+
 export default function IngredientFields({
   ingredients,
   recipeIngredient,
@@ -5,7 +7,7 @@ export default function IngredientFields({
   onChange,
 }) {
   return (
-    <>
+    <StyledFieldSets>
       <label htmlFor="ingredient">Ingredient</label>
       <select
         id="ingredient"
@@ -44,6 +46,11 @@ export default function IngredientFields({
           </option>
         ))}
       </select>
-    </>
+    </StyledFieldSets>
   );
 }
+
+const StyledFieldSets = styled.fieldset`
+  display: flex;
+  flex-direction: column;
+`;
