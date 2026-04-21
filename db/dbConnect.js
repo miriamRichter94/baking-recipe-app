@@ -1,4 +1,5 @@
 import ingredientSeed from "@/scripts/seedIngredients";
+import unitSeed from "@/scripts/seedUnits";
 import mongoose from "mongoose";
 
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -38,6 +39,7 @@ async function dbConnect() {
   try {
     cached.conn = await cached.promise;
     await ingredientSeed();
+    await unitSeed();
   } catch (e) {
     cached.promise = null;
     throw e;
