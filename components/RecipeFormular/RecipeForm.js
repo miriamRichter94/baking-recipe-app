@@ -62,7 +62,7 @@ export default function RecipeForm({ ingredients, units }) {
   return (
     <StyledForm onSubmit={(event) => handleSubmitForm(event)}>
       <label htmlFor="title">Title</label>
-      <input type="text" id="title" name="title" />
+      <input type="text" id="title" name="title" required />
       <label htmlFor="description">Description</label>
       <textarea id="description" name="description" rows={5} maxLength={255} />
 
