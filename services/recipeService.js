@@ -1,17 +1,24 @@
 import toast from "react-hot-toast";
 import { mutate } from "swr";
 
+export async function getAllRecipes() {
+  const res = await fetch("/api/recipes");
+
+  if (!res.ok) throw new Error("Faild to fetch recipes");
+  return res.json();
+}
+
 export async function getAllIngredients() {
   const res = await fetch("/api/ingredients");
 
-  if (!res.ok) throw new Error("Faild to fetch recipes");
+  if (!res.ok) throw new Error("Faild to fetch ingredients");
   return res.json();
 }
 
 export async function getAllUnits() {
   const res = await fetch("/api/units");
 
-  if (!res.ok) throw new Error("Faild to fetch recipes");
+  if (!res.ok) throw new Error("Faild to fetch units");
   return res.json();
 }
 
