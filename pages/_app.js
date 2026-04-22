@@ -1,7 +1,5 @@
 import { SWRConfig } from "swr";
 import GlobalStyle from "../styles";
-import { getAllIngredients, getAllUnits } from "@/services/recipeService";
-import useSWR from "swr";
 
 const fetcher = async (url) => {
   const res = await fetch(url);
