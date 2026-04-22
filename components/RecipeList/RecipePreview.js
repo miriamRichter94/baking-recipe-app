@@ -1,20 +1,23 @@
 import styled, { css } from "styled-components";
 import IngredientPrview from "./IngredientPreview";
+import Link from "next/link";
 
 export default function RecipePreview({ recipe }) {
   return (
     <RecipeCard>
-      <ImageWrapper>
-        <StyledImage
-          $imageAvailible={!!recipe.image}
-          src={recipe.image || "/assets/no-image.png"}
-          alt={`Picture of a ${recipe.title}`}
-        />
-      </ImageWrapper>
-      <TextWrapper>
-        <CakeTitle>{recipe.title}</CakeTitle>
-        <IngredientPrview ingredients={recipe.ingredients} />
-      </TextWrapper>
+      <StyledLink href={`/recipe/${recipe._id}`}>
+        <ImageWrapper>
+          <StyledImage
+            $imageAvailible={!!recipe.image}
+            src={recipe.image || "/assets/no-image.png"}
+            alt={`Picture of a ${recipe.title}`}
+          />
+        </ImageWrapper>
+        <TextWrapper>
+          <CakeTitle>{recipe.title}</CakeTitle>
+          <IngredientPrview ingredients={recipe.ingredients} />
+        </TextWrapper>
+      </StyledLink>
     </RecipeCard>
   );
 }
@@ -28,6 +31,14 @@ const RecipeCard = styled.li`
   flex-direction: column;
   height: 320px;
   overflow: hidden;
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  color: var(--text-color);
 `;
 
 const ImageWrapper = styled.div`
