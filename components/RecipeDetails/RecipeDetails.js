@@ -3,9 +3,9 @@ import styled from "styled-components";
 export default function RecipeDetails({ recipe }) {
   console.log(recipe);
   return (
-    <>
-      <h1>{recipe.title}</h1>
-      <p>{recipe.description}</p>
+    <DetailsWrapper>
+      <Title>{recipe.title}</Title>
+      <Description>{recipe.description}</Description>
       <StyledImage
         src={recipe.image || "/assets/no-image.png"}
         alt={`${recipe.title} Image`}
@@ -13,7 +13,7 @@ export default function RecipeDetails({ recipe }) {
         height={280}
       />
 
-      <div>
+      <IngredientWrapper>
         <h2>Ingredients</h2>
         <ul>
           {recipe.ingredients.map((recipeIngredient) => (
@@ -22,10 +22,10 @@ export default function RecipeDetails({ recipe }) {
             </li>
           ))}
         </ul>
-      </div>
+      </IngredientWrapper>
 
-      <div>
-        <h2>Baking - Steps</h2>
+      <BakingStepsWrapper>
+        <BakingStepsTitle>Baking - Steps</BakingStepsTitle>
         <ul>
           {recipe.steps.map((backingstep) => (
             <li key={backingstep._id}>
@@ -33,12 +33,49 @@ export default function RecipeDetails({ recipe }) {
             </li>
           ))}
         </ul>
-      </div>
-    </>
+      </BakingStepsWrapper>
+    </DetailsWrapper>
   );
 }
+
+const DetailsWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 15px;
+`;
+
+const Title = styled.h1`
+  grid-column: 1 / -1;
+  grid-row-start: 1;
+  place-self: center;
+`;
+
+const Description = styled.p`
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+`;
 
 const StyledImage = styled.img`
   width: 300px;
   height: 250px;
+
+  grid-row: 2 / 4;
+  grid-column: 2 / -1;
+  object-fit: contain;
+`;
+
+const IngredientWrapper = styled.div`
+  grid-column: 1 / 2;
+  grid-row: 3 / 4;
+`;
+
+const BakingStepsWrapper = styled.div`
+  grid-column: 1/-1;
+  grid-row: 4 / 5;
+  display: flex;
+  flex-direction: column;
+`;
+
+const BakingStepsTitle = styled.h2`
+  align-self: center;
 `;
