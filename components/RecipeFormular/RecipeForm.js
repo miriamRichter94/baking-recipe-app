@@ -52,6 +52,7 @@ export default function RecipeForm({ ingredients, units, recipe }) {
     const form = event.target;
     const formDataObject = new FormData(form);
     const formData = Object.fromEntries(formDataObject);
+    console.log(formData);
 
     if (!recipe || recipe.image === "") {
       ({ url, width, height } = await uploadImgae(formData.image));

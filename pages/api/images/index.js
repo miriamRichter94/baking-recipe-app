@@ -7,6 +7,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_SECRET,
 });
 
+console.log(process.env.CLOUDINARY_CLOUD_NAME);
 export const config = {
   api: {
     bodyParser: false,
@@ -32,10 +33,10 @@ export default async function handler(request, response) {
         public_id: newFilename,
         folder: "nf",
       });
-
-      response.status(200).json(result);
+      return response.status(200).json(result);
     }
   } catch (error) {
+    console.log("ERROR:", error.message);
     return response.status(400).json({ error: error.message });
   }
 
