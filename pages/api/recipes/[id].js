@@ -14,6 +14,18 @@ export default async function handler(request, response) {
       if (!recipe) return response.status(400).json({ status: "bad request" });
       return response.status(200).json(recipe);
     }
+
+    if (request.method === "PUT") {
+      const updatedRecipe = await Recipe.findByIdAndUpdate(id, request.body, {
+        new: true,
+      });
+
+      if (!updatedRecipe) {
+        return response.status(404).json({ message: "Recipe not found" });
+      }
+
+      return response.status(200).json(updatedRecipe);
+    }
   } catch (error) {
     response.status(500).json({ messgae: "Internal Server Error." });
     return;

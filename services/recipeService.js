@@ -20,7 +20,7 @@ export async function getRecipeById(url) {
   return response.json();
 }
 
-export async function addRecipie(recipeData) {
+export async function addRecipe(recipeData) {
   const response = await fetch(`/api/recipes`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -32,6 +32,21 @@ export async function addRecipie(recipeData) {
     toast.success("Recipe successfully saved!");
   } else {
     toast.error("Failed to save recipe.");
+  }
+}
+
+export async function editRecipe(recipeData, recipeId) {
+  const response = await fetch(`/api/recipes/${recipeId}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(recipeData),
+  });
+
+  if (response.ok) {
+    await mutate("/api/recipes");
+    toast.success("Recipe successfully edited!");
+  } else {
+    toast.error("Failed to edit recipe.");
   }
 }
 

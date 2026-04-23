@@ -5,8 +5,9 @@ import {
   createRecipeDataObject,
   setRecipeIngredientsForForm,
 } from "@/lib/helper";
-import { addRecipie } from "@/services/recipeService";
+import { addRecipe, editRecipe } from "@/services/recipeService";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 
 export default function RecipeForm({ ingredients, units, recipe }) {
   const [selectedShape, setSelectedShape] = useState("round");
@@ -16,6 +17,8 @@ export default function RecipeForm({ ingredients, units, recipe }) {
   const [recipeSteps, setRecipeSteps] = useState(
     recipe?.steps ?? [{ order: 1, instruction: "" }]
   );
+
+  const router = useRouter();
 
   function handleAddIngredient() {
     setRecipeIngredients([
@@ -55,7 +58,13 @@ export default function RecipeForm({ ingredients, units, recipe }) {
       recipeSteps
     );
 
-    await addRecipie(recipeData);
+    if (!recipe) {
+      await addRecipe(recipeData);
+      router.push("/");
+    } else {
+      await editRecipe(recipeData, recipe._id);
+      router.push(`/recipe/${recipe._id}`);
+    }
   }
 
   return (
