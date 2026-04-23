@@ -26,6 +26,13 @@ export default async function handler(request, response) {
 
       return response.status(200).json(updatedRecipe);
     }
+
+    if (request.method === "DELETE") {
+      await Recipe.findByIdAndDelete(id);
+
+      response.status(200).json({ message: "Sucess!" });
+      return;
+    }
   } catch (error) {
     response.status(500).json({ messgae: "Internal Server Error." });
     return;

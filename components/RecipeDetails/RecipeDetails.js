@@ -1,5 +1,6 @@
 import Link from "next/link";
 import styled from "styled-components";
+import ModalBox from "../ModalBox/ModalBox";
 
 export default function RecipeDetails({ recipe }) {
   return (
@@ -12,8 +13,6 @@ export default function RecipeDetails({ recipe }) {
         width={180}
         height={280}
       />
-
-      <Link href={`/form/edit-${recipe._id}`}>Edit Recipe</Link>
 
       <IngredientWrapper>
         <h2>Ingredients</h2>
@@ -36,6 +35,8 @@ export default function RecipeDetails({ recipe }) {
           ))}
         </ul>
       </BakingStepsWrapper>
+      <Link href={`/form/edit-${recipe._id}`}>Edit Recipe</Link>
+      <ModalBox type="delete" recipeId={recipe._id} />
     </DetailsWrapper>
   );
 }

@@ -50,6 +50,16 @@ export async function editRecipe(recipeData, recipeId) {
   }
 }
 
+export async function deleteRecipe(id) {
+  const response = await fetch(`/api/recipes/${id}`, { method: "DELETE" });
+  if (response.ok) {
+    await mutate("/api/recipes");
+    toast.success("Recipe successfully deleted!");
+  } else {
+    toast.error("Failed to delete recipe.");
+  }
+}
+
 /*
  *
  * Ingredient requests
