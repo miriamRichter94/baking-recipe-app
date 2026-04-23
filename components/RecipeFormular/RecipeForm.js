@@ -1,18 +1,21 @@
 import { useState } from "react";
 import IngredientFields from "./IngredientFields";
 import StepFields from "./StepsFields";
-import { createRecipeDataObject } from "@/lib/helper";
+import {
+  createRecipeDataObject,
+  setRecipeIngredientsForForm,
+} from "@/lib/helper";
 import { addRecipie } from "@/services/recipeService";
 import styled from "styled-components";
 
-export default function RecipeForm({ ingredients, units }) {
+export default function RecipeForm({ ingredients, units, recipe }) {
   const [selectedShape, setSelectedShape] = useState("round");
-  const [recipeIngredients, setRecipeIngredients] = useState([
-    { ingredient: "", amount: "", unit: "" },
-  ]);
-  const [recipeSteps, setRecipeSteps] = useState([
-    { stepNumber: 1, description: "" },
-  ]);
+  const [recipeIngredients, setRecipeIngredients] = useState(
+    setRecipeIngredientsForForm(recipe?.ingredients)
+  );
+  const [recipeSteps, setRecipeSteps] = useState(
+    recipe?.steps ?? [{ order: 1, instruction: "" }]
+  );
 
   function handleAddIngredient() {
     setRecipeIngredients([
@@ -28,13 +31,9 @@ export default function RecipeForm({ ingredients, units }) {
   }
 
   function handleAddStep() {
-    const lastStepNumber = recipeSteps.at(-1).stepNumber;
+    const lastStepNumber = recipeSteps.at(-1).order;
     const newStepNumber = lastStepNumber + 1;
-    console.log(newStepNumber);
-    setRecipeSteps([
-      ...recipeSteps,
-      { stepNumber: newStepNumber, description: "" },
-    ]);
+    setRecipeSteps([...recipeSteps, { order: newStepNumber, instruction: "" }]);
   }
 
   function hadnleStepChange(index, field, value) {
@@ -62,9 +61,21 @@ export default function RecipeForm({ ingredients, units }) {
   return (
     <StyledForm onSubmit={(event) => handleSubmitForm(event)}>
       <label htmlFor="title">Title</label>
-      <input type="text" id="title" name="title" required />
+      <input
+        type="text"
+        id="title"
+        name="title"
+        defaultValue={recipe?.title ?? ""}
+        required
+      />
       <label htmlFor="description">Description</label>
-      <textarea id="description" name="description" rows={5} maxLength={255} />
+      <textarea
+        id="description"
+        name="description"
+        rows={5}
+        maxLength={255}
+        defaultValue={recipe?.description ?? ""}
+      />
 
       <StyledFieldSets>
         <legend>Baking Form</legend>
@@ -72,6 +83,7 @@ export default function RecipeForm({ ingredients, units }) {
         <select
           id="shape"
           name="shape"
+          defaultValue={recipe?.bakingForm.shape ?? ""}
           onChange={(event) => setSelectedShape(event.target.value)}
         >
           <option value="round">Round</option>
@@ -80,16 +92,31 @@ export default function RecipeForm({ ingredients, units }) {
         {selectedShape === "round" && (
           <>
             <label htmlFor="diameter">Diameter</label>{" "}
-            <input type="number" id="diameter" name="diameter" />
+            <input
+              type="number"
+              id="diameter"
+              name="diameter"
+              defaultValue={recipe?.bakingForm.diameter ?? ""}
+            />
           </>
         )}
 
         {selectedShape === "rect" && (
           <>
             <label htmlFor="width">Width</label>
-            <input type="number" id="widht" name="width" />
+            <input
+              type="number"
+              id="widht"
+              name="width"
+              defaultValue={recipe?.bakingForm.width ?? ""}
+            />
             <label htmlFor="height">Height</label>
-            <input type="number" id="height" name="height" />
+            <input
+              type="number"
+              id="height"
+              name="height"
+              defaultValue={recipe?.bakingForm.height ?? ""}
+            />
           </>
         )}
       </StyledFieldSets>
@@ -123,7 +150,7 @@ export default function RecipeForm({ ingredients, units }) {
 
         {recipeSteps.map((recipeStep, index) => (
           <StepFields
-            key={recipeStep.stepNumber}
+            key={recipeStep.order}
             recipeStep={recipeStep}
             onChange={(field, value) => hadnleStepChange(index, field, value)}
           />

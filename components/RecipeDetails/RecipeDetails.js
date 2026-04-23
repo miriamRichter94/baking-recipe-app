@@ -1,7 +1,7 @@
+import Link from "next/link";
 import styled from "styled-components";
 
 export default function RecipeDetails({ recipe }) {
-  console.log(recipe);
   return (
     <DetailsWrapper>
       <Title>{recipe.title}</Title>
@@ -12,6 +12,8 @@ export default function RecipeDetails({ recipe }) {
         width={180}
         height={280}
       />
+
+      <Link href={`/form/edit-${recipe._id}`}>Edit Recipe</Link>
 
       <IngredientWrapper>
         <h2>Ingredients</h2>
