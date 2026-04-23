@@ -2,6 +2,7 @@ import styled, { css } from "styled-components";
 import IngredientPrview from "./IngredientPreview";
 import Link from "next/link";
 import Image from "next/image";
+import ModalBox from "../ModalBox/ModalBox";
 
 export default function RecipePreview({ recipe }) {
   return (
@@ -19,6 +20,10 @@ export default function RecipePreview({ recipe }) {
           <IngredientPrview ingredients={recipe.ingredients} />
         </TextWrapper>
       </StyledLink>
+
+      <ActionDiv $isDelete>
+        <ModalBox type="delete" recipeId={recipe._id} />
+      </ActionDiv>
 
       <ActionDiv $isEdit>
         <StyledActionLink href={`/form/edit-${recipe._id}`}>
@@ -94,6 +99,12 @@ const ActionDiv = styled.div`
   &:hover {
     box-shadow: 2px 2px 2px grey;
   }
+
+  ${({ $isDelete }) =>
+    $isDelete &&
+    css`
+      right: 5px;
+    `}
 
   ${({ $isEdit }) =>
     $isEdit &&
