@@ -59,27 +59,3 @@ export async function deleteRecipe(id) {
     toast.error("Failed to delete recipe.");
   }
 }
-
-/*
- *
- * Ingredient requests
- *
- */
-export async function getAllIngredients() {
-  const res = await fetch("/api/ingredients");
-
-  if (!res.ok) throw new Error("Faild to fetch ingredients");
-  return res.json();
-}
-
-/*
- *
- * Units requests
- *
- */
-export async function getAllUnits() {
-  const res = await fetch("/api/units");
-
-  if (!res.ok) throw new Error("Faild to fetch units");
-  return res.json();
-}
