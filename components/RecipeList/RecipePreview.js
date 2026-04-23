@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 import IngredientPrview from "./IngredientPreview";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function RecipePreview({ recipe }) {
   return (
@@ -18,6 +19,17 @@ export default function RecipePreview({ recipe }) {
           <IngredientPrview ingredients={recipe.ingredients} />
         </TextWrapper>
       </StyledLink>
+
+      <ActionDiv $isEdit>
+        <StyledActionLink href={`/form/edit-${recipe._id}`}>
+          <Image
+            src="/assets/pencil.png"
+            width={25}
+            height={25}
+            alt="Edit Pencil"
+          ></Image>
+        </StyledActionLink>
+      </ActionDiv>
     </RecipeCard>
   );
 }
@@ -67,4 +79,33 @@ const TextWrapper = styled.div`
 const CakeTitle = styled.p`
   font-size: 1.3em;
   margin: 4px 0;
+`;
+
+const ActionDiv = styled.div`
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: 20%;
+  border: 1px solid black;
+  background: white;
+  bottom: 5px;
+
+  &:hover {
+    box-shadow: 2px 2px 2px grey;
+  }
+
+  ${({ $isEdit }) =>
+    $isEdit &&
+    css`
+      right: 45px;
+    `}
+`;
+
+const StyledActionLink = styled(Link)`
+  background-color: transparent;
+  border: none;
+  align-self: center;
+  padding: 0;
+  cursor: pointer;
 `;
