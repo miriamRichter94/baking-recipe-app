@@ -9,7 +9,7 @@ export default function ModalBox({ type, recipeId }) {
   return (
     <>
       <OpenButton
-        aria-label="delete plant"
+        aria-label="delete recipe"
         onClick={() => setShowModalBox(true)}
       >
         <Image
