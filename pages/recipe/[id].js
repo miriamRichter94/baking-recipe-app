@@ -1,5 +1,5 @@
 import RecipeDetails from "@/components/RecipeDetails/RecipeDetails";
-import { getRecipeById } from "@/services/recipeService";
+import { getRecipeById } from "@/services/recipeServices";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 

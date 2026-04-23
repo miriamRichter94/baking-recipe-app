@@ -5,9 +5,10 @@ import {
   createRecipeDataObject,
   setRecipeIngredientsForForm,
 } from "@/lib/helper";
-import { addRecipe, editRecipe } from "@/services/recipeService";
+import { addRecipe, editRecipe } from "@/services/recipeServices";
 import styled from "styled-components";
 import { useRouter } from "next/router";
+import { uploadImgae } from "@/services/imageService";
 
 export default function RecipeForm({ ingredients, units, recipe }) {
   const [selectedShape, setSelectedShape] = useState("round");
@@ -47,15 +48,20 @@ export default function RecipeForm({ ingredients, units, recipe }) {
 
   async function handleSubmitForm(event) {
     event.preventDefault();
-
+    let url, width, height;
     const form = event.target;
     const formDataObject = new FormData(form);
     const formData = Object.fromEntries(formDataObject);
 
+    if (!recipe || recipe.image === "") {
+      ({ url, width, height } = await uploadImgae(formData.image));
+    }
+
     const recipeData = createRecipeDataObject(
       formData,
       recipeIngredients,
-      recipeSteps
+      recipeSteps,
+      url
     );
 
     if (!recipe) {
@@ -85,6 +91,9 @@ export default function RecipeForm({ ingredients, units, recipe }) {
         maxLength={255}
         defaultValue={recipe?.description ?? ""}
       />
+
+      <label htmlFor="image">Recipe Image</label>
+      <input type="file" id="image" name="image" />
 
       <StyledFieldSets>
         <legend>Baking Form</legend>

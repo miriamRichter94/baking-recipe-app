@@ -1,5 +1,5 @@
 import RecipeList from "@/components/RecipeList/RecipeList";
-import { getAllRecipes } from "@/services/recipeService";
+import { getAllRecipes } from "@/services/recipeServices";
 import Link from "next/link";
 import useSWR from "swr";
 

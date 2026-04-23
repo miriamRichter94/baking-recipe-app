@@ -1,9 +1,7 @@
 import RecipeForm from "@/components/RecipeFormular/RecipeForm";
-import {
-  getAllIngredients,
-  getAllUnits,
-  getRecipeById,
-} from "@/services/recipeService";
+import { getAllIngredients } from "@/services/ingredientServices";
+import { getRecipeById } from "@/services/recipeServices";
+import { getAllUnits } from "@/services/unitServices";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 
