@@ -10,8 +10,6 @@ export default function RecipeDetails({ recipe }) {
       <StyledImage
         src={recipe.image || "/assets/no-image.png"}
         alt={`${recipe.title} Image`}
-        width={180}
-        height={280}
       />
 
       <IngredientWrapper>

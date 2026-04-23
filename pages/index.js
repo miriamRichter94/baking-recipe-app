@@ -15,7 +15,7 @@ export default function HomePage() {
 
   return (
     <div>
-      <h1>Hello from Next.js</h1>
+      <h1>Baking Recipes</h1>
       <Link href="/form/create">Add a Recipe here!</Link>
       <RecipeList recipes={recipes} />
     </div>
