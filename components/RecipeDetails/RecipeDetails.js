@@ -26,9 +26,15 @@ export default function RecipeDetails({ recipe }) {
       <BakingStepsWrapper>
         <BakingStepsTitle>Baking - Steps</BakingStepsTitle>
         <ul>
-          {recipe.steps.map((backingstep) => (
-            <li key={backingstep._id}>
-              {backingstep.order}: {backingstep.instruction}
+          {recipe.steps.map((bakingstep) => (
+            <li key={bakingstep._id}>
+              {bakingstep.order}: {bakingstep.instruction}
+              {bakingstep.image && (
+                <StyledImage
+                  src={bakingstep.image}
+                  alt={`Step ${bakingstep.order} Image`}
+                />
+              )}
             </li>
           ))}
         </ul>

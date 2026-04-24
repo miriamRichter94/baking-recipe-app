@@ -27,7 +27,7 @@ export default function RecipeFormular() {
 
   return (
     <>
-      <h1>Create A recepie</h1>
+      <h1>Create A recipe</h1>
       <RecipeForm ingredients={ingredients} units={units} recipe={recipe} />
     </>
   );

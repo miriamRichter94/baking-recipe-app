@@ -9,7 +9,7 @@ import {
 import { addRecipe, editRecipe } from "@/services/recipeServices";
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import { uploadImgae } from "@/services/imageService";
+import { uploadImage } from "@/services/imageService";
 import Link from "next/link";
 
 export default function RecipeForm({ ingredients, units, recipe }) {
@@ -42,7 +42,7 @@ export default function RecipeForm({ ingredients, units, recipe }) {
     setRecipeSteps([...recipeSteps, { order: newStepNumber, instruction: "" }]);
   }
 
-  function hadnleStepChange(index, field, value) {
+  function handleStepChange(index, field, value) {
     const updated = [...recipeSteps];
     updated[index][field] = value;
     setRecipeSteps(updated);
@@ -56,7 +56,7 @@ export default function RecipeForm({ ingredients, units, recipe }) {
     const formData = Object.fromEntries(formDataObject);
 
     if (formData.image && formData.image.size > 0) {
-      ({ url: urlRecipePicture } = await uploadImgae(formData.image));
+      ({ url: urlRecipePicture } = await uploadImage(formData.image));
     } else {
       urlRecipePicture = recipe?.image ?? "";
     }
@@ -141,7 +141,7 @@ export default function RecipeForm({ ingredients, units, recipe }) {
               <label htmlFor="width">Width</label>
               <input
                 type="number"
-                id="widht"
+                id="width"
                 name="width"
                 defaultValue={recipe?.bakingForm.width ?? ""}
               />
@@ -187,7 +187,7 @@ export default function RecipeForm({ ingredients, units, recipe }) {
             <StepFields
               key={recipeStep.order}
               recipeStep={recipeStep}
-              onChange={(field, value) => hadnleStepChange(index, field, value)}
+              onChange={(field, value) => handleStepChange(index, field, value)}
             />
           ))}
 

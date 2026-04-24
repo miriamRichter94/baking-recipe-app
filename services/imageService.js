@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
 
-export async function uploadImgae(image) {
+export async function uploadImage(image) {
   const formData = new FormData();
   formData.append("image", image);
   const response = await fetch(`/api/images`, {

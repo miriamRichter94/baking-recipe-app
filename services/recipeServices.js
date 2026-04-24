@@ -9,14 +9,14 @@ import { mutate } from "swr";
 export async function getAllRecipes() {
   const res = await fetch("/api/recipes");
 
-  if (!res.ok) throw new Error("Faild to fetch recipes");
+  if (!res.ok) throw new Error("Failed to fetch recipes");
   return res.json();
 }
 
 export async function getRecipeById(url) {
   const response = await fetch(url);
 
-  if (!response.ok) throw new Error("Faild to fetch recipe");
+  if (!response.ok) throw new Error("Failed to fetch recipe");
   return response.json();
 }
 

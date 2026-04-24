@@ -3,7 +3,6 @@ export default function StepFields({ recipeStep, onChange }) {
     <>
       <label htmlFor="instruction">Step {recipeStep.order}</label>
       <textarea
-        type="text"
         id="instruction"
         name="instruction"
         rows={5}
@@ -23,7 +22,7 @@ export default function StepFields({ recipeStep, onChange }) {
       />
       <input
         type="text"
-        id={`stepImage-${recipeStep.order}`}
+        id={`stepImageUrl-${recipeStep.order}`}
         name="stepImageUrl"
         defaultValue={recipeStep.image ?? ""}
         readOnly
