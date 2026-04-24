@@ -10,6 +10,7 @@ import { addRecipe, editRecipe } from "@/services/recipeServices";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { uploadImgae } from "@/services/imageService";
+import Link from "next/link";
 
 export default function RecipeForm({ ingredients, units, recipe }) {
   const [selectedShape, setSelectedShape] = useState("round");
@@ -79,123 +80,128 @@ export default function RecipeForm({ ingredients, units, recipe }) {
   }
 
   return (
-    <StyledForm onSubmit={(event) => handleSubmitForm(event)}>
-      <label htmlFor="title">Title</label>
-      <input
-        type="text"
-        id="title"
-        name="title"
-        defaultValue={recipe?.title ?? ""}
-        required
-      />
-      <label htmlFor="description">Description</label>
-      <textarea
-        id="description"
-        name="description"
-        rows={5}
-        maxLength={255}
-        defaultValue={recipe?.description ?? ""}
-      />
+    <>
+      <button type="button" onClick={() => router.back()}>
+        Zurück
+      </button>
+      <StyledForm onSubmit={(event) => handleSubmitForm(event)}>
+        <label htmlFor="title">Title</label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          defaultValue={recipe?.title ?? ""}
+          required
+        />
+        <label htmlFor="description">Description</label>
+        <textarea
+          id="description"
+          name="description"
+          rows={5}
+          maxLength={255}
+          defaultValue={recipe?.description ?? ""}
+        />
 
-      <label htmlFor="image">Recipe Image</label>
-      <input type="file" id="image" name="image" />
-      <input
-        type="text"
-        id="image-url"
-        name="imageUrl"
-        defaultValue={recipe?.image ?? ""}
-        readOnly
-      />
+        <label htmlFor="image">Recipe Image</label>
+        <input type="file" id="image" name="image" />
+        <input
+          type="text"
+          id="image-url"
+          name="imageUrl"
+          defaultValue={recipe?.image ?? ""}
+          readOnly
+        />
 
-      <StyledFieldSets>
-        <legend>Baking Form</legend>
-        <label htmlFor="shape">Shape</label>
-        <select
-          id="shape"
-          name="shape"
-          defaultValue={recipe?.bakingForm.shape ?? ""}
-          onChange={(event) => setSelectedShape(event.target.value)}
-        >
-          <option value="round">Round</option>
-          <option value="rect">Rectangular</option>
-        </select>
-        {selectedShape === "round" && (
-          <>
-            <label htmlFor="diameter">Diameter</label>{" "}
-            <input
-              type="number"
-              id="diameter"
-              name="diameter"
-              defaultValue={recipe?.bakingForm.diameter ?? ""}
+        <StyledFieldSets>
+          <legend>Baking Form</legend>
+          <label htmlFor="shape">Shape</label>
+          <select
+            id="shape"
+            name="shape"
+            defaultValue={recipe?.bakingForm.shape ?? ""}
+            onChange={(event) => setSelectedShape(event.target.value)}
+          >
+            <option value="round">Round</option>
+            <option value="rect">Rectangular</option>
+          </select>
+          {selectedShape === "round" && (
+            <>
+              <label htmlFor="diameter">Diameter</label>{" "}
+              <input
+                type="number"
+                id="diameter"
+                name="diameter"
+                defaultValue={recipe?.bakingForm.diameter ?? ""}
+              />
+            </>
+          )}
+
+          {selectedShape === "rect" && (
+            <>
+              <label htmlFor="width">Width</label>
+              <input
+                type="number"
+                id="widht"
+                name="width"
+                defaultValue={recipe?.bakingForm.width ?? ""}
+              />
+              <label htmlFor="height">Height</label>
+              <input
+                type="number"
+                id="height"
+                name="height"
+                defaultValue={recipe?.bakingForm.height ?? ""}
+              />
+            </>
+          )}
+        </StyledFieldSets>
+
+        <StyledFieldSets>
+          <legend>Ingredients</legend>
+
+          {recipeIngredients.map((recipeIngredient, index) => (
+            <IngredientFields
+              key={recipeIngredient.ingredient}
+              ingredients={ingredients}
+              units={units}
+              recipeIngredient={recipeIngredient}
+              onChange={(field, value) =>
+                handleIngredientChange(index, field, value)
+              }
             />
-          </>
-        )}
+          ))}
 
-        {selectedShape === "rect" && (
-          <>
-            <label htmlFor="width">Width</label>
-            <input
-              type="number"
-              id="widht"
-              name="width"
-              defaultValue={recipe?.bakingForm.width ?? ""}
+          <button
+            type="button"
+            aria-label="Add Ingredient"
+            onClick={() => handleAddIngredient()}
+          >
+            +
+          </button>
+        </StyledFieldSets>
+
+        <StyledFieldSets>
+          <legend>Baking Steps</legend>
+
+          {recipeSteps.map((recipeStep, index) => (
+            <StepFields
+              key={recipeStep.order}
+              recipeStep={recipeStep}
+              onChange={(field, value) => hadnleStepChange(index, field, value)}
             />
-            <label htmlFor="height">Height</label>
-            <input
-              type="number"
-              id="height"
-              name="height"
-              defaultValue={recipe?.bakingForm.height ?? ""}
-            />
-          </>
-        )}
-      </StyledFieldSets>
+          ))}
 
-      <StyledFieldSets>
-        <legend>Ingredients</legend>
-
-        {recipeIngredients.map((recipeIngredient, index) => (
-          <IngredientFields
-            key={recipeIngredient.ingredient}
-            ingredients={ingredients}
-            units={units}
-            recipeIngredient={recipeIngredient}
-            onChange={(field, value) =>
-              handleIngredientChange(index, field, value)
-            }
-          />
-        ))}
-
-        <button
-          type="button"
-          aria-label="Add Ingredient"
-          onClick={() => handleAddIngredient()}
-        >
-          +
-        </button>
-      </StyledFieldSets>
-
-      <StyledFieldSets>
-        <legend>Baking Steps</legend>
-
-        {recipeSteps.map((recipeStep, index) => (
-          <StepFields
-            key={recipeStep.order}
-            recipeStep={recipeStep}
-            onChange={(field, value) => hadnleStepChange(index, field, value)}
-          />
-        ))}
-
-        <button
-          type="button"
-          aria-label="Add RecipeStep"
-          onClick={() => handleAddStep()}
-        >
-          +
-        </button>
-      </StyledFieldSets>
-      <button type="submit"> Save Recipe</button>
-    </StyledForm>
+          <button
+            type="button"
+            aria-label="Add RecipeStep"
+            onClick={() => handleAddStep()}
+          >
+            +
+          </button>
+        </StyledFieldSets>
+        <button type="submit"> Save Recipe</button>
+      </StyledForm>
+    </>
   );
 }
 
