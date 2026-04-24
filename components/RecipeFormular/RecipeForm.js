@@ -4,6 +4,7 @@ import StepFields from "./StepsFields";
 import {
   createRecipeDataObject,
   setRecipeIngredientsForForm,
+  uploadRecipeStepImages,
 } from "@/lib/helper";
 import { addRecipe, editRecipe } from "@/services/recipeServices";
 import styled from "styled-components";
@@ -16,7 +17,7 @@ export default function RecipeForm({ ingredients, units, recipe }) {
     setRecipeIngredientsForForm(recipe?.ingredients)
   );
   const [recipeSteps, setRecipeSteps] = useState(
-    recipe?.steps ?? [{ order: 1, instruction: "" }]
+    recipe?.steps ?? [{ order: 1, instruction: "", image: "" }]
   );
 
   const router = useRouter();
@@ -48,21 +49,24 @@ export default function RecipeForm({ ingredients, units, recipe }) {
 
   async function handleSubmitForm(event) {
     event.preventDefault();
-    let url, width, height;
+    let urlRecipePicture;
     const form = event.target;
     const formDataObject = new FormData(form);
     const formData = Object.fromEntries(formDataObject);
-    console.log(formData);
 
-    if (!recipe || recipe.image === "") {
-      ({ url, width, height } = await uploadImgae(formData.image));
+    if (formData.image && formData.image.size > 0) {
+      ({ url: urlRecipePicture } = await uploadImgae(formData.image));
+    } else {
+      urlRecipePicture = recipe?.image ?? "";
     }
+
+    const updatedSteps = await uploadRecipeStepImages(recipeSteps);
 
     const recipeData = createRecipeDataObject(
       formData,
       recipeIngredients,
-      recipeSteps,
-      url
+      updatedSteps,
+      urlRecipePicture
     );
 
     if (!recipe) {
@@ -95,6 +99,13 @@ export default function RecipeForm({ ingredients, units, recipe }) {
 
       <label htmlFor="image">Recipe Image</label>
       <input type="file" id="image" name="image" />
+      <input
+        type="text"
+        id="image-url"
+        name="imageUrl"
+        defaultValue={recipe?.image ?? ""}
+        readOnly
+      />
 
       <StyledFieldSets>
         <legend>Baking Form</legend>

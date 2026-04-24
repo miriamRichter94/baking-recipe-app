@@ -7,7 +7,6 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_SECRET,
 });
 
-console.log(process.env.CLOUDINARY_CLOUD_NAME);
 export const config = {
   api: {
     bodyParser: false,
