@@ -8,8 +8,6 @@ export async function uploadImgae(image) {
     body: formData,
   });
 
-  console.log(response);
-
   if (response.ok) {
     toast.success("Image successfully saved!");
   } else {
