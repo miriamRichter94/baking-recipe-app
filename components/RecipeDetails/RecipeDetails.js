@@ -10,8 +10,6 @@ export default function RecipeDetails({ recipe }) {
       <StyledImage
         src={recipe.image || "/assets/no-image.png"}
         alt={`${recipe.title} Image`}
-        width={180}
-        height={280}
       />
 
       <IngredientWrapper>
@@ -28,9 +26,15 @@ export default function RecipeDetails({ recipe }) {
       <BakingStepsWrapper>
         <BakingStepsTitle>Baking - Steps</BakingStepsTitle>
         <ul>
-          {recipe.steps.map((backingstep) => (
-            <li key={backingstep._id}>
-              {backingstep.order}: {backingstep.instruction}
+          {recipe.steps.map((bakingstep) => (
+            <li key={bakingstep._id}>
+              {bakingstep.order}: {bakingstep.instruction}
+              {bakingstep.image && (
+                <StyledImage
+                  src={bakingstep.image}
+                  alt={`Step ${bakingstep.order} Image`}
+                />
+              )}
             </li>
           ))}
         </ul>

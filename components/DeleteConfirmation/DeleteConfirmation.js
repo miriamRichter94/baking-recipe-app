@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import { deleteRecipe } from "@/services/recipeService";
+import { deleteRecipe } from "@/services/recipeServices";
 
 export default function DeleteConfirmation({ onCancel, recipeId }) {
   const router = useRouter();

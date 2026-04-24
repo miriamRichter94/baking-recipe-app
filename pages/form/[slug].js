@@ -1,9 +1,7 @@
 import RecipeForm from "@/components/RecipeFormular/RecipeForm";
-import {
-  getAllIngredients,
-  getAllUnits,
-  getRecipeById,
-} from "@/services/recipeService";
+import { getAllIngredients } from "@/services/ingredientServices";
+import { getRecipeById } from "@/services/recipeServices";
+import { getAllUnits } from "@/services/unitServices";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 
@@ -29,7 +27,7 @@ export default function RecipeFormular() {
 
   return (
     <>
-      <h1>Create A recepie</h1>
+      <h1>Create A recipe</h1>
       <RecipeForm ingredients={ingredients} units={units} recipe={recipe} />
     </>
   );
