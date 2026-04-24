@@ -8,11 +8,8 @@ export async function uploadImage(image) {
     body: formData,
   });
 
-  if (response.ok) {
-    toast.success("Image successfully saved!");
-  } else {
-    toast.error("Failed to save image.");
-  }
+  if (!response.ok) throw new Error("Failed to upload Image");
 
+  toast.success("Image successfully saved!");
   return response.json();
 }
