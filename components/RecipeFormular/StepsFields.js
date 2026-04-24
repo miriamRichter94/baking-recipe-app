@@ -21,6 +21,13 @@ export default function StepFields({ recipeStep, onChange }) {
         name="stepImage"
         onChange={(event) => onChange("image", event.target.files[0])}
       />
+      <input
+        type="text"
+        id={`stepImage-${recipeStep.order}`}
+        name="stepImageUrl"
+        defaultValue={recipeStep.image ?? ""}
+        readOnly
+      />
     </>
   );
 }
