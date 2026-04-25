@@ -8,5 +8,5 @@ export default async function handler(request, response) {
     return response.status(200).json(ingredients);
   }
 
-  return response.status(405).json({ stauts: "Method not allowed." });
+  return response.status(405).json({ status: "Method not allowed." });
 }

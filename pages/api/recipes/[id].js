@@ -11,7 +11,8 @@ export default async function handler(request, response) {
         .populate("ingredients.ingredient")
         .populate("ingredients.unit");
 
-      if (!recipe) return response.status(400).json({ status: "bad request" });
+      if (!recipe)
+        return response.status(404).json({ status: "Recipe not found" });
       return response.status(200).json(recipe);
     }
 
@@ -34,9 +35,9 @@ export default async function handler(request, response) {
       return;
     }
   } catch (error) {
-    response.status(500).json({ messgae: "Internal Server Error." });
+    response.status(500).json({ message: "Internal Server Error." });
     return;
   }
 
-  response.status(405).json({ stauts: "Method not allowed." });
+  response.status(405).json({ status: "Method not allowed." });
 }

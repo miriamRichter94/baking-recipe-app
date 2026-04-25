@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export default function IngredientPrview({ ingredients }) {
+export default function IngredientPreview({ ingredients }) {
   return (
     <IngredientsWrapper>
       {ingredients.map((recipeIngredient) => (

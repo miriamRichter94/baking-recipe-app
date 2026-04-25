@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import IngredientPrview from "./IngredientPreview";
+import IngredientPreview from "./IngredientPreview";
 import Link from "next/link";
 import Image from "next/image";
 import ModalBox from "../ModalBox/ModalBox";
@@ -10,14 +10,14 @@ export default function RecipePreview({ recipe }) {
       <StyledLink href={`/recipe/${recipe._id}`}>
         <ImageWrapper>
           <StyledImage
-            $imageAvailible={!!recipe.image}
+            $imageAvailable={!!recipe.image}
             src={recipe.image || "/assets/no-image.png"}
             alt={`Picture of a ${recipe.title}`}
           />
         </ImageWrapper>
         <TextWrapper>
           <CakeTitle>{recipe.title}</CakeTitle>
-          <IngredientPrview ingredients={recipe.ingredients} />
+          <IngredientPreview ingredients={recipe.ingredients} />
         </TextWrapper>
       </StyledLink>
 
