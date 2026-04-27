@@ -146,7 +146,7 @@ export default function RecipeForm({ ingredients, units, recipe }) {
           {recipeMainImage ? (
             <>
               <StepImagePreview>
-                <img src={recipeMainImage} alt={`image of ${recipe.title}`} />
+                <img src={recipeMainImage} alt="Recipe Image" />
               </StepImagePreview>
               <StepRemoveImageBtn
                 type="button"
@@ -419,7 +419,7 @@ export default function RecipeForm({ ingredients, units, recipe }) {
           {recipeMainImage ? (
             <>
               <StepImagePreview>
-                <img src={recipeMainImage} alt={`image of ${recipe.title}`} />
+                <img src={recipeMainImage} alt="Recipe Image" />
               </StepImagePreview>
               <StepRemoveImageBtn
                 type="button"
