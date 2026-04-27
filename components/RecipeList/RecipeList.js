@@ -2,8 +2,10 @@ import styled from "styled-components";
 import RecipePreview from "./RecipePreview";
 import NavBar from "@/styles/components/NavBar.styled";
 import Btn from "@/styles/components/Btn.styled";
+import { useRouter } from "next/router";
 
 export default function RecipeList({ recipes }) {
+  const router = useRouter();
   return (
     <PageWrapper>
       <NavBar />
