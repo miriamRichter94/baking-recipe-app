@@ -59,13 +59,7 @@ export default function RecipeForm({ ingredients, units, recipe }) {
     recipe?.steps ?? [{ order: 1, instruction: "", image: "" }]
   );
 
-  const [recipeMainImage, setRecipeMainImage] = useState(
-    recipe.image
-      ? typeof recipe.image === "string"
-        ? recipe.image
-        : URL.createObjectURL(recipe.image)
-      : null
-  );
+  const [recipeMainImage, setRecipeMainImage] = useState(recipe?.image ?? null);
 
   function handleAddIngredient() {
     setRecipeIngredients([
@@ -154,6 +148,12 @@ export default function RecipeForm({ ingredients, units, recipe }) {
               <StepImagePreview>
                 <img src={recipeMainImage} alt={`image of ${recipe.title}`} />
               </StepImagePreview>
+              <StepRemoveImageBtn
+                type="button"
+                onClick={() => setRecipeMainImage(null)}
+              >
+                Remove image
+              </StepRemoveImageBtn>
             </>
           ) : (
             <>
@@ -169,7 +169,7 @@ export default function RecipeForm({ ingredients, units, recipe }) {
                 name="image"
                 style={{ display: "none" }}
                 onChange={(event) =>
-                  setRecipeMainImage(URL.createObjectURL(e.target.files[0]))
+                  setRecipeMainImage(URL.createObjectURL(event.target.files[0]))
                 }
               />
             </>
@@ -421,6 +421,12 @@ export default function RecipeForm({ ingredients, units, recipe }) {
               <StepImagePreview>
                 <img src={recipeMainImage} alt={`image of ${recipe.title}`} />
               </StepImagePreview>
+              <StepRemoveImageBtn
+                type="button"
+                onClick={() => setRecipeMainImage(null)}
+              >
+                Remove image
+              </StepRemoveImageBtn>
             </>
           ) : (
             <>
@@ -435,6 +441,9 @@ export default function RecipeForm({ ingredients, units, recipe }) {
                 id="image"
                 name="image"
                 style={{ display: "none" }}
+                onChange={(event) =>
+                  setRecipeMainImage(URL.createObjectURL(event.target.files[0]))
+                }
               />
             </>
           )}
