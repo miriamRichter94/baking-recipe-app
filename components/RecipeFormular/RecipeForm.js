@@ -59,6 +59,14 @@ export default function RecipeForm({ ingredients, units, recipe }) {
     recipe?.steps ?? [{ order: 1, instruction: "", image: "" }]
   );
 
+  const [recipeMainImage, setRecipeMainImage] = useState(
+    recipe.image
+      ? typeof recipe.image === "string"
+        ? recipe.image
+        : URL.createObjectURL(recipe.image)
+      : null
+  );
+
   function handleAddIngredient() {
     setRecipeIngredients([
       ...recipeIngredients,
@@ -141,18 +149,31 @@ export default function RecipeForm({ ingredients, units, recipe }) {
           <FormPageTitle>{pageTitle}</FormPageTitle>
 
           {/* Photo upload */}
-          <label htmlFor="image">
-            <PhotoUploadMobile>
-              <PhotoIconBox>📷</PhotoIconBox>
-              <PhotoUploadLabel>Add a photo</PhotoUploadLabel>
-            </PhotoUploadMobile>
-          </label>
-          <input
-            type="file"
-            id="image"
-            name="image"
-            style={{ display: "none" }}
-          />
+          {recipeMainImage ? (
+            <>
+              <StepImagePreview>
+                <img src={recipeMainImage} alt={`image of ${recipe.title}`} />
+              </StepImagePreview>
+            </>
+          ) : (
+            <>
+              <label htmlFor="image">
+                <PhotoUploadMobile>
+                  <PhotoIconBox>📷</PhotoIconBox>
+                  <PhotoUploadLabel>Add a photo</PhotoUploadLabel>
+                </PhotoUploadMobile>
+              </label>
+              <input
+                type="file"
+                id="image"
+                name="image"
+                style={{ display: "none" }}
+                onChange={(event) =>
+                  setRecipeMainImage(URL.createObjectURL(e.target.files[0]))
+                }
+              />
+            </>
+          )}
 
           <InputField
             label="Recipe title"
@@ -395,18 +416,28 @@ export default function RecipeForm({ ingredients, units, recipe }) {
           >
             Recipe Image
           </label>
-          <label htmlFor="image">
-            <PhotoUploadDesktop>
-              <div style={{ fontSize: 28, marginBottom: 8 }}>📷</div>
-              Drop image here or click to upload
-            </PhotoUploadDesktop>
-          </label>
-          <input
-            type="file"
-            id="image"
-            name="image"
-            style={{ display: "none" }}
-          />
+          {recipeMainImage ? (
+            <>
+              <StepImagePreview>
+                <img src={recipeMainImage} alt={`image of ${recipe.title}`} />
+              </StepImagePreview>
+            </>
+          ) : (
+            <>
+              <label htmlFor="image">
+                <PhotoUploadDesktop>
+                  <div style={{ fontSize: 28, marginBottom: 8 }}>📷</div>
+                  Drop image here or click to upload
+                </PhotoUploadDesktop>
+              </label>
+              <input
+                type="file"
+                id="image"
+                name="image"
+                style={{ display: "none" }}
+              />
+            </>
+          )}
         </div>
 
         {/* Baking form */}
