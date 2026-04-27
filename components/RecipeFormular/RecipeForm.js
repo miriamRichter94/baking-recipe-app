@@ -27,13 +27,17 @@ import {
   SectionCardTitle,
   ShapeToggleRow,
   ShapeToggleBtn,
-  IngredientItem,
-  IngredientItemAmount,
   RemoveBtn,
   AddRowBtn,
   StepRow,
   StepBadge,
-  StepTextBox,
+  MobileIngredientEditRow,
+  MobileInput,
+  MobileUnitSelect,
+  MobileStepTextarea,
+  StepAddPhotoBtn,
+  StepImagePreview,
+  StepRemoveImageBtn,
   StyledFieldset,
   StyledLegend,
   AddDashedBtn,
@@ -164,15 +168,35 @@ export default function RecipeForm({ ingredients, units, recipe }) {
           <SectionCard>
             <SectionCardTitle>Ingredients</SectionCardTitle>
             {recipeIngredients.map((ing, i) => (
-              <IngredientItem key={i}>
-                <span style={{ flex: 2 }}>
-                  {ingredients.find((x) => x._id === ing.ingredient)?.name || "Ingredient"}
-                </span>
-                <IngredientItemAmount>
-                  {ing.amount} {units.find((u) => u._id === ing.unit)?.name}
-                </IngredientItemAmount>
+              <MobileIngredientEditRow key={i}>
+                <MobileUnitSelect
+                  style={{ flex: 2 }}
+                  value={ing.ingredient}
+                  onChange={(e) => handleIngredientChange(i, "ingredient", e.target.value)}
+                >
+                  <option value="">Ingredient</option>
+                  {ingredients.map((x) => (
+                    <option key={x._id} value={x._id}>{x.name}</option>
+                  ))}
+                </MobileUnitSelect>
+                <MobileInput
+                  style={{ width: 56, textAlign: "center" }}
+                  type="number"
+                  placeholder="Amt"
+                  value={ing.amount}
+                  onChange={(e) => handleIngredientChange(i, "amount", e.target.value)}
+                />
+                <MobileUnitSelect
+                  value={ing.unit}
+                  onChange={(e) => handleIngredientChange(i, "unit", e.target.value)}
+                >
+                  <option value="">Unit</option>
+                  {units.map((u) => (
+                    <option key={u._id} value={u._id}>{u.name}</option>
+                  ))}
+                </MobileUnitSelect>
                 <RemoveBtn type="button" onClick={() => handleRemoveIngredient(i)}>×</RemoveBtn>
-              </IngredientItem>
+              </MobileIngredientEditRow>
             ))}
             <AddRowBtn type="button" onClick={handleAddIngredient}>+ Add ingredient</AddRowBtn>
           </SectionCard>
@@ -180,15 +204,50 @@ export default function RecipeForm({ ingredients, units, recipe }) {
           {/* Steps card */}
           <SectionCard>
             <SectionCardTitle>Baking Steps</SectionCardTitle>
-            {recipeSteps.map((step, i) => (
-              <StepRow key={step.order}>
-                <StepBadge>{step.order}</StepBadge>
-                <div style={{ flex: 1, display: "flex", alignItems: "flex-start", gap: 6 }}>
-                  <StepTextBox>{step.instruction || "Step description..."}</StepTextBox>
-                  <RemoveBtn type="button" onClick={() => handleRemoveStep(i)} style={{ marginTop: 6 }}>×</RemoveBtn>
+            {recipeSteps.map((step, i) => {
+              const fileInputId = `mobile-stepImage-${step.order}`;
+              const imageSrc = step.image
+                ? typeof step.image === "string" ? step.image : URL.createObjectURL(step.image)
+                : null;
+              return (
+                <div key={step.order} style={{ marginBottom: 14 }}>
+                  <StepRow>
+                    <StepBadge>{step.order}</StepBadge>
+                    <div style={{ flex: 1, display: "flex", alignItems: "flex-start", gap: 6 }}>
+                      <MobileStepTextarea
+                        rows={2}
+                        placeholder="Describe this step..."
+                        value={step.instruction}
+                        onChange={(e) => handleStepChange(i, "instruction", e.target.value)}
+                      />
+                      <RemoveBtn type="button" onClick={() => handleRemoveStep(i)} style={{ marginTop: 6 }}>×</RemoveBtn>
+                    </div>
+                  </StepRow>
+                  <div style={{ marginLeft: 36, marginTop: 8 }}>
+                    <input
+                      type="file"
+                      id={fileInputId}
+                      style={{ display: "none" }}
+                      onChange={(e) => handleStepChange(i, "image", e.target.files[0])}
+                    />
+                    {imageSrc ? (
+                      <>
+                        <StepImagePreview>
+                          <img src={imageSrc} alt={`Step ${step.order}`} />
+                        </StepImagePreview>
+                        <StepRemoveImageBtn type="button" onClick={() => handleStepChange(i, "image", "")}>
+                          Remove image
+                        </StepRemoveImageBtn>
+                      </>
+                    ) : (
+                      <StepAddPhotoBtn type="button" onClick={() => document.getElementById(fileInputId)?.click()}>
+                        + Add photo
+                      </StepAddPhotoBtn>
+                    )}
+                  </div>
                 </div>
-              </StepRow>
-            ))}
+              );
+            })}
             <AddRowBtn type="button" onClick={handleAddStep}>+ Add step</AddRowBtn>
           </SectionCard>
         </form>

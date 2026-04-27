@@ -229,6 +229,109 @@ export const StepTextBox = styled.div`
   line-height: 1.5;
 `;
 
+// ── Mobile: editable ingredient row ──
+// Replaces the old static IngredientItem when in edit mode
+
+export const MobileIngredientEditRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+`;
+
+export const MobileInput = styled.input`
+  padding: 10px 12px;
+  background: #faf6f1;
+  border-radius: 10px;
+  border: 1px solid #e8ddd2;
+  font-size: 14px;
+  font-family: var(--font-body), sans-serif;
+  color: #3d2b1f;
+  outline: none;
+
+  &:focus {
+    border-color: #8b5e3c;
+  }
+`;
+
+export const MobileUnitSelect = styled.select`
+  width: 58px;
+  padding: 10px 4px;
+  background: #faf6f1;
+  border-radius: 10px;
+  border: 1px solid #e8ddd2;
+  font-size: 14px;
+  font-family: var(--font-body), sans-serif;
+  color: #3d2b1f;
+`;
+
+// ── Mobile: editable step textarea ──
+
+export const MobileStepTextarea = styled.textarea`
+  flex: 1;
+  padding: 9px 12px;
+  background: #faf6f1;
+  border-radius: 10px;
+  border: 1px solid #e8ddd2;
+  font-size: 14px;
+  font-family: var(--font-body), sans-serif;
+  line-height: 1.5;
+  resize: vertical;
+  outline: none;
+  color: #3d2b1f;
+
+  &:focus {
+    border-color: #8b5e3c;
+  }
+`;
+
+// ── Step image controls (used on both mobile + desktop) ──
+
+// Wrapper that indents under the step text, with image preview
+export const StepImagePreview = styled.div`
+  margin-top: 8px;
+  border-radius: 8px;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    display: block;
+
+    @media (min-width: 641px) {
+      height: 120px;
+    }
+  }
+`;
+
+// "+ Add photo" or "📷 Add step image (optional)" button
+export const StepAddPhotoBtn = styled.button`
+  background: none;
+  border: 1px dashed #e8ddd2;
+  border-radius: 8px;
+  padding: 8px 14px;
+  color: #c49a6c;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: var(--font-body), sans-serif;
+  margin-top: 8px;
+  display: block;
+`;
+
+// "Remove image" danger text link
+export const StepRemoveImageBtn = styled.button`
+  background: none;
+  border: none;
+  font-size: 12px;
+  color: #b5473a;
+  cursor: pointer;
+  padding: 0;
+  margin-top: 4px;
+  font-family: var(--font-body), sans-serif;
+  display: inline-block;
+`;
+
 // ── Desktop: fieldset ──
 
 export const StyledFieldset = styled.fieldset`

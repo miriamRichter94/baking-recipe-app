@@ -169,6 +169,41 @@ export const StepText = styled.p`
   }
 `;
 
+// Wrapper for an entire step (instruction row + optional image below)
+export const StepBlock = styled.div`
+  margin-bottom: 20px;
+
+  @media (min-width: 641px) {
+    margin-bottom: 24px;
+  }
+`;
+
+// Optional step image — indented to align under the text, not the badge
+// Mobile indent: badge(32) + gap(14) = 46px
+// Desktop indent: badge(36) + gap(16) = 52px
+export const StepImageWrap = styled.div`
+  margin-top: 10px;
+  margin-left: 46px;
+  border-radius: 10px;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    display: block;
+  }
+
+  @media (min-width: 641px) {
+    margin-left: 52px;
+    margin-top: 12px;
+
+    img {
+      height: 180px;
+    }
+  }
+`;
+
 // ── Desktop: two-column top grid ──
 
 export const DesktopTopGrid = styled.div`

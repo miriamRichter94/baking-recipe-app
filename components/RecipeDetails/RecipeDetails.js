@@ -19,9 +19,11 @@ import {
   DetailDesc,
   IngredientRow,
   IngredientAmount,
+  StepBlock,
   StepItem,
   StepBadge,
   StepText,
+  StepImageWrap,
   DesktopTopGrid,
   DesktopHeroImage,
   DesktopActionRow,
@@ -71,11 +73,18 @@ export default function RecipeDetails({ recipe }) {
             </IngredientRow>
           ))}
 
-          {activeTab === "Steps" && recipe.steps.map((step, i) => (
-            <StepItem key={step._id}>
-              <StepBadge>{step.order}</StepBadge>
-              <StepText>{step.instruction}</StepText>
-            </StepItem>
+          {activeTab === "Steps" && recipe.steps.map((step) => (
+            <StepBlock key={step._id}>
+              <StepItem>
+                <StepBadge>{step.order}</StepBadge>
+                <StepText>{step.instruction}</StepText>
+              </StepItem>
+              {step.image && (
+                <StepImageWrap>
+                  <img src={step.image} alt={`Step ${step.order}`} />
+                </StepImageWrap>
+              )}
+            </StepBlock>
           ))}
 
           <div style={{ marginTop: 28 }}>
@@ -123,10 +132,17 @@ export default function RecipeDetails({ recipe }) {
           <div>
             <SectionHeading>Baking Steps</SectionHeading>
             {recipe.steps.map((step) => (
-              <StepItem key={step._id}>
-                <StepBadge>{step.order}</StepBadge>
-                <StepText>{step.instruction}</StepText>
-              </StepItem>
+              <StepBlock key={step._id}>
+                <StepItem>
+                  <StepBadge>{step.order}</StepBadge>
+                  <StepText>{step.instruction}</StepText>
+                </StepItem>
+                {step.image && (
+                  <StepImageWrap>
+                    <img src={step.image} alt={`Step ${step.order}`} />
+                  </StepImageWrap>
+                )}
+              </StepBlock>
             ))}
           </div>
         </DesktopBottomGrid>
