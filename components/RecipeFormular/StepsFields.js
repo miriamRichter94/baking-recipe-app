@@ -1,24 +1,31 @@
-export default function StepFields({ recipeStep, onChange }) {
+import {
+  StepBadge,
+  StepTextarea,
+  RemoveBtn,
+  DesktopIngredientRow,
+} from "@/styles/components/FormPage.styled";
+
+export default function StepFields({ recipeStep, onChange, onRemove }) {
   return (
-    <>
-      <label htmlFor="instruction">Step {recipeStep.order}</label>
-      <textarea
+    <DesktopIngredientRow style={{ alignItems: "flex-start" }}>
+      <StepBadge style={{ marginTop: 6 }}>{recipeStep.order}</StepBadge>
+
+      <StepTextarea
         id="instruction"
         name="instruction"
-        rows={5}
+        rows={2}
         maxLength={255}
+        placeholder="Describe this step..."
         value={recipeStep.instruction}
-        onChange={(event) => onChange("instruction", event.target.value)}
+        onChange={(e) => onChange("instruction", e.target.value)}
       />
 
-      <label htmlFor={`stepImage-${recipeStep.order}`}>
-        Step Image {recipeStep.order}
-      </label>
       <input
         type="file"
         id={`stepImage-${recipeStep.order}`}
         name="stepImage"
-        onChange={(event) => onChange("image", event.target.files[0])}
+        style={{ display: "none" }}
+        onChange={(e) => onChange("image", e.target.files[0])}
       />
       <input
         type="text"
@@ -26,7 +33,12 @@ export default function StepFields({ recipeStep, onChange }) {
         name="stepImageUrl"
         defaultValue={recipeStep.image ?? ""}
         readOnly
+        style={{ display: "none" }}
       />
-    </>
+
+      {onRemove && (
+        <RemoveBtn type="button" onClick={onRemove} style={{ fontSize: 18, marginTop: 8 }}>×</RemoveBtn>
+      )}
+    </DesktopIngredientRow>
   );
 }

@@ -24,7 +24,7 @@ const inputBase = css`
   border: 1px solid #e8ddd2;
   border-radius: 8px;
   font-size: 15px;
-  font-family: 'Source Sans 3', sans-serif;
+  font-family: var(--font-body), sans-serif;
   background: #ffffff;
   box-sizing: border-box;
   outline: none;

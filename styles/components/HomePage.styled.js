@@ -8,7 +8,7 @@ import Btn from "./Btn.styled";
 export const PageWrapper = styled.div`
   background: #faf6f1;
   min-height: 100vh;
-  font-family: 'Source Sans 3', sans-serif;
+  font-family: var(--font-body), sans-serif;
   color: #3d2b1f;
 `;
 
@@ -33,7 +33,7 @@ export const PageHeader = styled.div`
 `;
 
 export const PageTitle = styled.h1`
-  font-family: 'DM Serif Display', serif;
+  font-family: var(--font-heading), serif;
   font-size: 28px;
   margin: 0 0 8px;
   font-weight: 400;
@@ -71,7 +71,7 @@ export const SearchInput = styled.input`
   border: 1px solid #e8ddd2;
   border-radius: 40px;
   font-size: 15px;
-  font-family: 'Source Sans 3', sans-serif;
+  font-family: var(--font-body), sans-serif;
   background: #ffffff;
   outline: none;
   box-sizing: border-box;
@@ -182,7 +182,7 @@ export const RecipeCardBody = styled.div`
 `;
 
 export const RecipeCardTitle = styled.h3`
-  font-family: 'DM Serif Display', serif;
+  font-family: var(--font-heading), serif;
   font-size: 17px;
   margin: 0 0 4px;
   font-weight: 400;

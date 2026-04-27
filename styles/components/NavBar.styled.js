@@ -19,7 +19,7 @@ export const Nav = styled.nav`
 `;
 
 export const NavBrand = styled.div`
-  font-family: 'DM Serif Display', serif;
+  font-family: var(--font-heading), serif;
   font-size: 22px;
   color: #8b5e3c;
 
@@ -58,7 +58,7 @@ export const NavBackButton = styled.button`
   background: none;
   border: none;
   color: #8b5e3c;
-  font-family: 'Source Sans 3', sans-serif;
+  font-family: var(--font-body), sans-serif;
   font-size: 15px;
   cursor: pointer;
   padding: 0;
@@ -69,7 +69,7 @@ export const NavBackButton = styled.button`
 
 // Centred page title shown next to the back button
 export const NavCentreTitle = styled.span`
-  font-family: 'DM Serif Display', serif;
+  font-family: var(--font-heading), serif;
   font-size: 16px;
   position: absolute;
   left: 50%;

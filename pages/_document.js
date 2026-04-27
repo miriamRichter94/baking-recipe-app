@@ -1,5 +1,6 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import { ServerStyleSheet } from "styled-components";
+import { dmSerifDisplay, sourceSans3 } from "@/styles/fonts";
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -25,15 +26,10 @@ export default class MyDocument extends Document {
 
   render() {
     return (
-      <Html lang="en">
-        <Head>
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-          <link
-            href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Source+Sans+3:wght@400;500;600&display=swap"
-            rel="stylesheet"
-          />
-        </Head>
+      // CSS variables from next/font are applied at the HTML root
+      // so every styled component can use var(--font-heading) and var(--font-body)
+      <Html lang="en" className={`${dmSerifDisplay.variable} ${sourceSans3.variable}`}>
+        <Head />
         <body>
           <Main />
           <NextScript />

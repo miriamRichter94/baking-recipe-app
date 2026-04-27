@@ -1,6 +1,6 @@
 // Design tokens — Warm Classic theme
-// Fonts needed in _app.js or _document.js:
-// 'DM Serif Display' (headings) + 'Source Sans 3' (body) from Google Fonts
+// Fonts are loaded via next/font/google (styles/fonts.js) and exposed
+// as CSS variables on <html>. Styled components reference them via var().
 
 const theme = {
   bg:          "#FAF6F1",
@@ -12,8 +12,8 @@ const theme = {
   textMuted:   "#8C7B6B",
   border:      "#E8DDD2",
   danger:      "#B5473A",
-  heading:     "'DM Serif Display', serif",
-  body:        "'Source Sans 3', sans-serif",
+  heading:     "var(--font-heading), serif",
+  body:        "var(--font-body), sans-serif",
   radius:      "12px",
 };
 

@@ -9,7 +9,7 @@ import TabSwitcher from "./TabSwitcher.styled";
 export const PageWrapper = styled.div`
   background: #faf6f1;
   min-height: 100vh;
-  font-family: 'Source Sans 3', sans-serif;
+  font-family: var(--font-body), sans-serif;
   color: #3d2b1f;
 `;
 
@@ -83,7 +83,7 @@ export const MetaTag = styled.span`
 `;
 
 export const DetailTitle = styled.h1`
-  font-family: 'DM Serif Display', serif;
+  font-family: var(--font-heading), serif;
   font-size: 28px;
   margin: 0 0 8px;
   font-weight: 400;
@@ -222,7 +222,7 @@ export const IngredientsSidebar = styled.div`
 `;
 
 export const SectionHeading = styled.h2`
-  font-family: 'DM Serif Display', serif;
+  font-family: var(--font-heading), serif;
   font-size: 22px;
   margin: 0 0 16px;
   font-weight: 400;

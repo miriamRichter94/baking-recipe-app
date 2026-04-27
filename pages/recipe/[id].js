@@ -7,14 +7,13 @@ export default function DetailsPage() {
   const router = useRouter();
   const { id } = router.query;
 
-  const {
-    data: recipe,
-    isLoading,
-    error,
-  } = useSWR(`/api/recipes/${id}`, getRecipeById);
+  const { data: recipe, isLoading, error } = useSWR(
+    id ? `/api/recipes/${id}` : null,
+    getRecipeById
+  );
 
-  if (isLoading || !recipe) return <h1>Loading...</h1>;
-  if (error) return <h1>ERROR</h1>;
+  if (isLoading || !recipe) return <p>Loading...</p>;
+  if (error) return <p>Something went wrong.</p>;
 
   return <RecipeDetails recipe={recipe} />;
 }

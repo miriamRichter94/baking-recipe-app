@@ -1,29 +1,32 @@
-import styled from "styled-components";
 import { useRouter } from "next/router";
 import { deleteRecipe } from "@/services/recipeServices";
+import {
+  ConfirmationWrapper,
+  ConfirmTitle,
+  ConfirmText,
+  ConfirmActions,
+  DeleteBtn,
+  CancelBtn,
+} from "@/styles/components/DeleteConfirmation.styled";
 
 export default function DeleteConfirmation({ onCancel, recipeId }) {
   const router = useRouter();
+
+  async function handleDelete() {
+    await deleteRecipe(recipeId);
+    router.push("/");
+  }
+
   return (
-    <ConfirmationDiv>
-      <p>Are you sure you want to delete the Recipe?</p>
-      <button
-        onClick={async () => {
-          await deleteRecipe(recipeId);
-          router.push("/");
-        }}
-      >
-        ❌Delete Recipe
-      </button>
-      <button onClick={onCancel}>Cancel</button>
-    </ConfirmationDiv>
+    <ConfirmationWrapper>
+      <ConfirmTitle>Delete recipe?</ConfirmTitle>
+      <ConfirmText>
+        Are you sure you want to delete this recipe? This action cannot be undone.
+      </ConfirmText>
+      <ConfirmActions>
+        <DeleteBtn onClick={handleDelete}>Delete Recipe</DeleteBtn>
+        <CancelBtn onClick={onCancel}>Cancel</CancelBtn>
+      </ConfirmActions>
+    </ConfirmationWrapper>
   );
 }
-
-// --- Styled Components ---
-const ConfirmationDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  position: relative;
-`;

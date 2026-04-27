@@ -1,122 +1,83 @@
-import styled, { css } from "styled-components";
-import IngredientPrview from "./IngredientPreview";
 import Link from "next/link";
-import Image from "next/image";
+import IngredientPreview from "./IngredientPreview";
 import ModalBox from "../ModalBox/ModalBox";
+import styled from "styled-components";
+import {
+  RecipeCard,
+  RecipeCardThumb,
+  RecipeCardBody,
+  RecipeCardTitle,
+  RecipeCardDesc,
+} from "@/styles/components/HomePage.styled";
 
 export default function RecipePreview({ recipe }) {
   return (
-    <RecipeCard>
-      <StyledLink href={`/recipe/${recipe._id}`}>
-        <ImageWrapper>
-          <StyledImage
-            $imageAvailible={!!recipe.image}
-            src={recipe.image || "/assets/no-image.png"}
-            alt={`Picture of a ${recipe.title}`}
-          />
-        </ImageWrapper>
-        <TextWrapper>
-          <CakeTitle>{recipe.title}</CakeTitle>
-          <IngredientPrview ingredients={recipe.ingredients} />
-        </TextWrapper>
-      </StyledLink>
+    // li wrapper so RecipeList's <ul> stays valid HTML
+    <CardItem>
+      <CardLink href={`/recipe/${recipe._id}`}>
+        <RecipeCard as="div">
+          <RecipeCardThumb>
+            <img
+              src={recipe.image || "/assets/no-image.png"}
+              alt={`Photo of ${recipe.title}`}
+              style={{ opacity: recipe.image ? 1 : 0.3 }}
+            />
+          </RecipeCardThumb>
 
-      <ActionDiv $isDelete>
+          <RecipeCardBody>
+            <RecipeCardTitle>{recipe.title}</RecipeCardTitle>
+            {recipe.description && (
+              <RecipeCardDesc>{recipe.description}</RecipeCardDesc>
+            )}
+            <IngredientPreview ingredients={recipe.ingredients} />
+          </RecipeCardBody>
+        </RecipeCard>
+      </CardLink>
+
+      {/* Action buttons overlaid on bottom-right */}
+      <ActionBar>
+        <ActionLink href={`/form/edit-${recipe._id}`} aria-label="Edit recipe">
+          ✏️
+        </ActionLink>
         <ModalBox type="delete" recipeId={recipe._id} />
-      </ActionDiv>
-
-      <ActionDiv $isEdit>
-        <StyledActionLink href={`/form/edit-${recipe._id}`}>
-          <Image
-            src="/assets/pencil.png"
-            width={25}
-            height={25}
-            alt="Edit Pencil"
-          ></Image>
-        </StyledActionLink>
-      </ActionDiv>
-    </RecipeCard>
+      </ActionBar>
+    </CardItem>
   );
 }
 
-const RecipeCard = styled.li`
+const CardItem = styled.li`
   position: relative;
-  border: 2px solid black;
-  border-radius: 10px;
-  padding: 8px;
-  display: flex;
-  flex-direction: column;
-  height: 320px;
-  overflow: hidden;
+  list-style: none;
 `;
 
-const StyledLink = styled(Link)`
+const CardLink = styled(Link)`
   text-decoration: none;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  color: var(--text-color);
+  color: inherit;
+  display: block;
 `;
 
-const ImageWrapper = styled.div`
-  width: 100%;
-  height: 200px;
-  overflow: hidden;
-  border-radius: 8px;
-`;
-
-const StyledImage = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  ${({ $imageAvailible }) =>
-    !$imageAvailible &&
-    css`
-      opacity: 30%;
-    `}
-`;
-
-const TextWrapper = styled.div`
-  padding: 8px;
-  overflow: hidden;
-`;
-
-const CakeTitle = styled.p`
-  font-size: 1.3em;
-  margin: 4px 0;
-`;
-
-const ActionDiv = styled.div`
+const ActionBar = styled.div`
   position: absolute;
+  bottom: 10px;
+  right: 10px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+`;
+
+const ActionLink = styled(Link)`
   width: 30px;
   height: 30px;
-  padding: 0;
-  border-radius: 20%;
-  border: 1px solid black;
-  background: white;
-  bottom: 5px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid #e8ddd2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  text-decoration: none;
 
   &:hover {
-    box-shadow: 2px 2px 2px grey;
+    box-shadow: 0 2px 8px rgba(60, 40, 20, 0.12);
   }
-
-  ${({ $isDelete }) =>
-    $isDelete &&
-    css`
-      right: 5px;
-    `}
-
-  ${({ $isEdit }) =>
-    $isEdit &&
-    css`
-      right: 45px;
-    `}
-`;
-
-const StyledActionLink = styled(Link)`
-  background-color: transparent;
-  border: none;
-  align-self: center;
-  padding: 0;
-  cursor: pointer;
 `;

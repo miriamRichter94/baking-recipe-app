@@ -9,7 +9,7 @@ import InputField from "./InputField.styled";
 export const PageWrapper = styled.div`
   background: #faf6f1;
   min-height: 100vh;
-  font-family: 'Source Sans 3', sans-serif;
+  font-family: var(--font-body), sans-serif;
   color: #3d2b1f;
   padding-bottom: 40px;
 `;
@@ -34,7 +34,7 @@ export const MobileBackBtn = styled.button`
   font-size: 15px;
   cursor: pointer;
   color: #3d2b1f;
-  font-family: 'Source Sans 3', sans-serif;
+  font-family: var(--font-body), sans-serif;
   padding: 0;
 `;
 
@@ -47,11 +47,11 @@ export const MobileSaveBtn = styled.button`
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  font-family: 'Source Sans 3', sans-serif;
+  font-family: var(--font-body), sans-serif;
 `;
 
 export const FormPageTitle = styled.h1`
-  font-family: 'DM Serif Display', serif;
+  font-family: var(--font-heading), serif;
   font-size: 26px;
   margin: 0 0 24px;
   font-weight: 400;
@@ -118,7 +118,7 @@ export const SectionCard = styled.div`
 `;
 
 export const SectionCardTitle = styled.h3`
-  font-family: 'DM Serif Display', serif;
+  font-family: var(--font-heading), serif;
   font-size: 17px;
   margin: 0 0 14px;
   font-weight: 400;
@@ -141,7 +141,7 @@ export const ShapeToggleBtn = styled.button`
   font-weight: 500;
   cursor: pointer;
   text-transform: capitalize;
-  font-family: 'Source Sans 3', sans-serif;
+  font-family: var(--font-body), sans-serif;
 
   background: ${({ $active }) => ($active ? "#8b5e3c" : "transparent")};
   color: ${({ $active }) => ($active ? "#fff" : "#8c7b6b")};
@@ -187,7 +187,7 @@ export const AddRowBtn = styled.button`
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  font-family: 'Source Sans 3', sans-serif;
+  font-family: var(--font-body), sans-serif;
 `;
 
 export const StepRow = styled.div`
@@ -240,7 +240,7 @@ export const StyledFieldset = styled.fieldset`
 `;
 
 export const StyledLegend = styled.legend`
-  font-family: 'DM Serif Display', serif;
+  font-family: var(--font-heading), serif;
   font-size: 18px;
   padding: 0 8px;
   font-weight: 400;
@@ -258,7 +258,7 @@ export const IngredientInput = styled.input`
   border: 1px solid #e8ddd2;
   border-radius: 8px;
   font-size: 14px;
-  font-family: 'Source Sans 3', sans-serif;
+  font-family: var(--font-body), sans-serif;
   outline: none;
   color: #3d2b1f;
 
@@ -273,7 +273,7 @@ export const UnitSelect = styled.select`
   border: 1px solid #e8ddd2;
   border-radius: 8px;
   font-size: 14px;
-  font-family: 'Source Sans 3', sans-serif;
+  font-family: var(--font-body), sans-serif;
   color: #3d2b1f;
   background: #ffffff;
 `;
@@ -286,7 +286,7 @@ export const AddDashedBtn = styled.button`
   color: #8b5e3c;
   font-size: 14px;
   cursor: pointer;
-  font-family: 'Source Sans 3', sans-serif;
+  font-family: var(--font-body), sans-serif;
 `;
 
 export const StepTextarea = styled.textarea`
@@ -295,7 +295,7 @@ export const StepTextarea = styled.textarea`
   border: 1px solid #e8ddd2;
   border-radius: 8px;
   font-size: 14px;
-  font-family: 'Source Sans 3', sans-serif;
+  font-family: var(--font-body), sans-serif;
   background: #fff;
   resize: vertical;
   outline: none;

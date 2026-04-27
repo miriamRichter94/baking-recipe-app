@@ -1,88 +1,136 @@
+import { useState } from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
-import styled from "styled-components";
+import useIsMobile from "@/lib/useIsMobile";
+import TabSwitcher from "@/styles/components/TabSwitcher.styled";
+import NavBar from "@/styles/components/NavBar.styled";
+import Btn from "@/styles/components/Btn.styled";
 import ModalBox from "../ModalBox/ModalBox";
+import {
+  PageWrapper,
+  HeroWrapper,
+  HeroImage,
+  HeroBackBtn,
+  HeroEditBtn,
+  MobileContent,
+  TagRow,
+  MetaTag,
+  DetailTitle,
+  DetailDesc,
+  IngredientRow,
+  IngredientAmount,
+  StepItem,
+  StepBadge,
+  StepText,
+  DesktopTopGrid,
+  DesktopHeroImage,
+  DesktopActionRow,
+  DesktopBottomGrid,
+  IngredientsSidebar,
+  SectionHeading,
+} from "@/styles/components/DetailPage.styled";
 
 export default function RecipeDetails({ recipe }) {
+  const router = useRouter();
+  const isMobile = useIsMobile();
+  const [activeTab, setActiveTab] = useState("Ingredients");
+
+  // ── Mobile layout ────────────────────────────────────────────────────────────
+  if (isMobile) {
+    return (
+      <PageWrapper>
+        <HeroWrapper>
+          <HeroImage>
+            <img src={recipe.image || "/assets/no-image.png"} alt={recipe.title} />
+          </HeroImage>
+          <HeroBackBtn onClick={() => router.push("/")} aria-label="Back">←</HeroBackBtn>
+          <HeroEditBtn as={Link} href={`/form/edit-${recipe._id}`} aria-label="Edit">✏️</HeroEditBtn>
+        </HeroWrapper>
+
+        <MobileContent>
+          {/* Meta tags — show step + ingredient counts since DB has no time/servings */}
+          <TagRow>
+            <MetaTag>🥣 {recipe.ingredients.length} ingredients</MetaTag>
+            <MetaTag>📋 {recipe.steps.length} steps</MetaTag>
+          </TagRow>
+
+          <DetailTitle>{recipe.title}</DetailTitle>
+          <DetailDesc>{recipe.description}</DetailDesc>
+
+          {/* Tab switcher — Ingredients / Steps */}
+          <TabSwitcher
+            tabs={["Ingredients", "Steps"]}
+            active={activeTab}
+            onChange={setActiveTab}
+          />
+
+          {activeTab === "Ingredients" && recipe.ingredients.map((ing, i) => (
+            <IngredientRow key={ing._id} $last={i === recipe.ingredients.length - 1}>
+              <span>{ing.ingredient.name}</span>
+              <IngredientAmount>{ing.amount} {ing.unit.name}</IngredientAmount>
+            </IngredientRow>
+          ))}
+
+          {activeTab === "Steps" && recipe.steps.map((step, i) => (
+            <StepItem key={step._id}>
+              <StepBadge>{step.order}</StepBadge>
+              <StepText>{step.instruction}</StepText>
+            </StepItem>
+          ))}
+
+          <div style={{ marginTop: 28 }}>
+            <ModalBox type="delete" recipeId={recipe._id} />
+          </div>
+        </MobileContent>
+      </PageWrapper>
+    );
+  }
+
+  // ── Desktop layout ───────────────────────────────────────────────────────────
   return (
-    <DetailsWrapper>
-      <Title>{recipe.title}</Title>
-      <Description>{recipe.description}</Description>
-      <StyledImage
-        src={recipe.image || "/assets/no-image.png"}
-        alt={`${recipe.title} Image`}
-      />
+    <PageWrapper>
+      <NavBar onBack={() => router.push("/")} />
 
-      <IngredientWrapper>
-        <h2>Ingredients</h2>
-        <ul>
-          {recipe.ingredients.map((recipeIngredient) => (
-            <li key={recipeIngredient._id}>
-              {`${recipeIngredient.amount} ${recipeIngredient.unit.name} ${recipeIngredient.ingredient.name}`}{" "}
-            </li>
-          ))}
-        </ul>
-      </IngredientWrapper>
+      <div style={{ padding: "36px 40px", maxWidth: 960, margin: "0 auto" }}>
+        {/* Top: image + title/description/actions side by side */}
+        <DesktopTopGrid>
+          <DesktopHeroImage>
+            <img src={recipe.image || "/assets/no-image.png"} alt={recipe.title} />
+          </DesktopHeroImage>
 
-      <BakingStepsWrapper>
-        <BakingStepsTitle>Baking - Steps</BakingStepsTitle>
-        <ul>
-          {recipe.steps.map((bakingstep) => (
-            <li key={bakingstep._id}>
-              {bakingstep.order}: {bakingstep.instruction}
-              {bakingstep.image && (
-                <StyledImage
-                  src={bakingstep.image}
-                  alt={`Step ${bakingstep.order} Image`}
-                />
-              )}
-            </li>
-          ))}
-        </ul>
-      </BakingStepsWrapper>
-      <Link href={`/form/edit-${recipe._id}`}>Edit Recipe</Link>
-      <ModalBox type="delete" recipeId={recipe._id} />
-    </DetailsWrapper>
+          <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+            <DetailTitle>{recipe.title}</DetailTitle>
+            <DetailDesc>{recipe.description}</DetailDesc>
+            <DesktopActionRow>
+              <Btn as={Link} href={`/form/edit-${recipe._id}`}>Edit Recipe</Btn>
+              <ModalBox type="delete" recipeId={recipe._id} />
+            </DesktopActionRow>
+          </div>
+        </DesktopTopGrid>
+
+        {/* Bottom: ingredients sidebar + steps */}
+        <DesktopBottomGrid>
+          <IngredientsSidebar>
+            <SectionHeading>Ingredients</SectionHeading>
+            {recipe.ingredients.map((ing, i) => (
+              <IngredientRow key={ing._id} $last={i === recipe.ingredients.length - 1}>
+                <span>{ing.ingredient.name}</span>
+                <IngredientAmount>{ing.amount} {ing.unit.name}</IngredientAmount>
+              </IngredientRow>
+            ))}
+          </IngredientsSidebar>
+
+          <div>
+            <SectionHeading>Baking Steps</SectionHeading>
+            {recipe.steps.map((step) => (
+              <StepItem key={step._id}>
+                <StepBadge>{step.order}</StepBadge>
+                <StepText>{step.instruction}</StepText>
+              </StepItem>
+            ))}
+          </div>
+        </DesktopBottomGrid>
+      </div>
+    </PageWrapper>
   );
 }
-
-const DetailsWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  padding: 15px;
-`;
-
-const Title = styled.h1`
-  grid-column: 1 / -1;
-  grid-row-start: 1;
-  place-self: center;
-`;
-
-const Description = styled.p`
-  grid-column: 1 / 2;
-  grid-row: 2 / 3;
-`;
-
-const StyledImage = styled.img`
-  width: 300px;
-  height: 250px;
-
-  grid-row: 2 / 4;
-  grid-column: 2 / -1;
-  object-fit: contain;
-`;
-
-const IngredientWrapper = styled.div`
-  grid-column: 1 / 2;
-  grid-row: 3 / 4;
-`;
-
-const BakingStepsWrapper = styled.div`
-  grid-column: 1/-1;
-  grid-row: 4 / 5;
-  display: flex;
-  flex-direction: column;
-`;
-
-const BakingStepsTitle = styled.h2`
-  align-self: center;
-`;
