@@ -1,5 +1,5 @@
 import { SWRConfig } from "swr";
-import GlobalStyle from "../styles";
+import GlobalStyle from "../styles/global-styles";
 import { Toaster } from "react-hot-toast";
 
 const fetcher = async (url) => {
