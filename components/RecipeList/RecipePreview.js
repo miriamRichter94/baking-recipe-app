@@ -11,7 +11,7 @@ export default function RecipePreview({ recipe }) {
         <RecipeCard>
           <ImageWrapper>
             <StyledImage
-              $imageAvailable={!!recipe.image}
+              $imageAvailable={!!!recipe.image}
               src={recipe.image || "/assets/no-image.png"}
               alt={`Picture of a ${recipe.title}`}
             />
@@ -78,12 +78,6 @@ const ImageWrapper = styled.div`
   border-radius: 12px 0 0 12px;
   overflow: hidden;
 
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
   @media (min-width: 641px) {
     width: 100%;
     height: 180px;
@@ -96,7 +90,7 @@ const StyledImage = styled.img`
   height: 100%;
   object-fit: cover;
   ${({ $imageAvailible }) =>
-    !$imageAvailible &&
+    $imageAvailible &&
     css`
       opacity: 30%;
     `}

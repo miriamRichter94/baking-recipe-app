@@ -1,6 +1,5 @@
 import RecipeList from "@/components/RecipeList/RecipeList";
 import { getAllRecipes } from "@/services/recipeServices";
-import Link from "next/link";
 import useSWR from "swr";
 
 export default function HomePage() {
@@ -13,11 +12,5 @@ export default function HomePage() {
   if (isLoading || !recipes) return <h1>Loading...</h1>;
   if (error) return <h1>ERROR</h1>;
 
-  return (
-    <div>
-      <h1>Baking Recipes</h1>
-      <Link href="/form/create">Add a Recipe here!</Link>
-      <RecipeList recipes={recipes} />
-    </div>
-  );
+  return <RecipeList recipes={recipes} />;
 }
