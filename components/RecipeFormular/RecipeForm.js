@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import IngredientFields from "./IngredientFields";
 import StepFields from "./StepsFields";
-import useIsMobile from "@/lib/useIsMobile";
 import InputField from "@/components/RecipeFormular/InputField";
 import StyledButton from "@/components/Button/StyledButton";
 import {
@@ -16,9 +15,7 @@ import styled from "styled-components";
 
 export default function RecipeForm({ ingredients, units, recipe }) {
   const router = useRouter();
-  const isMobile = useIsMobile();
   const isEdit = !!recipe;
-  const pageTitle = isEdit ? "Edit Recipe" : "Add New Recipe";
 
   const [selectedShape, setSelectedShape] = useState(
     recipe?.bakingForm?.shape ?? "round"
@@ -222,6 +219,22 @@ export default function RecipeForm({ ingredients, units, recipe }) {
           + Add ingredient
         </AddRowBtn>
       </StyledFieldset>
+
+      {/* Steps card */}
+      <StyledFieldset>
+        <StyledLegend>Baking Steps</StyledLegend>
+        {recipeSteps.map((step, i) => (
+          <StepFields
+            key={step.order}
+            recipeStep={step}
+            onChange={(field, value) => handleStepChange(i, field, value)}
+            onRemove={() => handleRemoveStep(i)}
+          />
+        ))}
+        <AddRowBtn type="button" onClick={handleAddStep}>
+          + Add Step
+        </AddRowBtn>
+      </StyledFieldset>
     </StyledForm>
   );
 }
@@ -300,6 +313,7 @@ const RemoveImagePreviewBtn = styled.button`
 `;
 
 const StyledFieldset = styled.fieldset`
+  min-width: 0;
   background: #ffffff;
   border-radius: 12px;
   padding: 18px;
@@ -341,39 +355,6 @@ const ShapeToggleBtn = styled.button`
   background: ${({ $active }) => ($active ? "#8b5e3c" : "transparent")};
   color: ${({ $active }) => ($active ? "#fff" : "#8c7b6b")};
   border: ${({ $active }) => ($active ? "none" : "1px solid #e8ddd2")};
-`;
-
-const MobileIngredientEditRow = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
-`;
-
-const MobileInput = styled.input`
-  padding: 10px 12px;
-  background: #faf6f1;
-  border-radius: 10px;
-  border: 1px solid #e8ddd2;
-  font-size: 14px;
-  font-family: var(--font-body), sans-serif;
-  color: #3d2b1f;
-  outline: none;
-
-  &:focus {
-    border-color: #8b5e3c;
-  }
-`;
-
-const MobileUnitSelect = styled.select`
-  width: 58px;
-  padding: 10px 4px;
-  background: #faf6f1;
-  border-radius: 10px;
-  border: 1px solid #e8ddd2;
-  font-size: 14px;
-  font-family: var(--font-body), sans-serif;
-  color: #3d2b1f;
 `;
 
 export const AddRowBtn = styled.button`

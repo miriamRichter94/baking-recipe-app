@@ -16,7 +16,7 @@ export default function IngredientFields({
         value={recipeIngredient.ingredient}
         onChange={(e) => onChange("ingredient", e.target.value)}
       >
-        <option value="">Select ingredient</option>
+        <option value="">Ingredient</option>
         {ingredients.map((ing) => (
           <option value={ing._id} key={ing._id}>
             {ing.name}
@@ -25,7 +25,7 @@ export default function IngredientFields({
       </IngredientSelect>
 
       {/* Amount */}
-      <IngredientInput
+      <AmmountInput
         type="number"
         id="amount"
         name="amount"
@@ -71,8 +71,9 @@ const DesktopIngredientRow = styled.div`
   }
 `;
 
-const IngredientInput = styled.input`
+const AmmountInput = styled.input`
   width: 56px;
+  box-sizing: border-box;
   padding: 10px 12px;
   background: #faf6f1;
   border-radius: 10px;
@@ -108,6 +109,7 @@ const IngredientSelect = styled.select`
   border: 1px solid #e8ddd2;
   font-size: 14px;
   color: #3d2b1f;
+  overflow: hidden;
 
   @media (min-width: 641px) {
     flex: 2;
