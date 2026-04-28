@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import useIsMobile from "@/lib/useIsMobile";
 import { useState } from "react";
 import TabSwitcher from "@/styles/components/TabSwitcher.styled";
-import NavBar from "@/styles/components/NavBar.styled";
 import Btn from "@/styles/components/Btn.styled";
 
 export default function RecipeDetails({ recipe }) {
@@ -15,7 +14,7 @@ export default function RecipeDetails({ recipe }) {
 
   if (isMobile) {
     return (
-      <DetailsWrapper>
+      <>
         <HeroWrapper>
           <HeroImage>
             <img
@@ -90,97 +89,87 @@ export default function RecipeDetails({ recipe }) {
             <ModalBox type="delete" recipeId={recipe._id} />
           </div>
         </MobileContent>
-      </DetailsWrapper>
+      </>
     );
   }
 
   return (
-    <DetailsWrapper>
-      <NavBar onBack={() => router.push("/")} />
-      <div style={{ padding: "36px 40px", maxWidth: 960, margin: "0 auto" }}>
-        {/* Top: image + title/description/actions side by side */}
-        <DesktopTopGrid>
-          <DesktopHeroImage>
-            <img
-              src={recipe.image || "/assets/no-image.png"}
-              alt={recipe.title}
-            />
-          </DesktopHeroImage>
+    <div style={{ padding: "36px 40px", maxWidth: 960, margin: "0 auto" }}>
+      {/* Top: image + title/description/actions side by side */}
+      <DesktopTopGrid>
+        <DesktopHeroImage>
+          <img
+            src={recipe.image || "/assets/no-image.png"}
+            alt={recipe.title}
+          />
+        </DesktopHeroImage>
 
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-            }}
-          >
-            <Title>{recipe.title}</Title>
-            <Description>{recipe.description}</Description>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          <Title>{recipe.title}</Title>
+          <Description>{recipe.description}</Description>
 
-            <TagRow>
-              <MetaTag>🥣 {recipe.ingredients.length} ingredients</MetaTag>
-              <MetaTag>📋 {recipe.steps.length} steps</MetaTag>
-              <MetaTag>
-                📐 {recipe.bakingForm.shape} ·
-                {recipe.bakingForm.shape === "round"
-                  ? recipe.bakingForm.diameter
-                  : `${recipe.bakingForm.width} cm x ${recipe.bakingForm.length} cm`}
-              </MetaTag>
-            </TagRow>
-            <DesktopActionRow>
-              <Btn as={Link} href={`/form/edit-${recipe._id}`}>
-                Edit Recipe
-              </Btn>
-              <ModalBox type="delete" recipeId={recipe._id} />
-            </DesktopActionRow>
-          </div>
-        </DesktopTopGrid>
+          <TagRow>
+            <MetaTag>🥣 {recipe.ingredients.length} ingredients</MetaTag>
+            <MetaTag>📋 {recipe.steps.length} steps</MetaTag>
+            <MetaTag>
+              📐 {recipe.bakingForm.shape} ·
+              {recipe.bakingForm.shape === "round"
+                ? recipe.bakingForm.diameter
+                : `${recipe.bakingForm.width} cm x ${recipe.bakingForm.length} cm`}
+            </MetaTag>
+          </TagRow>
+          <DesktopActionRow>
+            <Btn as={Link} href={`/form/edit-${recipe._id}`}>
+              Edit Recipe
+            </Btn>
+            <ModalBox type="delete" recipeId={recipe._id} />
+          </DesktopActionRow>
+        </div>
+      </DesktopTopGrid>
 
-        {/* Bottom: ingredients sidebar + steps */}
-        <DesktopBottomGrid>
-          <IngredientsSidebar>
-            <SectionHeading>Ingredients</SectionHeading>
-            {recipe.ingredients.map((ing, i) => (
-              <IngredientRow
-                key={ing._id}
-                $last={i === recipe.ingredients.length - 1}
-              >
-                <span>{ing.ingredient.name}</span>
-                <IngredientAmount>
-                  {ing.amount} {ing.unit.name}
-                </IngredientAmount>
-              </IngredientRow>
-            ))}
-          </IngredientsSidebar>
+      {/* Bottom: ingredients sidebar + steps */}
+      <DesktopBottomGrid>
+        <IngredientsSidebar>
+          <SectionHeading>Ingredients</SectionHeading>
+          {recipe.ingredients.map((ing, i) => (
+            <IngredientRow
+              key={ing._id}
+              $last={i === recipe.ingredients.length - 1}
+            >
+              <span>{ing.ingredient.name}</span>
+              <IngredientAmount>
+                {ing.amount} {ing.unit.name}
+              </IngredientAmount>
+            </IngredientRow>
+          ))}
+        </IngredientsSidebar>
 
-          <div>
-            <SectionHeading>Baking Steps</SectionHeading>
-            {recipe.steps.map((step) => (
-              <StepBlock key={step._id}>
-                <StepItem>
-                  <StepBadge>{step.order}</StepBadge>
-                  <StepText>{step.instruction}</StepText>
-                </StepItem>
-                {step.image && (
-                  <StepImageWrap>
-                    <img src={step.image} alt={`Step ${step.order}`} />
-                  </StepImageWrap>
-                )}
-              </StepBlock>
-            ))}
-          </div>
-        </DesktopBottomGrid>
-      </div>
-    </DetailsWrapper>
+        <div>
+          <SectionHeading>Baking Steps</SectionHeading>
+          {recipe.steps.map((step) => (
+            <StepBlock key={step._id}>
+              <StepItem>
+                <StepBadge>{step.order}</StepBadge>
+                <StepText>{step.instruction}</StepText>
+              </StepItem>
+              {step.image && (
+                <StepImageWrap>
+                  <img src={step.image} alt={`Step ${step.order}`} />
+                </StepImageWrap>
+              )}
+            </StepBlock>
+          ))}
+        </div>
+      </DesktopBottomGrid>
+    </div>
   );
 }
-
-const DetailsWrapper = styled.div`
-  background: #faf6f1;
-  min-height: 100vh;
-  font-family: var(--font-body), sans-serif;
-  color: #3d2b1f;
-`;
 
 const Title = styled.h1`
   font-family: var(--font-heading), serif;

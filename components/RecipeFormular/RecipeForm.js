@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import IngredientFields from "./IngredientFields";
 import StepFields from "./StepsFields";
 import useIsMobile from "@/lib/useIsMobile";
-import NavBar from "@/styles/components/NavBar.styled";
 import InputField from "@/styles/components/InputField.styled";
 import Btn from "@/styles/components/Btn.styled";
 import {
@@ -125,7 +124,7 @@ export default function RecipeForm({ ingredients, units, recipe }) {
   // ── Mobile layout ────────────────────────────────────────────────────────────
   if (isMobile) {
     return (
-      <PageWrapper>
+      <>
         <MobileHeader>
           <MobileBackBtn type="button" onClick={() => router.back()}>
             ← Back
@@ -372,15 +371,13 @@ export default function RecipeForm({ ingredients, units, recipe }) {
             </AddRowBtn>
           </SectionCard>
         </form>
-      </PageWrapper>
+      </>
     );
   }
 
   // ── Desktop layout ───────────────────────────────────────────────────────────
   return (
-    <PageWrapper>
-      <NavBar onBack={() => router.back()} />
-
+    <>
       <form
         onSubmit={handleSubmit}
         style={{ padding: "36px 40px", maxWidth: 680, margin: "0 auto" }}
@@ -564,6 +561,6 @@ export default function RecipeForm({ ingredients, units, recipe }) {
           Save Recipe
         </Btn>
       </form>
-    </PageWrapper>
+    </>
   );
 }

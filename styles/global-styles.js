@@ -3,15 +3,16 @@ import { createGlobalStyle } from "styled-components";
 export default createGlobalStyle`
 
 :root{
-  :root {
-  --bg: #FAF6F1;
+  --background: #FAF6F1;
   --text-muted: #8C7B6B;
+  --text-color: #3d2b1f;
   --border: #E8DDD2;
   --danger: #B5473A;
   --radius: 12px;
-  --font-heading: var(--font-heading), serif;
-  --font-body: var(--font-heading), sans-serif;
-}
+  --heading-font: var(--font-heading), serif;
+  --body-font: var(--font-body), system-ui, sans-serif;
+  --nav-font-color: #8b5e3c;
+
 }
 
 
@@ -22,8 +23,13 @@ export default createGlobalStyle`
   }
 
   body {
-    font-family: 'Source Sans 3', system-ui, sans-serif;
-    background: #faf6f1;
-    color: #3d2b1f;
+    font-family: var(--body-font);
+    background: var(--background);
+    color: var(--text-color);
+  min-height: 100vh;
   }
+
+  button, input, select, textarea {
+  font-family: inherit;
+}
 `;

@@ -1,15 +1,12 @@
 import styled from "styled-components";
 import RecipePreview from "./RecipePreview";
-import NavBar from "@/styles/components/NavBar.styled";
 import Btn from "@/styles/components/Btn.styled";
 import { useRouter } from "next/router";
 
 export default function RecipeList({ recipes }) {
   const router = useRouter();
   return (
-    <PageWrapper>
-      <NavBar />
-
+    <>
       <PageContent>
         <PageHeader>
           <PageTitle>Baking Recipes</PageTitle>
@@ -40,16 +37,9 @@ export default function RecipeList({ recipes }) {
       >
         +
       </FAB>
-    </PageWrapper>
+    </>
   );
 }
-
-const PageWrapper = styled.div`
-  background: #faf6f1;
-  min-height: 100vh;
-  font-family: var(--font-body), sans-serif;
-  color: #3d2b1f;
-`;
 
 export const PageContent = styled.div`
   padding: 24px 20px;
