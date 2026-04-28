@@ -101,6 +101,7 @@ const IngredientInput = styled.input`
 
 const IngredientSelect = styled.select`
   flex: 2;
+  min-width: 0;
   padding: 10px 4px;
   background: #faf6f1;
   border-radius: 10px;
