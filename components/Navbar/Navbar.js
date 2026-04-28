@@ -2,11 +2,6 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-const ROUTE_TITLES = {
-  "/form/create": "New Recipe",
-  "/recipe/[id]": "Recipe",
-};
-
 export default function Navbar() {
   const router = useRouter();
   const isHome = router.pathname === "/";

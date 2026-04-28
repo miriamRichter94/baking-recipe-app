@@ -6,9 +6,9 @@ import ModalBox from "../ModalBox/ModalBox";
 
 export default function RecipePreview({ recipe }) {
   return (
-    <CardItem>
+    <RecipeCard>
       <StyledLink href={`/recipe/${recipe._id}`}>
-        <RecipeCard>
+        <RecipeInformation>
           <ImageWrapper>
             <StyledImage
               $imageAvailable={!!!recipe.image}
@@ -20,11 +20,14 @@ export default function RecipePreview({ recipe }) {
             <CardTitle>{recipe.title}</CardTitle>
             <IngredientPreview ingredients={recipe.ingredients} />
           </TextWrapper>
-        </RecipeCard>
+        </RecipeInformation>
       </StyledLink>
 
       <ActionDiv>
-        <StyledActionLink href={`/form/edit-${recipe._id}`}>
+        <StyledActionLink
+          href={`/form/edit-${recipe._id}`}
+          aria-label="Edit Recipe"
+        >
           <Image
             src="/assets/pencil.png"
             width={25}
@@ -32,13 +35,17 @@ export default function RecipePreview({ recipe }) {
             alt="Edit Pencil"
           ></Image>
         </StyledActionLink>
-        <ModalBox type="delete" recipeId={recipe._id} />
+        <ModalBox
+          type="delete"
+          recipeId={recipe._id}
+          aria-label="Delete Recipe"
+        />
       </ActionDiv>
-    </CardItem>
+    </RecipeCard>
   );
 }
 
-const CardItem = styled.li`
+const RecipeCard = styled.li`
   position: relative;
   list-style: none;
 `;
@@ -48,8 +55,8 @@ const StyledLink = styled(Link)`
   color: inherit;
   display: block;
 `;
-const RecipeCard = styled.div`
-  background: #ffffff;
+const RecipeInformation = styled.div`
+  background: var(--recipe-card-background);
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 2px 12px rgba(60, 40, 20, 0.07);
@@ -74,7 +81,6 @@ const ImageWrapper = styled.div`
   width: 120px;
   height: 110px;
   flex-shrink: 0;
-  background: #ede5da;
   border-radius: 12px 0 0 12px;
   overflow: hidden;
 
@@ -109,7 +115,7 @@ const TextWrapper = styled.div`
 `;
 
 const CardTitle = styled.p`
-  font-family: var(--font-heading), serif;
+  font-family: var(--heading-font);
   font-size: 17px;
   margin: 0 0 4px;
   font-weight: 400;
@@ -126,14 +132,17 @@ const ActionDiv = styled.div`
   display: flex;
   gap: 6px;
   align-items: center;
+  display: none;
+
+  @media (min-width: 641px) {
+    display: block;
+  }
 `;
 
 const StyledActionLink = styled(Link)`
   width: 30px;
   height: 30px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.92);
-  border: 1px solid #e8ddd2;
   display: flex;
   align-items: center;
   justify-content: center;

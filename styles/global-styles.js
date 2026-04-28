@@ -12,6 +12,7 @@ export default createGlobalStyle`
   --heading-font: var(--font-heading), serif;
   --body-font: var(--font-body), system-ui, sans-serif;
   --nav-font-color: #8b5e3c;
+  --recipe-card-background: #fdfdfd;
 
 }
 
