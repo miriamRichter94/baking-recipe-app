@@ -1,56 +1,66 @@
-import styled from "styled-components";
+import {
+  DesktopIngredientRow,
+  IngredientInput,
+  UnitSelect,
+  RemoveBtn,
+} from "@/styles/components/FormPage.styled";
 
 export default function IngredientFields({
   ingredients,
   recipeIngredient,
   units,
   onChange,
+  onRemove,
 }) {
   return (
-    <StyledFieldSets>
-      <label htmlFor="ingredient">Ingredient</label>
-      <select
+    <DesktopIngredientRow>
+      {/* Ingredient dropdown */}
+      <UnitSelect
+        style={{ width: "auto", flex: 2 }}
         id="ingredient"
         name="ingredient"
         value={recipeIngredient.ingredient}
-        onChange={(event) => onChange("ingredient", event.target.value)}
+        onChange={(e) => onChange("ingredient", e.target.value)}
       >
-        <option value="">Select an Ingredient</option>
-        {ingredients.map((ingredient) => (
-          <option value={ingredient._id} key={ingredient._id}>
-            {ingredient.name}
+        <option value="">Select ingredient</option>
+        {ingredients.map((ing) => (
+          <option value={ing._id} key={ing._id}>
+            {ing.name}
           </option>
         ))}
-      </select>
+      </UnitSelect>
 
-      <label htmlFor="amount">Amount</label>
-      <input
+      {/* Amount */}
+      <IngredientInput
+        style={{ flex: 1, boxSizing: "border-box" }}
         type="number"
         id="amount"
         name="amount"
+        placeholder="Amt"
         value={recipeIngredient.amount}
-        onChange={(event) => onChange("amount", event.target.value)}
+        onChange={(e) => onChange("amount", e.target.value)}
       />
 
-      <label htmlFor="unit">Unit</label>
-      <select
+      {/* Unit dropdown */}
+      <UnitSelect
         id="unit"
         name="unit"
         value={recipeIngredient.unit}
-        onChange={(event) => onChange("unit", event.target.value)}
+        onChange={(e) => onChange("unit", e.target.value)}
       >
-        <option value="">Select an Unit</option>
+        <option value="">Unit</option>
         {units.map((unit) => (
           <option value={unit._id} key={unit._id}>
             {unit.name}
           </option>
         ))}
-      </select>
-    </StyledFieldSets>
+      </UnitSelect>
+
+      {onRemove && (
+        <RemoveBtn type="button" onClick={onRemove} style={{ fontSize: 18 }}>
+          ×
+        </RemoveBtn>
+      )}
+    </DesktopIngredientRow>
   );
 }
-
-const StyledFieldSets = styled.fieldset`
-  display: flex;
-  flex-direction: column;
-`;

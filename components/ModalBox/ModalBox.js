@@ -40,15 +40,13 @@ const OpenButton = styled.button`
   background-color: transparent;
   border: none;
   padding: 0;
-  width: 100%;
-  align-self: center;
   cursor: pointer;
 `;
 
 const Overlay = styled.div`
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(61, 43, 31, 0.5);
   z-index: 9999;
   display: flex;
   justify-content: center;
@@ -56,12 +54,13 @@ const Overlay = styled.div`
 `;
 
 const Modal = styled.div`
-  background: white;
-  padding: 20px;
-  width: 400px;
+  background: #ffffff;
+  padding: 28px 24px;
+  width: 380px;
   max-height: 90vh;
   overflow-y: auto;
-  border-radius: 8px;
+  border-radius: 16px;
   position: relative;
   z-index: 10000;
+  box-shadow: 0 8px 32px rgba(60, 40, 20, 0.18);
 `;

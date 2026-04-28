@@ -1,27 +1,30 @@
 import styled from "styled-components";
 
-export default function IngredientPrview({ ingredients }) {
+export default function IngredientPreview({ ingredients }) {
   return (
     <IngredientsWrapper>
-      {ingredients.map((recipeIngredient) => (
-        <Ingredient key={recipeIngredient._id}>
-          {recipeIngredient.ingredient.name}
-        </Ingredient>
+      {ingredients.slice(0, 4).map((item) => (
+        <Ingredient key={item._id}>{item.ingredient.name}</Ingredient>
       ))}
+      {ingredients.length > 4 && (
+        <Ingredient>+{ingredients.length - 4} more</Ingredient>
+      )}
     </IngredientsWrapper>
   );
 }
 
 const IngredientsWrapper = styled.div`
-  font-size: 0.75em;
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 6px;
+  margin-top: 8px;
 `;
 
 const Ingredient = styled.span`
-  border: 1px solid darkslategray;
-  background-color: lightgray;
-  padding: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 40px;
+  background: #e8d5c4;
+  color: #8b5e3c;
 `;
