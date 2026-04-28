@@ -11,8 +11,8 @@ export default function Navbar() {
   function getTitle(pathname, query) {
     if (pathname === "/recipe/[id]") return "Recipe";
     if (pathname === "/form/[slug]") {
-      if (query.slug === "create") return "New Recipe";
-      if (query.slug?.startsWith("edit")) return "Edit Recipe";
+      if (query.slug === "create") return "Add new Recipe";
+      if (query.slug?.startsWith("edit")) return "Edit the Recipe";
     }
     return null;
   }

@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import IngredientFields from "./IngredientFields";
 import StepFields from "./StepsFields";
 import useIsMobile from "@/lib/useIsMobile";
-import InputField from "@/styles/components/InputField.styled";
+import InputField from "@/components/RecipeFormular/InputField";
 import StyledButton from "@/components/Button/StyledButton";
 import {
   createRecipeDataObject,
@@ -12,35 +12,7 @@ import {
 } from "@/lib/helper";
 import { addRecipe, editRecipe } from "@/services/recipeServices";
 import { uploadImage } from "@/services/imageService";
-import {
-  PageWrapper,
-  MobileHeader,
-  MobileBackBtn,
-  MobileSaveBtn,
-  FormPageTitle,
-  PhotoUploadMobile,
-  PhotoIconBox,
-  PhotoUploadLabel,
-  PhotoUploadDesktop,
-  SectionCard,
-  SectionCardTitle,
-  ShapeToggleRow,
-  ShapeToggleBtn,
-  RemoveBtn,
-  AddRowBtn,
-  StepRow,
-  StepBadge,
-  MobileIngredientEditRow,
-  MobileInput,
-  MobileUnitSelect,
-  MobileStepTextarea,
-  StepAddPhotoBtn,
-  StepImagePreview,
-  StepRemoveImageBtn,
-  StyledFieldset,
-  StyledLegend,
-  AddDashedBtn,
-} from "@/styles/components/FormPage.styled";
+import styled from "styled-components";
 
 export default function RecipeForm({ ingredients, units, recipe }) {
   const router = useRouter();
@@ -121,446 +93,308 @@ export default function RecipeForm({ ingredients, units, recipe }) {
     }
   }
 
-  // ── Mobile layout ────────────────────────────────────────────────────────────
-  if (isMobile) {
-    return (
-      <>
-        <MobileHeader>
-          <MobileBackBtn type="button" onClick={() => router.back()}>
-            ← Back
-          </MobileBackBtn>
-          <MobileSaveBtn type="submit" form="recipe-form">
-            {isEdit ? "Save" : "Add"}
-          </MobileSaveBtn>
-        </MobileHeader>
-
-        <form
-          id="recipe-form"
-          onSubmit={handleSubmit}
-          style={{ padding: "24px 20px" }}
-        >
-          <FormPageTitle>{pageTitle}</FormPageTitle>
-
-          {/* Photo upload */}
-          {recipeMainImage ? (
-            <>
-              <StepImagePreview>
-                <img src={recipeMainImage} alt="Recipe Image" />
-              </StepImagePreview>
-              <StepRemoveImageBtn
-                type="button"
-                onClick={() => setRecipeMainImage(null)}
-              >
-                Remove image
-              </StepRemoveImageBtn>
-            </>
-          ) : (
-            <>
-              <label htmlFor="image">
-                <PhotoUploadMobile>
-                  <PhotoIconBox>📷</PhotoIconBox>
-                  <PhotoUploadLabel>Add a photo</PhotoUploadLabel>
-                </PhotoUploadMobile>
-              </label>
-            </>
-          )}
-
-          <input
-            type="file"
-            id="image"
-            name="image"
-            style={{ display: "none" }}
-            onChange={(event) =>
-              setRecipeMainImage(URL.createObjectURL(event.target.files[0]))
-            }
-          />
-
-          <InputField
-            label="Recipe title"
-            placeholder="What are we baking?"
-            name="title"
-            id="title"
-            defaultValue={recipe?.title}
-          />
-          <InputField
-            label="Description"
-            placeholder="Tell us about this recipe..."
-            rows={3}
-            name="description"
-            id="description"
-            defaultValue={recipe?.description}
-          />
-
-          {/* Baking form card */}
-          <SectionCard>
-            <SectionCardTitle>Baking Form</SectionCardTitle>
-            <ShapeToggleRow>
-              {["round", "rect"].map((s) => (
-                <ShapeToggleBtn
-                  key={s}
-                  type="button"
-                  $active={selectedShape === s}
-                  onClick={() => setSelectedShape(s)}
-                >
-                  {s === "rect" ? "Rectangular" : "Round"}
-                </ShapeToggleBtn>
-              ))}
-            </ShapeToggleRow>
-            <input type="hidden" name="shape" value={selectedShape} />
-            {selectedShape === "round" ? (
-              <InputField
-                label="Diameter (cm)"
-                type="number"
-                placeholder="26"
-                name="diameter"
-                id="diameter"
-                defaultValue={recipe?.bakingForm?.diameter}
-              />
-            ) : (
-              <div style={{ display: "flex", gap: 12 }}>
-                <InputField
-                  label="Width (cm)"
-                  type="number"
-                  placeholder="30"
-                  name="width"
-                  id="width"
-                  defaultValue={recipe?.bakingForm?.width}
-                />
-                <InputField
-                  label="length (cm)"
-                  type="number"
-                  placeholder="40"
-                  name="length"
-                  id="length"
-                  defaultValue={recipe?.bakingForm?.length}
-                />
-              </div>
-            )}
-          </SectionCard>
-
-          {/* Ingredients card */}
-          <SectionCard>
-            <SectionCardTitle>Ingredients</SectionCardTitle>
-            {recipeIngredients.map((ing, i) => (
-              <MobileIngredientEditRow key={i}>
-                <MobileUnitSelect
-                  style={{ flex: 2 }}
-                  value={ing.ingredient}
-                  onChange={(e) =>
-                    handleIngredientChange(i, "ingredient", e.target.value)
-                  }
-                >
-                  <option value="">Ingredient</option>
-                  {ingredients.map((x) => (
-                    <option key={x._id} value={x._id}>
-                      {x.name}
-                    </option>
-                  ))}
-                </MobileUnitSelect>
-                <MobileInput
-                  style={{ width: 56, textAlign: "center" }}
-                  type="number"
-                  placeholder="Amt"
-                  value={ing.amount}
-                  onChange={(e) =>
-                    handleIngredientChange(i, "amount", e.target.value)
-                  }
-                />
-                <MobileUnitSelect
-                  value={ing.unit}
-                  onChange={(e) =>
-                    handleIngredientChange(i, "unit", e.target.value)
-                  }
-                >
-                  <option value="">Unit</option>
-                  {units.map((u) => (
-                    <option key={u._id} value={u._id}>
-                      {u.name}
-                    </option>
-                  ))}
-                </MobileUnitSelect>
-                <RemoveBtn
-                  type="button"
-                  onClick={() => handleRemoveIngredient(i)}
-                >
-                  ×
-                </RemoveBtn>
-              </MobileIngredientEditRow>
-            ))}
-            <AddRowBtn type="button" onClick={handleAddIngredient}>
-              + Add ingredient
-            </AddRowBtn>
-          </SectionCard>
-
-          {/* Steps card */}
-          <SectionCard>
-            <SectionCardTitle>Baking Steps</SectionCardTitle>
-            {recipeSteps.map((step, i) => {
-              const fileInputId = `mobile-stepImage-${step.order}`;
-              const imageSrc = step.image
-                ? typeof step.image === "string"
-                  ? step.image
-                  : URL.createObjectURL(step.image)
-                : null;
-              return (
-                <div key={step.order} style={{ marginBottom: 14 }}>
-                  <StepRow>
-                    <StepBadge>{step.order}</StepBadge>
-                    <div
-                      style={{
-                        flex: 1,
-                        display: "flex",
-                        alignItems: "flex-start",
-                        gap: 6,
-                      }}
-                    >
-                      <MobileStepTextarea
-                        rows={2}
-                        placeholder="Describe this step..."
-                        value={step.instruction}
-                        onChange={(e) =>
-                          handleStepChange(i, "instruction", e.target.value)
-                        }
-                      />
-                      <RemoveBtn
-                        type="button"
-                        onClick={() => handleRemoveStep(i)}
-                        style={{ marginTop: 6 }}
-                      >
-                        ×
-                      </RemoveBtn>
-                    </div>
-                  </StepRow>
-                  <div style={{ marginLeft: 36, marginTop: 8 }}>
-                    <input
-                      type="file"
-                      id={fileInputId}
-                      style={{ display: "none" }}
-                      onChange={(e) =>
-                        handleStepChange(i, "image", e.target.files[0])
-                      }
-                    />
-                    {imageSrc ? (
-                      <>
-                        <StepImagePreview>
-                          <img src={imageSrc} alt={`Step ${step.order}`} />
-                        </StepImagePreview>
-                        <StepRemoveImageBtn
-                          type="button"
-                          onClick={() => handleStepChange(i, "image", "")}
-                        >
-                          Remove image
-                        </StepRemoveImageBtn>
-                      </>
-                    ) : (
-                      <StepAddPhotoBtn
-                        type="button"
-                        onClick={() =>
-                          document.getElementById(fileInputId)?.click()
-                        }
-                      >
-                        + Add photo
-                      </StepAddPhotoBtn>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-            <AddRowBtn type="button" onClick={handleAddStep}>
-              + Add step
-            </AddRowBtn>
-          </SectionCard>
-        </form>
-      </>
-    );
-  }
-
-  // ── Desktop layout ───────────────────────────────────────────────────────────
   return (
-    <>
-      <form
-        onSubmit={handleSubmit}
-        style={{ padding: "36px 40px", maxWidth: 680, margin: "0 auto" }}
+    <StyledForm>
+      <InputField
+        label="Recipe title"
+        placeholder="What are we baking?"
+        name="title"
+        id="title"
+        defaultValue={recipe?.title}
+      />
+      <InputField
+        label="Description"
+        placeholder="Tell us about this recipe..."
+        rows={3}
+        name="description"
+        id="description"
+        defaultValue={recipe?.description}
+      />
+
+      {/* Photo upload */}
+
+      <label
+        htmlFor="image"
+        style={{
+          display: "block",
+          fontSize: 13,
+          fontWeight: 600,
+          marginBottom: 8,
+          color: "#8c7b6b",
+        }}
       >
-        <FormPageTitle>{pageTitle}</FormPageTitle>
-
-        <InputField
-          label="Title"
-          placeholder="e.g. Chocolate Lava Cake"
-          name="title"
-          id="title"
-          defaultValue={recipe?.title}
-        />
-        <InputField
-          label="Description"
-          placeholder="A short description of your recipe..."
-          rows={3}
-          name="description"
-          id="description"
-          defaultValue={recipe?.description}
-        />
-
-        {/* Photo upload */}
-        <div style={{ marginBottom: 28 }}>
-          <label
-            htmlFor="image"
-            style={{
-              display: "block",
-              fontSize: 13,
-              fontWeight: 600,
-              marginBottom: 8,
-              color: "#8c7b6b",
-            }}
+        Recipe Image
+      </label>
+      {recipeMainImage ? (
+        <>
+          <ImagePreview>
+            <img src={recipeMainImage} alt="Recipe Image" />
+          </ImagePreview>
+          <RemoveImagePreviewBtn
+            type="button"
+            onClick={() => setRecipeMainImage(null)}
           >
-            Recipe Image
+            Remove image
+          </RemoveImagePreviewBtn>
+        </>
+      ) : (
+        <>
+          <label htmlFor="image">
+            <PhotoUploadMobile>
+              <PhotoIconBox>📷</PhotoIconBox>
+              <PhotoUploadLabel>Add a photo</PhotoUploadLabel>
+            </PhotoUploadMobile>
           </label>
-          {recipeMainImage ? (
-            <>
-              <StepImagePreview>
-                <img src={recipeMainImage} alt="Recipe Image" />
-              </StepImagePreview>
-              <StepRemoveImageBtn
-                type="button"
-                onClick={() => setRecipeMainImage(null)}
-              >
-                Remove image
-              </StepRemoveImageBtn>
-            </>
-          ) : (
-            <>
-              <label htmlFor="image">
-                <PhotoUploadDesktop>
-                  <div style={{ fontSize: 28, marginBottom: 8 }}>📷</div>
-                  Drop image here or click to upload
-                </PhotoUploadDesktop>
-              </label>
-            </>
-          )}
+        </>
+      )}
+      <input
+        type="file"
+        id="image"
+        name="image"
+        style={{ display: "none" }}
+        onChange={(event) =>
+          setRecipeMainImage(URL.createObjectURL(event.target.files[0]))
+        }
+      />
 
-          <input
-            type="file"
-            id="image"
-            name="image"
-            style={{ display: "none" }}
-            onChange={(event) =>
-              setRecipeMainImage(URL.createObjectURL(event.target.files[0]))
-            }
+      {/* Baking form */}
+      <StyledFieldset>
+        <StyledLegend>Baking Form</StyledLegend>
+
+        <ShapeToggleRow>
+          {["round", "rect"].map((s) => (
+            <ShapeToggleBtn
+              key={s}
+              type="button"
+              $active={selectedShape === s}
+              onClick={() => setSelectedShape(s)}
+            >
+              {s === "rect" ? "Rectangular" : "Round"}
+            </ShapeToggleBtn>
+          ))}
+        </ShapeToggleRow>
+        <input type="hidden" name="shape" value={selectedShape} />
+        {selectedShape === "round" ? (
+          <InputField
+            label="Diameter (cm)"
+            type="number"
+            placeholder="26"
+            name="diameter"
+            id="diameter"
+            defaultValue={recipe?.bakingForm?.diameter}
           />
-        </div>
-
-        {/* Baking form */}
-        <StyledFieldset>
-          <StyledLegend>Baking Form</StyledLegend>
-          <div style={{ display: "flex", gap: 16, marginTop: 4 }}>
-            <div style={{ flex: 1 }}>
-              <label
-                style={{
-                  display: "block",
-                  fontSize: 13,
-                  fontWeight: 600,
-                  marginBottom: 6,
-                  color: "#8c7b6b",
-                }}
-              >
-                Shape
-              </label>
-              <select
-                name="shape"
-                value={selectedShape}
-                onChange={(e) => setSelectedShape(e.target.value)}
-                style={{
-                  width: "100%",
-                  padding: "10px 12px",
-                  border: "1px solid #e8ddd2",
-                  borderRadius: 8,
-                  fontSize: 14,
-                  fontFamily: "var(--font-body), sans-serif",
-                  background: "#fff",
-                  color: "#3d2b1f",
-                }}
-              >
-                <option value="round">Round</option>
-                <option value="rect">Rectangular</option>
-              </select>
-            </div>
-            {selectedShape === "round" ? (
-              <div style={{ flex: 1 }}>
-                <InputField
-                  label="Diameter (cm)"
-                  type="number"
-                  placeholder="26"
-                  name="diameter"
-                  id="diameter"
-                  defaultValue={recipe?.bakingForm?.diameter}
-                />
-              </div>
-            ) : (
-              <>
-                <div style={{ flex: 1 }}>
-                  <InputField
-                    label="Width (cm)"
-                    type="number"
-                    placeholder="30"
-                    name="width"
-                    id="width"
-                    defaultValue={recipe?.bakingForm?.width}
-                  />
-                </div>
-                <div style={{ flex: 1 }}>
-                  <InputField
-                    label="length (cm)"
-                    type="number"
-                    placeholder="40"
-                    name="length"
-                    id="length"
-                    defaultValue={recipe?.bakingForm?.length}
-                  />
-                </div>
-              </>
-            )}
+        ) : (
+          <div style={{ display: "flex", gap: 12 }}>
+            <InputField
+              label="Width (cm)"
+              type="number"
+              placeholder="30"
+              name="width"
+              id="width"
+              defaultValue={recipe?.bakingForm?.width}
+            />
+            <InputField
+              label="length (cm)"
+              type="number"
+              placeholder="40"
+              name="length"
+              id="length"
+              defaultValue={recipe?.bakingForm?.length}
+            />
           </div>
-        </StyledFieldset>
+        )}
+      </StyledFieldset>
 
-        {/* Ingredients */}
-        <StyledFieldset>
-          <StyledLegend>Ingredients</StyledLegend>
-          {recipeIngredients.map((ing, i) => (
-            <IngredientFields
-              key={i}
-              ingredients={ingredients}
-              units={units}
-              recipeIngredient={ing}
-              onChange={(field, value) =>
-                handleIngredientChange(i, field, value)
-              }
-              onRemove={() => handleRemoveIngredient(i)}
-            />
-          ))}
-          <AddDashedBtn type="button" onClick={handleAddIngredient}>
-            + Add Ingredient
-          </AddDashedBtn>
-        </StyledFieldset>
-
-        {/* Steps */}
-        <StyledFieldset>
-          <StyledLegend>Baking Steps</StyledLegend>
-          {recipeSteps.map((step, i) => (
-            <StepFields
-              key={step.order}
-              recipeStep={step}
-              onChange={(field, value) => handleStepChange(i, field, value)}
-              onRemove={() => handleRemoveStep(i)}
-            />
-          ))}
-          <AddDashedBtn type="button" onClick={handleAddStep}>
-            + Add Step
-          </AddDashedBtn>
-        </StyledFieldset>
-
-        <StyledButton variant="pill" type="submit">
-          Save Recipe
-        </StyledButton>
-      </form>
-    </>
+      {/* Ingredients card */}
+      <StyledFieldset>
+        <StyledLegend>Ingredients</StyledLegend>
+        {recipeIngredients.map((ing, i) => (
+          <IngredientFields
+            key={i}
+            ingredients={ingredients}
+            units={units}
+            recipeIngredient={ing}
+            onChange={(field, value) => handleIngredientChange(i, field, value)}
+            onRemove={() => handleRemoveIngredient(i)}
+          />
+        ))}
+        <AddRowBtn type="button" onClick={handleAddIngredient}>
+          + Add ingredient
+        </AddRowBtn>
+      </StyledFieldset>
+    </StyledForm>
   );
 }
+
+const StyledForm = styled.form`
+  padding: 24px 20px;
+
+  @media (min-width: 641px) {
+    padding: 36px 40px;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+`;
+
+const PhotoUploadMobile = styled.div`
+  border: 2px dashed #e8ddd2;
+  border-radius: 12px;
+  padding: 36px;
+  text-align: center;
+  background: #ffffff;
+  color: #8c7b6b;
+  font-size: 14px;
+  margin-bottom: 28px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
+
+const PhotoIconBox = styled.div`
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+`;
+
+const PhotoUploadLabel = styled.span`
+  font-size: 13px;
+  color: #8b5e3c;
+  font-weight: 500;
+`;
+
+// Wrapper that indents under the step text, with image preview
+const ImagePreview = styled.div`
+  margin-top: 8px;
+  border-radius: 8px;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    display: block;
+
+    @media (min-width: 641px) {
+      height: 120px;
+    }
+  }
+`;
+
+// "Remove image" danger text link
+const RemoveImagePreviewBtn = styled.button`
+  background: none;
+  border: none;
+  font-size: 12px;
+  color: #b5473a;
+  cursor: pointer;
+  padding: 0;
+  margin-top: 4px;
+  display: inline-block;
+`;
+
+const StyledFieldset = styled.fieldset`
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 20px;
+  border: 1px solid #e8ddd2;
+
+  @media (min-width: 641px) {
+    border: 1px solid #e8ddd2;
+    border-radius: 12px;
+    padding: 22px;
+    margin-bottom: 28px;
+    background: #ffffff;
+  }
+`;
+
+const StyledLegend = styled.legend`
+  font-family: var(--font-heading), serif;
+  font-size: 18px;
+  padding: 0 8px;
+  font-weight: 400;
+`;
+
+const ShapeToggleRow = styled.div`
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+`;
+
+const ShapeToggleBtn = styled.button`
+  flex: 1;
+  padding: 10px 0;
+  text-align: center;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  text-transform: capitalize;
+
+  background: ${({ $active }) => ($active ? "#8b5e3c" : "transparent")};
+  color: ${({ $active }) => ($active ? "#fff" : "#8c7b6b")};
+  border: ${({ $active }) => ($active ? "none" : "1px solid #e8ddd2")};
+`;
+
+const MobileIngredientEditRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+`;
+
+const MobileInput = styled.input`
+  padding: 10px 12px;
+  background: #faf6f1;
+  border-radius: 10px;
+  border: 1px solid #e8ddd2;
+  font-size: 14px;
+  font-family: var(--font-body), sans-serif;
+  color: #3d2b1f;
+  outline: none;
+
+  &:focus {
+    border-color: #8b5e3c;
+  }
+`;
+
+const MobileUnitSelect = styled.select`
+  width: 58px;
+  padding: 10px 4px;
+  background: #faf6f1;
+  border-radius: 10px;
+  border: 1px solid #e8ddd2;
+  font-size: 14px;
+  font-family: var(--font-body), sans-serif;
+  color: #3d2b1f;
+`;
+
+export const AddRowBtn = styled.button`
+  width: 100%;
+  padding: 11px;
+  border-radius: 10px;
+  border: 1.5px dashed #e8d5c4;
+  background: transparent;
+  color: #8b5e3c;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+
+  @media (min-width: 641px) {
+    width: auto;
+    background: none;
+    border: 1px dashed #c49a6c;
+    border-radius: 8px;
+    padding: 10px 16px;
+    color: #8b5e3c;
+    font-size: 14px;
+    cursor: pointer;
+  }
+`;

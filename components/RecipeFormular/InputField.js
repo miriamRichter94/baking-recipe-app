@@ -1,5 +1,39 @@
 import styled, { css } from "styled-components";
 
+export default function InputField({
+  label,
+  placeholder,
+  type,
+  rows,
+  defaultValue,
+  name,
+  id,
+}) {
+  const inputId = id || name;
+  return (
+    <FieldWrapper>
+      {label && <FieldLabel htmlFor={inputId}>{label}</FieldLabel>}
+      {rows ? (
+        <StyledTextarea
+          id={inputId}
+          name={name}
+          rows={rows}
+          placeholder={placeholder}
+          defaultValue={defaultValue}
+        />
+      ) : (
+        <StyledInput
+          id={inputId}
+          name={name}
+          type={type || "text"}
+          placeholder={placeholder}
+          defaultValue={defaultValue}
+        />
+      )}
+    </FieldWrapper>
+  );
+}
+
 // ─── Styled Components ───────────────────────────────────────────────────────
 
 export const FieldWrapper = styled.div`
@@ -64,37 +98,3 @@ export const StyledTextarea = styled.textarea`
 //   <InputField label="Recipe title" placeholder="What are we baking?" name="title" />
 //   <InputField label="Description" placeholder="Tell us about this recipe…" rows={3} name="description" />
 //   <InputField label="Diameter (cm)" type="number" placeholder="26" name="diameter" />
-
-export default function InputField({
-  label,
-  placeholder,
-  type,
-  rows,
-  defaultValue,
-  name,
-  id,
-}) {
-  const inputId = id || name;
-  return (
-    <FieldWrapper>
-      {label && <FieldLabel htmlFor={inputId}>{label}</FieldLabel>}
-      {rows ? (
-        <StyledTextarea
-          id={inputId}
-          name={name}
-          rows={rows}
-          placeholder={placeholder}
-          defaultValue={defaultValue}
-        />
-      ) : (
-        <StyledInput
-          id={inputId}
-          name={name}
-          type={type || "text"}
-          placeholder={placeholder}
-          defaultValue={defaultValue}
-        />
-      )}
-    </FieldWrapper>
-  );
-}

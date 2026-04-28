@@ -2,7 +2,6 @@ import Link from "next/link";
 import styled, { css } from "styled-components";
 import ModalBox from "../ModalBox/ModalBox";
 import { useRouter } from "next/router";
-import useIsMobile from "@/lib/useIsMobile";
 import { useState } from "react";
 import TabSwitcher from "@/components/RecipeDetails/TabSwitcher";
 import StyledButton from "@/components/Button/StyledButton";
