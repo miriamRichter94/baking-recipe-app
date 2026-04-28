@@ -10,12 +10,15 @@ const ROUTE_TITLES = {
 export default function Navbar() {
   const router = useRouter();
   const isHome = router.pathname === "/";
-  const title = getTitle(router.pathname);
+  const title = getTitle(router.pathname, router.query);
   const [mounted, setMounted] = useState(false);
 
-  function getTitle(pathname) {
-    if (ROUTE_TITLES[pathname]) return ROUTE_TITLES[pathname];
-    if (pathname.startsWith("/form/edit")) return "Edit Recipe";
+  function getTitle(pathname, query) {
+    if (pathname === "/recipe/[id]") return "Recipe";
+    if (pathname === "/form/[slug]") {
+      if (query.slug === "create") return "New Recipe";
+      if (query.slug?.startsWith("edit")) return "Edit Recipe";
+    }
     return null;
   }
 
