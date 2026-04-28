@@ -12,7 +12,7 @@ export default function RecipeList({ recipes }) {
 
       <PageContent>
         <PageHeader>
-          <PageTitle>Your Baking Recipes</PageTitle>
+          <PageTitle>Baking Recipes</PageTitle>
           <PageSubtitle>Simple recipes, made with love</PageSubtitle>
         </PageHeader>
 

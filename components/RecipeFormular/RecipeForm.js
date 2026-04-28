@@ -163,17 +163,18 @@ export default function RecipeForm({ ingredients, units, recipe }) {
                   <PhotoUploadLabel>Add a photo</PhotoUploadLabel>
                 </PhotoUploadMobile>
               </label>
-              <input
-                type="file"
-                id="image"
-                name="image"
-                style={{ display: "none" }}
-                onChange={(event) =>
-                  setRecipeMainImage(URL.createObjectURL(event.target.files[0]))
-                }
-              />
             </>
           )}
+
+          <input
+            type="file"
+            id="image"
+            name="image"
+            style={{ display: "none" }}
+            onChange={(event) =>
+              setRecipeMainImage(URL.createObjectURL(event.target.files[0]))
+            }
+          />
 
           <InputField
             label="Recipe title"
@@ -436,17 +437,18 @@ export default function RecipeForm({ ingredients, units, recipe }) {
                   Drop image here or click to upload
                 </PhotoUploadDesktop>
               </label>
-              <input
-                type="file"
-                id="image"
-                name="image"
-                style={{ display: "none" }}
-                onChange={(event) =>
-                  setRecipeMainImage(URL.createObjectURL(event.target.files[0]))
-                }
-              />
             </>
           )}
+
+          <input
+            type="file"
+            id="image"
+            name="image"
+            style={{ display: "none" }}
+            onChange={(event) =>
+              setRecipeMainImage(URL.createObjectURL(event.target.files[0]))
+            }
+          />
         </div>
 
         {/* Baking form */}
