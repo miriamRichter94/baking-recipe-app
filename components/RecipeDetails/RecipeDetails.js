@@ -40,6 +40,13 @@ export default function RecipeDetails({ recipe }) {
           <TagRow>
             <MetaTag>🥣 {recipe.ingredients.length} ingredients</MetaTag>
             <MetaTag>📋 {recipe.steps.length} steps</MetaTag>
+            <MetaTag> Bakingform: {recipe.bakingForm.shape} </MetaTag>
+            <MetaTag>
+              Size:
+              {recipe.bakingForm.shape === "round"
+                ? recipe.bakingForm.diameter
+                : `${recipe.bakingForm.width} cm x ${recipe.bakingForm.length} cm`}
+            </MetaTag>
           </TagRow>
 
           <Title>{recipe.title}</Title>
@@ -110,6 +117,18 @@ export default function RecipeDetails({ recipe }) {
           >
             <Title>{recipe.title}</Title>
             <Description>{recipe.description}</Description>
+
+            <TagRow>
+              <MetaTag>🥣 {recipe.ingredients.length} ingredients</MetaTag>
+              <MetaTag>📋 {recipe.steps.length} steps</MetaTag>
+              <MetaTag> Bakingform: {recipe.bakingForm.shape} </MetaTag>
+              <MetaTag>
+                Size:
+                {recipe.bakingForm.shape === "round"
+                  ? recipe.bakingForm.diameter
+                  : `${recipe.bakingForm.width} cm x ${recipe.bakingForm.length} cm`}
+              </MetaTag>
+            </TagRow>
             <DesktopActionRow>
               <Btn as={Link} href={`/form/edit-${recipe._id}`}>
                 Edit Recipe
