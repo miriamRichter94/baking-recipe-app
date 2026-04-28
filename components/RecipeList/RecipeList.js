@@ -98,24 +98,13 @@ const ListGrid = styled.ul`
   list-style: "none";
   padding: 0;
   margin: 0;
-  background: #ffffff;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 2px 12px rgba(60, 40, 20, 0.07);
-  cursor: pointer;
-  display: flex;
-  flex-direction: row;
-  transition:
-    box-shadow 0.2s,
-    transform 0.2s;
-
-  &:hover {
-    box-shadow: 0 4px 20px rgba(60, 40, 20, 0.13);
-    transform: translateY(-2px);
-  }
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
 
   @media (min-width: 641px) {
-    flex-direction: column;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
   }
 `;
 
