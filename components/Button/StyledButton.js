@@ -1,5 +1,26 @@
 import styled, { css } from "styled-components";
 
+export default function StyledButton({
+  children,
+  variant = "primary",
+  full,
+  onClick,
+  style,
+  ...rest
+}) {
+  return (
+    <StyledBtn
+      $variant={variant}
+      $full={full}
+      onClick={onClick}
+      style={style}
+      {...rest}
+    >
+      {children}
+    </StyledBtn>
+  );
+}
+
 // ─── Styled Components ───────────────────────────────────────────────────────
 
 const variantStyles = {
@@ -56,31 +77,3 @@ export const StyledBtn = styled.button`
       justify-content: center;
     `}
 `;
-
-// ─── Blueprint Component ──────────────────────────────────────────────────────
-//
-// Variants: "primary" | "secondary" | "danger" | "ghost" | "pill"
-// Props:
-//   variant  – visual style (default: "primary")
-//   full     – stretch to full width
-//   onClick  – click handler
-//
-// Usage:
-//   <Btn>Save Recipe</Btn>
-//   <Btn variant="pill">+ Add New Recipe</Btn>
-//   <Btn variant="danger" full>Delete Recipe</Btn>
-//   <Btn variant="secondary" onClick={handleCancel}>Cancel</Btn>
-
-export default function Btn({
-  children,
-  variant = "primary",
-  full,
-  onClick,
-  style,
-}) {
-  return (
-    <StyledBtn $variant={variant} $full={full} onClick={onClick} style={style}>
-      {children}
-    </StyledBtn>
-  );
-}

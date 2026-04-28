@@ -4,7 +4,7 @@ import IngredientFields from "./IngredientFields";
 import StepFields from "./StepsFields";
 import useIsMobile from "@/lib/useIsMobile";
 import InputField from "@/styles/components/InputField.styled";
-import Btn from "@/styles/components/Btn.styled";
+import StyledButton from "@/components/Button/StyledButton";
 import {
   createRecipeDataObject,
   setRecipeIngredientsForForm,
@@ -557,9 +557,9 @@ export default function RecipeForm({ ingredients, units, recipe }) {
           </AddDashedBtn>
         </StyledFieldset>
 
-        <Btn variant="pill" type="submit">
+        <StyledButton variant="pill" type="submit">
           Save Recipe
-        </Btn>
+        </StyledButton>
       </form>
     </>
   );

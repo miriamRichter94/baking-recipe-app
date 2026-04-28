@@ -1,27 +1,28 @@
 import Link from "next/link";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import ModalBox from "../ModalBox/ModalBox";
 import { useRouter } from "next/router";
 import useIsMobile from "@/lib/useIsMobile";
 import { useState } from "react";
-import TabSwitcher from "@/styles/components/TabSwitcher.styled";
-import Btn from "@/styles/components/Btn.styled";
+import TabSwitcher from "@/components/RecipeDetails/TabSwitcher";
+import StyledButton from "@/components/Button/StyledButton";
+import RecipeMetaData from "./RecipeMetaData";
+import Image from "next/image";
 
 export default function RecipeDetails({ recipe }) {
   const router = useRouter();
-  const isMobile = useIsMobile();
   const [activeTab, setActiveTab] = useState("Ingredients");
 
-  if (isMobile) {
-    return (
-      <>
-        <HeroWrapper>
-          <HeroImage>
-            <img
-              src={recipe.image || "/assets/no-image.png"}
-              alt={recipe.title}
-            />
-          </HeroImage>
+  return (
+    <>
+      {/* Top: image + title/description/actions side by side */}
+      <RecipeTopDetails>
+        <ImageWrapper>
+          <img
+            src={recipe.image || "/assets/no-image.png"}
+            alt={recipe.title}
+          />
+
           <HeroBackBtn onClick={() => router.push("/")} aria-label="Back">
             ←
           </HeroBackBtn>
@@ -30,112 +31,54 @@ export default function RecipeDetails({ recipe }) {
             href={`/form/edit-${recipe._id}`}
             aria-label="Edit"
           >
-            ✏️
+            <Image
+              src="/assets/pencil.png"
+              width={35}
+              height={35}
+              alt="Edit pencil"
+            />
           </HeroEditBtn>
-        </HeroWrapper>
-
-        <MobileContent>
-          {/* Meta tags — show step + ingredient counts since DB has no time/servings */}
-          <TagRow>
-            <MetaTag>🥣 {recipe.ingredients.length} ingredients</MetaTag>
-            <MetaTag>📋 {recipe.steps.length} steps</MetaTag>
-            <MetaTag>
-              📐 {recipe.bakingForm.shape} ·
-              {recipe.bakingForm.shape === "round"
-                ? recipe.bakingForm.diameter
-                : `${recipe.bakingForm.width} cm x ${recipe.bakingForm.length} cm`}
-            </MetaTag>
-          </TagRow>
-
-          <Title>{recipe.title}</Title>
-          <Description>{recipe.description}</Description>
-
-          {/* Tab switcher — Ingredients / Steps */}
-          <TabSwitcher
-            tabs={["Ingredients", "Steps"]}
-            active={activeTab}
-            onChange={setActiveTab}
-          />
-
-          {activeTab === "Ingredients" &&
-            recipe.ingredients.map((ing, i) => (
-              <IngredientRow
-                key={ing._id}
-                $last={i === recipe.ingredients.length - 1}
-              >
-                <span>{ing.ingredient.name}</span>
-                <IngredientAmount>
-                  {ing.amount} {ing.unit.name}
-                </IngredientAmount>
-              </IngredientRow>
-            ))}
-
-          {activeTab === "Steps" &&
-            recipe.steps.map((step) => (
-              <StepBlock key={step._id}>
-                <StepItem>
-                  <StepBadge>{step.order}</StepBadge>
-                  <StepText>{step.instruction}</StepText>
-                </StepItem>
-                {step.image && (
-                  <StepImageWrap>
-                    <img src={step.image} alt={`Step ${step.order}`} />
-                  </StepImageWrap>
-                )}
-              </StepBlock>
-            ))}
-
-          <div style={{ marginTop: 28 }}>
+          <HeroDelete as="div">
             <ModalBox type="delete" recipeId={recipe._id} />
-          </div>
-        </MobileContent>
-      </>
-    );
-  }
-
-  return (
-    <div style={{ padding: "36px 40px", maxWidth: 960, margin: "0 auto" }}>
-      {/* Top: image + title/description/actions side by side */}
-      <DesktopTopGrid>
-        <DesktopHeroImage>
-          <img
-            src={recipe.image || "/assets/no-image.png"}
-            alt={recipe.title}
+          </HeroDelete>
+        </ImageWrapper>
+        <DesktopMetaDataWrapper>
+          <RecipeMetaData
+            title={recipe.title}
+            description={recipe.description}
+            bakingForm={recipe.bakingForm}
+            ingredientsLength={recipe.ingredients.length}
+            stepLength={recipe.steps.length}
           />
-        </DesktopHeroImage>
 
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-          }}
-        >
-          <Title>{recipe.title}</Title>
-          <Description>{recipe.description}</Description>
-
-          <TagRow>
-            <MetaTag>🥣 {recipe.ingredients.length} ingredients</MetaTag>
-            <MetaTag>📋 {recipe.steps.length} steps</MetaTag>
-            <MetaTag>
-              📐 {recipe.bakingForm.shape} ·
-              {recipe.bakingForm.shape === "round"
-                ? recipe.bakingForm.diameter
-                : `${recipe.bakingForm.width} cm x ${recipe.bakingForm.length} cm`}
-            </MetaTag>
-          </TagRow>
           <DesktopActionRow>
-            <Btn as={Link} href={`/form/edit-${recipe._id}`}>
+            <StyledButton as={Link} href={`/form/edit-${recipe._id}`}>
               Edit Recipe
-            </Btn>
+            </StyledButton>
             <ModalBox type="delete" recipeId={recipe._id} />
           </DesktopActionRow>
-        </div>
-      </DesktopTopGrid>
+        </DesktopMetaDataWrapper>
+      </RecipeTopDetails>
 
       {/* Bottom: ingredients sidebar + steps */}
-      <DesktopBottomGrid>
-        <IngredientsSidebar>
+      <RecipeBottomDetails>
+        <MobileMetaDataWrapper>
+          <RecipeMetaData
+            title={recipe.title}
+            description={recipe.description}
+            bakingForm={recipe.bakingForm}
+            ingredientsLength={recipe.ingredients.length}
+            stepLength={recipe.steps.length}
+          />
+        </MobileMetaDataWrapper>
+
+        <TabSwitcher
+          tabs={["Ingredients", "Steps"]}
+          active={activeTab}
+          onChange={setActiveTab}
+        />
+
+        <IngredientsSidebar $activeTab={activeTab}>
           <SectionHeading>Ingredients</SectionHeading>
           {recipe.ingredients.map((ing, i) => (
             <IngredientRow
@@ -150,7 +93,7 @@ export default function RecipeDetails({ recipe }) {
           ))}
         </IngredientsSidebar>
 
-        <div>
+        <BakingStepWrapper $activeTab={activeTab}>
           <SectionHeading>Baking Steps</SectionHeading>
           {recipe.steps.map((step) => (
             <StepBlock key={step._id}>
@@ -165,68 +108,23 @@ export default function RecipeDetails({ recipe }) {
               )}
             </StepBlock>
           ))}
-        </div>
-      </DesktopBottomGrid>
-    </div>
+        </BakingStepWrapper>
+      </RecipeBottomDetails>
+    </>
   );
 }
 
-const Title = styled.h1`
-  font-family: var(--font-heading), serif;
-  font-size: 28px;
-  margin: 0 0 8px;
-  font-weight: 400;
-
-  @media (min-width: 641px) {
-    font-size: 36px;
-    margin: 0 0 12px;
-  }
-`;
-
-const Description = styled.p`
-  color: #8c7b6b;
-  font-size: 15px;
-  line-height: 1.6;
-  margin: 0 0 24px;
-
-  @media (min-width: 641px) {
-    font-size: 16px;
-    margin: 0 0 20px;
-  }
-`;
-
-const StyledImage = styled.img`
-  width: 300px;
-  height: 250px;
-
-  grid-row: 2 / 4;
-  grid-column: 2 / -1;
-  object-fit: contain;
-`;
-
-const IngredientWrapper = styled.div`
-  grid-column: 1 / 2;
-  grid-row: 3 / 4;
-`;
-
-const BakingStepsWrapper = styled.div`
-  grid-column: 1/-1;
-  grid-row: 4 / 5;
-  display: flex;
-  flex-direction: column;
-`;
-
-const BakingStepsTitle = styled.h2`
-  align-self: center;
-`;
-
-// ── Mobile: hero image area ──
-
-const HeroWrapper = styled.div`
+const RecipeTopDetails = styled.div`
   position: relative;
+
+  @media (min-width: 641px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+  }
 `;
 
-const HeroImage = styled.div`
+const ImageWrapper = styled.div`
   width: 100%;
   height: 260px;
   background: #ede5da;
@@ -236,6 +134,20 @@ const HeroImage = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  @media (min-width: 641px) {
+    width: 100%;
+    height: 340px;
+    background: #ede5da;
+    border-radius: 12px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
 `;
 
@@ -253,6 +165,10 @@ const HeroIconBtn = styled.button`
   justify-content: center;
   font-size: 16px;
   cursor: pointer;
+
+  @media (min-width: 641px) {
+    display: none;
+  }
 `;
 
 const HeroBackBtn = styled(HeroIconBtn)`
@@ -260,37 +176,94 @@ const HeroBackBtn = styled(HeroIconBtn)`
 `;
 
 const HeroEditBtn = styled(HeroIconBtn)`
+  padding: 3px;
   right: 14px;
   font-size: 14px;
 `;
 
-// ── Mobile: content card pulled up over the hero ──
+const HeroDelete = styled(HeroIconBtn)`
+  right: 14px;
+  top: 60px;
+  padding: 3px;
+`;
 
-const MobileContent = styled.div`
+const DesktopMetaDataWrapper = styled.div`
+  display: none;
+
+  @media (min-width: 641px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+`;
+
+const MobileMetaDataWrapper = styled.div`
+  display: flex;
+  flex-direction: column-reverse;
+
+  @media (min-width: 641px) {
+    display: none;
+  }
+`;
+
+const RecipeBottomDetails = styled.div`
   padding: 20px 20px 32px;
   margin-top: -20px;
   background: #faf6f1;
   border-radius: 20px 20px 0 0;
   position: relative;
+
+  @media (min-width: 641px) {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 36px;
+    margin-top: 40px;
+  }
 `;
 
-const TagRow = styled.div`
+const DesktopActionRow = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 14px;
+  gap: 12px;
 `;
 
-const MetaTag = styled.span`
-  padding: 5px 14px;
-  border-radius: 40px;
-  font-size: 12px;
-  font-weight: 600;
-  background: #e8d5c4;
-  color: #8b5e3c;
+const SectionHeading = styled.h2`
+  display: none;
+  @media (min-width: 641px) {
+    font-family: var(--heading-font);
+    font-size: 22px;
+    margin: 0 0 16px;
+    font-weight: 400;
+    display: block;
+  }
 `;
 
-// ── Shared: ingredient row ──
+const IngredientsSidebar = styled.div`
+  ${({ $activeTab }) =>
+    $activeTab !== "Ingredients" &&
+    css`
+      display: none;
+    `}
+  @media (min-width: 641px) {
+    background: var(--recipe-card-background);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 12px rgba(60, 40, 20, 0.07);
+    align-self: start;
+    display: block;
+  }
+`;
+
+const BakingStepWrapper = styled.div`
+  ${({ $activeTab }) =>
+    $activeTab !== "Steps" &&
+    css`
+      display: none;
+    `}
+
+  @media (min-width: 641px) {
+    display: block;
+  }
+`;
 
 const IngredientRow = styled.div`
   display: flex;
@@ -304,8 +277,6 @@ const IngredientAmount = styled.span`
   color: #8b5e3c;
   font-weight: 600;
 `;
-
-// ── Shared: step item ──
 
 const StepItem = styled.div`
   display: flex;
@@ -386,63 +357,4 @@ const StepImageWrap = styled.div`
       height: 180px;
     }
   }
-`;
-
-// ── Desktop: two-column top grid ──
-
-export const DesktopTopGrid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 36px;
-`;
-
-const DesktopHeroImage = styled.div`
-  width: 100%;
-  height: 340px;
-  background: #ede5da;
-  border-radius: 12px;
-  overflow: hidden;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-`;
-
-const DesktopMetaRow = styled.div`
-  display: flex;
-  gap: 20px;
-  font-size: 14px;
-  color: #c49a6c;
-  margin-bottom: 24px;
-`;
-
-const DesktopActionRow = styled.div`
-  display: flex;
-  gap: 12px;
-`;
-
-// ── Desktop: ingredients sidebar + steps grid ──
-
-const DesktopBottomGrid = styled.div`
-  display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 36px;
-  margin-top: 40px;
-`;
-
-const IngredientsSidebar = styled.div`
-  background: #ffffff;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 2px 12px rgba(60, 40, 20, 0.07);
-  align-self: start;
-`;
-
-const SectionHeading = styled.h2`
-  font-family: var(--font-heading), serif;
-  font-size: 22px;
-  margin: 0 0 16px;
-  font-weight: 400;
 `;

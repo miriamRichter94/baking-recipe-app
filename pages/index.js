@@ -1,6 +1,6 @@
 import RecipeList from "@/components/RecipeList/RecipeList";
 import { getAllRecipes } from "@/services/recipeServices";
-import Btn from "@/styles/components/Btn.styled";
+import StyledButton from "@/components/Button/StyledButton";
 import styled from "styled-components";
 import useSWR from "swr";
 import { useRouter } from "next/router";
@@ -25,9 +25,12 @@ export default function HomePage() {
         </PageHeader>
         {/* Add button (desktop) */}
         <AddRecipeButtonWrapper>
-          <Btn variant="pill" onClick={() => router.push("/form/create")}>
+          <StyledButton
+            variant="pill"
+            onClick={() => router.push("/form/create")}
+          >
             + Add New Recipe
-          </Btn>
+          </StyledButton>
         </AddRecipeButtonWrapper>
         <RecipeList recipes={recipes} />
       </PageContent>
