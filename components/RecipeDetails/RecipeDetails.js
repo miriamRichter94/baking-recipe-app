@@ -40,9 +40,8 @@ export default function RecipeDetails({ recipe }) {
           <TagRow>
             <MetaTag>🥣 {recipe.ingredients.length} ingredients</MetaTag>
             <MetaTag>📋 {recipe.steps.length} steps</MetaTag>
-            <MetaTag> Bakingform: {recipe.bakingForm.shape} </MetaTag>
             <MetaTag>
-              Size:
+              📐 {recipe.bakingForm.shape} ·
               {recipe.bakingForm.shape === "round"
                 ? recipe.bakingForm.diameter
                 : `${recipe.bakingForm.width} cm x ${recipe.bakingForm.length} cm`}
@@ -121,9 +120,8 @@ export default function RecipeDetails({ recipe }) {
             <TagRow>
               <MetaTag>🥣 {recipe.ingredients.length} ingredients</MetaTag>
               <MetaTag>📋 {recipe.steps.length} steps</MetaTag>
-              <MetaTag> Bakingform: {recipe.bakingForm.shape} </MetaTag>
               <MetaTag>
-                Size:
+                📐 {recipe.bakingForm.shape} ·
                 {recipe.bakingForm.shape === "round"
                   ? recipe.bakingForm.diameter
                   : `${recipe.bakingForm.width} cm x ${recipe.bakingForm.length} cm`}
@@ -289,6 +287,7 @@ const MobileContent = styled.div`
 
 const TagRow = styled.div`
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 14px;
 `;
