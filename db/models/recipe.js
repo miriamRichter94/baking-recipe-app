@@ -10,7 +10,7 @@ const recipeSchema = new Schema({
     shape: { type: String, enum: ["round", "rect"] },
     diameter: Number,
     width: Number,
-    height: Number,
+    length: Number,
   },
 
   steps: [

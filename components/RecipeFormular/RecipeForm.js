@@ -228,12 +228,12 @@ export default function RecipeForm({ ingredients, units, recipe }) {
                   defaultValue={recipe?.bakingForm?.width}
                 />
                 <InputField
-                  label="Height (cm)"
+                  label="length (cm)"
                   type="number"
                   placeholder="40"
-                  name="height"
-                  id="height"
-                  defaultValue={recipe?.bakingForm?.height}
+                  name="length"
+                  id="length"
+                  defaultValue={recipe?.bakingForm?.length}
                 />
               </div>
             )}
@@ -511,12 +511,12 @@ export default function RecipeForm({ ingredients, units, recipe }) {
                 </div>
                 <div style={{ flex: 1 }}>
                   <InputField
-                    label="Height (cm)"
+                    label="length (cm)"
                     type="number"
                     placeholder="40"
-                    name="height"
-                    id="height"
-                    defaultValue={recipe?.bakingForm?.height}
+                    name="length"
+                    id="length"
+                    defaultValue={recipe?.bakingForm?.length}
                   />
                 </div>
               </>
