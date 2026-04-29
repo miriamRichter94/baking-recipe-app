@@ -2,6 +2,7 @@ import Image from "next/image";
 import DeleteConfirmation from "../DeleteConfirmation/DeleteConfirmation";
 import styled from "styled-components";
 import { useState } from "react";
+import { StyledBtn } from "../Button/StyledButton";
 
 export default function ModalBox({ type, recipeId }) {
   const [showModalBox, setShowModalBox] = useState(false);

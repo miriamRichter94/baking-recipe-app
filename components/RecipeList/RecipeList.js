@@ -1,11 +1,20 @@
 import styled from "styled-components";
 import RecipePreview from "./RecipePreview";
 
-export default function RecipeList({ recipes }) {
+export default function RecipeList({
+  recipes,
+  favoriteRecipes,
+  handleToggleFavoriteRecipe,
+}) {
   return (
     <ListGrid>
       {recipes.map((recipe) => (
-        <RecipePreview key={recipe._id} recipe={recipe} />
+        <RecipePreview
+          key={recipe._id}
+          recipe={recipe}
+          favoriteRecipes={favoriteRecipes}
+          onToggleFavoriteRecipe={handleToggleFavoriteRecipe}
+        />
       ))}
     </ListGrid>
   );

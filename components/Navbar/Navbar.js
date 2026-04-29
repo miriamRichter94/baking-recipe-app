@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
@@ -5,6 +6,7 @@ import styled from "styled-components";
 export default function Navbar() {
   const router = useRouter();
   const isHome = router.pathname === "/";
+  const isFavorite = router.pathname === "/favorites";
   const title = getTitle(router.pathname, router.query);
   const [mounted, setMounted] = useState(false);
 
@@ -24,7 +26,7 @@ export default function Navbar() {
   if (!mounted) return null;
   return (
     <Nav>
-      {!isHome ? (
+      {!isHome && !isFavorite ? (
         <>
           <NavBackButton
             onClick={() => router.back()}
@@ -40,7 +42,12 @@ export default function Navbar() {
         <>
           <NavTitle>BakeBook</NavTitle>
           <NavLinks>
-            <NavLinkActive>Recipes</NavLinkActive>
+            <NavLink href="/" $active={isHome}>
+              Recipes
+            </NavLink>
+            <NavLink href="/favorites" $active={isFavorite}>
+              Favorites
+            </NavLink>
           </NavLinks>
         </>
       )}
@@ -50,7 +57,7 @@ export default function Navbar() {
 
 // ─── Styled Components ───────────────────────────────────────────────────────
 
-export const Nav = styled.nav`
+const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -66,7 +73,7 @@ export const Nav = styled.nav`
   }
 `;
 
-export const NavTitle = styled.div`
+const NavTitle = styled.div`
   font-family: var(--heading-font);
   font-size: 22px;
   color: var(--nav-font-color);
@@ -76,7 +83,7 @@ export const NavTitle = styled.div`
   }
 `;
 
-export const NavLinks = styled.div`
+const NavLinks = styled.div`
   display: flex;
   gap: 16px;
   font-size: 14px;
@@ -87,14 +94,11 @@ export const NavLinks = styled.div`
   }
 `;
 
-export const NavLinkActive = styled.span`
-  color: var(--nav-font-color);
-  font-weight: 600;
+const NavLink = styled(Link)`
+  text-decoration: none;
   cursor: pointer;
-`;
-
-export const NavLinkInactive = styled.span`
-  cursor: pointer;
+  font-weight: ${({ $active }) => ($active ? 600 : 400)};
+  color: ${({ $active }) => ($active ? "var(--nav-font-color)" : "#8c7b6b")};
 
   &:hover {
     color: var(--nav-font-color);
@@ -102,7 +106,7 @@ export const NavLinkInactive = styled.span`
 `;
 
 // Back button shown on detail / form pages instead of the brand
-export const NavBackButton = styled.button`
+const NavBackButton = styled.button`
   background: none;
   border: none;
   color: var(--nav-font-color);

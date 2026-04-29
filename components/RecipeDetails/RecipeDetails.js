@@ -8,7 +8,11 @@ import StyledButton from "@/components/Button/StyledButton";
 import RecipeMetaData from "./RecipeMetaData";
 import Image from "next/image";
 
-export default function RecipeDetails({ recipe }) {
+export default function RecipeDetails({
+  recipe,
+  favoriteRecipes,
+  onToggleFavoriteRecipe,
+}) {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("Ingredients");
 
@@ -40,6 +44,9 @@ export default function RecipeDetails({ recipe }) {
           <HeroDelete as="div">
             <ModalBox type="delete" recipeId={recipe._id} />
           </HeroDelete>
+          <HeroFavorite onClick={() => onToggleFavoriteRecipe(recipe._id)}>
+            {favoriteRecipes.includes(recipe._id) ? "♥️" : "🤍"}
+          </HeroFavorite>
         </ImageWrapper>
         <DesktopMetaDataWrapper>
           <RecipeMetaData
@@ -54,7 +61,12 @@ export default function RecipeDetails({ recipe }) {
             <StyledButton as={Link} href={`/form/edit-${recipe._id}`}>
               Edit Recipe
             </StyledButton>
-            <ModalBox type="delete" recipeId={recipe._id} />
+            <StyledButton onClick={() => onToggleFavoriteRecipe(recipe._id)}>
+              {favoriteRecipes.includes(recipe._id) ? "♥️" : "🤍"}
+            </StyledButton>
+            <StyledButton as="div">
+              <ModalBox type="delete" recipeId={recipe._id} />
+            </StyledButton>
           </DesktopActionRow>
         </DesktopMetaDataWrapper>
       </RecipeTopDetails>
@@ -184,6 +196,14 @@ const HeroDelete = styled(HeroIconBtn)`
   right: 14px;
   top: 60px;
   padding: 3px;
+`;
+
+const HeroFavorite = styled(HeroIconBtn)`
+  right: 14px;
+  top: 110px;
+  padding: 3px;
+  font-size: 24px;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
 `;
 
 const DesktopMetaDataWrapper = styled.div`
