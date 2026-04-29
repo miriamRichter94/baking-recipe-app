@@ -91,7 +91,7 @@ export default function RecipeForm({ ingredients, units, recipe }) {
   }
 
   return (
-    <StyledForm>
+    <StyledForm onSubmit={handleSubmit}>
       <InputField
         label="Recipe title"
         placeholder="What are we baking?"
@@ -235,6 +235,9 @@ export default function RecipeForm({ ingredients, units, recipe }) {
           + Add Step
         </AddRowBtn>
       </StyledFieldset>
+      <StyledButton variant="pill" type="submit">
+        Save Recipe
+      </StyledButton>
     </StyledForm>
   );
 }

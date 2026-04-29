@@ -1,3 +1,4 @@
+import Select from "react-select";
 import styled from "styled-components";
 
 export default function IngredientFields({
@@ -7,22 +8,30 @@ export default function IngredientFields({
   onChange,
   onRemove,
 }) {
+  const ingredientOptions = ingredients.map((ingredients) => ({
+    value: ingredients._id,
+    label: ingredients.name,
+  }));
+
+  const unitOptions = units.map((unit) => ({
+    value: unit._id,
+    label: unit.name,
+  }));
+
   return (
     <DesktopIngredientRow>
       {/* Ingredient dropdown */}
-      <IngredientSelect
-        id="ingredient"
-        name="ingredient"
-        value={recipeIngredient.ingredient}
-        onChange={(e) => onChange("ingredient", e.target.value)}
-      >
-        <option value="">Ingredient</option>
-        {ingredients.map((ing) => (
-          <option value={ing._id} key={ing._id}>
-            {ing.name}
-          </option>
-        ))}
-      </IngredientSelect>
+      <Select
+        inputId="ingredient"
+        options={ingredientOptions}
+        placeholder="Ingredient"
+        onChange={(selected) => onChange("ingredient", selected.value)}
+        value={
+          ingredientOptions.find(
+            (o) => o.value === recipeIngredient.ingredient
+          ) || null
+        }
+      />
 
       {/* Amount */}
       <AmmountInput
@@ -35,19 +44,15 @@ export default function IngredientFields({
       />
 
       {/* Unit dropdown */}
-      <UnitSelect
-        id="unit"
-        name="unit"
-        value={recipeIngredient.unit}
-        onChange={(e) => onChange("unit", e.target.value)}
-      >
-        <option value="">Unit</option>
-        {units.map((unit) => (
-          <option value={unit._id} key={unit._id}>
-            {unit.name}
-          </option>
-        ))}
-      </UnitSelect>
+      <Select
+        inputId="unit"
+        options={unitOptions}
+        placeholder="Unit"
+        onChange={(selected) => onChange("unit", selected.value)}
+        value={
+          unitOptions.find((o) => o.value === recipeIngredient.unit) || null
+        }
+      />
 
       {onRemove && (
         <RemoveBtn type="button" onClick={onRemove} style={{ fontSize: 18 }}>
