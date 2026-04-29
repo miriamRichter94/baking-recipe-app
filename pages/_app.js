@@ -29,7 +29,7 @@ export default function App({ Component, pageProps }) {
       setFavoriteRecipes([...safeFavorites, id]);
     } else {
       setFavoriteRecipes(
-        safeFavorites.filter((bookmarkedId) => bookmarkedId != id)
+        safeFavorites.filter((bookmarkedId) => bookmarkedId !== id)
       );
     }
   }

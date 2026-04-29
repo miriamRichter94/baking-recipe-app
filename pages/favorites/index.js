@@ -33,7 +33,9 @@ export default function Favorites({
             handleToggleFavoriteRecipe={handleToggleFavoriteRecipe}
           />
         ) : (
-          <EmptFavoritesHint>Add Recipes as your Favorites!</EmptFavoritesHint>
+          <EmptyFavoritesHint>
+            Add Recipes as your Favorites!
+          </EmptyFavoritesHint>
         )}
       </PageContent>
     </>
@@ -73,7 +75,7 @@ const PageTitle = styled.h1`
   }
 `;
 
-const EmptFavoritesHint = styled.p`
+const EmptyFavoritesHint = styled.p`
   font-size: 28px;
   text-align: center;
   font-weight: bold;

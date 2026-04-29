@@ -22,7 +22,6 @@
     "react-select": "^5.10.2",
     "styled-components": "^6.4.0",
     "swr": "^2.4.1",
-    "use-local-storage": "^3.0.0",
     "use-local-storage-state": "^19.5.0"
   },
   "devDependencies": {
