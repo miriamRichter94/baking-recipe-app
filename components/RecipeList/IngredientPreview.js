@@ -18,6 +18,10 @@ const IngredientsWrapper = styled.div`
   flex-wrap: wrap;
   gap: 6px;
   margin-top: 8px;
+  width: 50%;
+  @media (min-width: 900px) {
+    width: auto;
+  }
 `;
 
 const Ingredient = styled.span`

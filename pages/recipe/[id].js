@@ -4,7 +4,10 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 import useSWR from "swr";
 
-export default function DetailsPage() {
+export default function DetailsPage({
+  favoriteRecipes,
+  handleToggleFavoriteRecipe,
+}) {
   const router = useRouter();
   const { id } = router.query;
 
@@ -19,7 +22,11 @@ export default function DetailsPage() {
 
   return (
     <DesktopWrapper>
-      <RecipeDetails recipe={recipe} />
+      <RecipeDetails
+        recipe={recipe}
+        favoriteRecipes={favoriteRecipes}
+        onToggleFavoriteRecipe={handleToggleFavoriteRecipe}
+      />
     </DesktopWrapper>
   );
 }

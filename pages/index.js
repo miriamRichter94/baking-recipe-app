@@ -5,7 +5,10 @@ import styled from "styled-components";
 import useSWR from "swr";
 import { useRouter } from "next/router";
 
-export default function HomePage() {
+export default function HomePage({
+  favoriteRecipes,
+  handleToggleFavoriteRecipe,
+}) {
   const {
     data: recipes,
     isLoading,
@@ -32,7 +35,11 @@ export default function HomePage() {
             + Add New Recipe
           </StyledButton>
         </AddRecipeButtonWrapper>
-        <RecipeList recipes={recipes} />
+        <RecipeList
+          recipes={recipes}
+          favoriteRecipes={favoriteRecipes}
+          handleToggleFavoriteRecipe={handleToggleFavoriteRecipe}
+        />
       </PageContent>
 
       {/* Mobile FAB */}

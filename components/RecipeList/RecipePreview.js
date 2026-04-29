@@ -4,7 +4,11 @@ import Link from "next/link";
 import Image from "next/image";
 import ModalBox from "../ModalBox/ModalBox";
 
-export default function RecipePreview({ recipe }) {
+export default function RecipePreview({
+  recipe,
+  favoriteRecipes,
+  onToggleFavoriteRecipe,
+}) {
   return (
     <RecipeCard>
       <StyledLink href={`/recipe/${recipe._id}`}>
@@ -18,12 +22,19 @@ export default function RecipePreview({ recipe }) {
           </ImageWrapper>
           <TextWrapper>
             <CardTitle>{recipe.title}</CardTitle>
+            <CardDescription>{recipe.description}</CardDescription>
             <IngredientPreview ingredients={recipe.ingredients} />
           </TextWrapper>
         </RecipeInformation>
       </StyledLink>
 
       <ActionDiv>
+        <StyledActionLink
+          as="button"
+          onClick={() => onToggleFavoriteRecipe(recipe._id)}
+        >
+          {favoriteRecipes.includes(recipe._id) ? "♥️" : "🤍"}
+        </StyledActionLink>
         <StyledActionLink
           href={`/form/edit-${recipe._id}`}
           aria-label="Edit Recipe"
@@ -107,7 +118,7 @@ const TextWrapper = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
 
   @media (min-width: 641px) {
     padding: 16px 20px 20px;
@@ -125,6 +136,17 @@ const CardTitle = styled.p`
   }
 `;
 
+const CardDescription = styled.p`
+  font-size: 14px;
+  margin: 0 0 4px;
+  font-weight: 400;
+  display: none;
+
+  @media (min-width: 900px) {
+    display: block;
+  }
+`;
+
 const ActionDiv = styled.div`
   position: absolute;
   bottom: 10px;
@@ -132,11 +154,6 @@ const ActionDiv = styled.div`
   display: flex;
   gap: 6px;
   align-items: center;
-  display: none;
-
-  @media (min-width: 641px) {
-    display: block;
-  }
 `;
 
 const StyledActionLink = styled(Link)`
