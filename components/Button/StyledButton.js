@@ -61,7 +61,6 @@ const variantStyles = {
 };
 
 export const StyledBtn = styled.button`
-  font-family: var(--font-body), sans-serif;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;

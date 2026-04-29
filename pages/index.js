@@ -67,7 +67,7 @@ const PageHeader = styled.div`
 `;
 
 const PageTitle = styled.h1`
-  font-family: var(--font-heading), serif;
+  font-family: var(--heading-font);
   font-size: 28px;
   margin: 0 0 8px;
   font-weight: 400;

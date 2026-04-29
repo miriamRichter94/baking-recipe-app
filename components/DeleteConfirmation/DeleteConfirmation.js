@@ -33,7 +33,7 @@ const ConfirmationWrapper = styled.div`
 `;
 
 const ConfirmTitle = styled.h2`
-  font-family: var(--font-heading), serif;
+  font-family: var(--heading-font);
   font-size: 22px;
   color: #3d2b1f;
   margin: 0;
@@ -41,7 +41,6 @@ const ConfirmTitle = styled.h2`
 `;
 
 const ConfirmText = styled.p`
-  font-family: var(--font-body), sans-serif;
   font-size: 15px;
   color: #8c7b6b;
   margin: 0;
@@ -64,7 +63,6 @@ const DeleteBtn = styled.button`
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  font-family: var(--font-body), sans-serif;
   width: 100%;
 `;
 
@@ -77,6 +75,5 @@ const CancelBtn = styled.button`
   font-weight: 600;
   cursor: pointer;
   color: #3d2b1f;
-  font-family: var(--font-body), sans-serif;
   width: 100%;
 `;

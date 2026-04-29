@@ -335,7 +335,7 @@ const StyledFieldset = styled.fieldset`
 `;
 
 const StyledLegend = styled.legend`
-  font-family: var(--font-heading), serif;
+  font-family: var(--heading-font);
   font-size: 18px;
   padding: 0 8px;
   font-weight: 400;

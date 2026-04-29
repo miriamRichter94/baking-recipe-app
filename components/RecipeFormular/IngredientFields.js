@@ -87,7 +87,6 @@ const AmmountInput = styled.input`
   border-radius: 10px;
   border: 1px solid #e8ddd2;
   font-size: 14px;
-  font-family: var(--font-body), sans-serif;
   color: #3d2b1f;
   outline: none;
 
@@ -96,7 +95,6 @@ const AmmountInput = styled.input`
     border: 1px solid #e8ddd2;
     border-radius: 8px;
     font-size: 14px;
-    font-family: var(--font-body), sans-serif;
     outline: none;
     color: #3d2b1f;
     flex: 1;

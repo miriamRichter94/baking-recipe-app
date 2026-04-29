@@ -61,7 +61,6 @@ const inputBase = css`
   border: 1px solid #e8ddd2;
   border-radius: 8px;
   font-size: 15px;
-  font-family: var(--font-body), sans-serif;
   background: #ffffff;
   box-sizing: border-box;
   outline: none;
@@ -85,19 +84,3 @@ export const StyledTextarea = styled.textarea`
   ${inputBase}
   resize: vertical;
 `;
-
-// ─── Blueprint Component ──────────────────────────────────────────────────────
-//
-// Props:
-//   label        – field label text
-//   placeholder  – placeholder text
-//   type         – input type (default: "text")
-//   rows         – if provided, renders a <textarea> instead of <input>
-//   defaultValue – prefill value
-//   name         – form field name (important for form submission)
-//   id           – input id (links label to input)
-//
-// Usage:
-//   <InputField label="Recipe title" placeholder="What are we baking?" name="title" />
-//   <InputField label="Description" placeholder="Tell us about this recipe…" rows={3} name="description" />
-//   <InputField label="Diameter (cm)" type="number" placeholder="26" name="diameter" />

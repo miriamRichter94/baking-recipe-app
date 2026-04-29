@@ -107,7 +107,6 @@ const StepAddPhotoBtn = styled.button`
   color: #c49a6c;
   font-size: 13px;
   cursor: pointer;
-  font-family: var(--font-body), sans-serif;
   margin-top: 8px;
   display: block;
 `;
@@ -121,7 +120,6 @@ const StepRemoveImageBtn = styled.button`
   cursor: pointer;
   padding: 0;
   margin-top: 4px;
-  font-family: var(--font-body), sans-serif;
   display: inline-block;
 `;
 
@@ -155,7 +153,6 @@ const StepTextarea = styled.textarea`
   border: 1px solid #e8ddd2;
   border-radius: 8px;
   font-size: 14px;
-  font-family: var(--font-body), sans-serif;
   background: #fff;
   resize: vertical;
   outline: none;
