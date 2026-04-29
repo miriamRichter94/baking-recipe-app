@@ -1,6 +1,7 @@
 import RecipeDetails from "@/components/RecipeDetails/RecipeDetails";
 import { getRecipeById } from "@/services/recipeServices";
 import { useRouter } from "next/router";
+import styled from "styled-components";
 import useSWR from "swr";
 
 export default function DetailsPage() {
@@ -16,5 +17,17 @@ export default function DetailsPage() {
   if (isLoading || !recipe) return <h1>Loading...</h1>;
   if (error) return <h1>ERROR</h1>;
 
-  return <RecipeDetails recipe={recipe} />;
+  return (
+    <DesktopWrapper>
+      <RecipeDetails recipe={recipe} />
+    </DesktopWrapper>
+  );
 }
+
+const DesktopWrapper = styled.div`
+  @media (min-width: 641px) {
+    padding: 36px 40px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+`;

@@ -25,10 +25,5 @@ export default function RecipeFormular() {
   if (isLoading || !ingredients || !units || !slug) return <h1>Loading...</h1>;
   if (error) return <h1>ERROR</h1>;
 
-  return (
-    <>
-      <h1>Create A recipe</h1>
-      <RecipeForm ingredients={ingredients} units={units} recipe={recipe} />
-    </>
-  );
+  return <RecipeForm ingredients={ingredients} units={units} recipe={recipe} />;
 }
