@@ -12,7 +12,7 @@ export default function RecipeList({ recipes }) {
 }
 
 const ListGrid = styled.ul`
-  list-style: "none";
+  list-style: none;
   padding: 0;
   margin: 0;
   display: grid;
