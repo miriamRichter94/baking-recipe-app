@@ -8,6 +8,7 @@ export default function InputField({
   defaultValue,
   name,
   id,
+  required = false,
 }) {
   const inputId = id || name;
   return (
@@ -20,6 +21,7 @@ export default function InputField({
           rows={rows}
           placeholder={placeholder}
           defaultValue={defaultValue}
+          required={required}
         />
       ) : (
         <StyledInput
@@ -28,6 +30,7 @@ export default function InputField({
           type={type || "text"}
           placeholder={placeholder}
           defaultValue={defaultValue}
+          required={required}
         />
       )}
     </FieldWrapper>

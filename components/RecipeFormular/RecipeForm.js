@@ -98,6 +98,7 @@ export default function RecipeForm({ ingredients, units, recipe }) {
         name="title"
         id="title"
         defaultValue={recipe?.title}
+        required={true}
       />
       <InputField
         label="Description"
@@ -106,6 +107,7 @@ export default function RecipeForm({ ingredients, units, recipe }) {
         name="description"
         id="description"
         defaultValue={recipe?.description}
+        required={true}
       />
 
       {/* Photo upload */}

@@ -31,6 +31,7 @@ export default function IngredientFields({
             (o) => o.value === recipeIngredient.ingredient
           ) || null
         }
+        required
       />
 
       {/* Amount */}
@@ -41,6 +42,7 @@ export default function IngredientFields({
         placeholder="Amt"
         value={recipeIngredient.amount}
         onChange={(e) => onChange("amount", e.target.value)}
+        required
       />
 
       {/* Unit dropdown */}
@@ -52,6 +54,7 @@ export default function IngredientFields({
         value={
           unitOptions.find((o) => o.value === recipeIngredient.unit) || null
         }
+        required
       />
 
       {onRemove && (
