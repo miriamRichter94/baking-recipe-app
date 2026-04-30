@@ -6,9 +6,8 @@ import { mutate } from "swr";
  * Recipe requests
  *
  */
-export async function getAllRecipes() {
-  const res = await fetch("/api/recipes");
-
+export async function getAllRecipes(url) {
+  const res = await fetch(url);
   if (!res.ok) throw new Error("Failed to fetch recipes");
   return res.json();
 }

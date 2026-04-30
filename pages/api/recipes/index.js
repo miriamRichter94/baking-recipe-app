@@ -6,9 +6,14 @@ export default async function handler(request, response) {
 
   try {
     if (request.method === "GET") {
-      const recipes = await Recipe.find({})
+      const { ids } = request.query;
+
+      const query = ids ? { _id: { $in: ids.split(",") } } : {};
+
+      const recipes = await Recipe.find(query)
         .populate("ingredients.ingredient")
         .populate("ingredients.unit");
+
       return response.status(200).json(recipes);
     }
 

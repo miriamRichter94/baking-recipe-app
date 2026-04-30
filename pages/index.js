@@ -8,6 +8,8 @@ import { useRouter } from "next/router";
 export default function HomePage({
   favoriteRecipes,
   handleToggleFavoriteRecipe,
+  recipesToShop,
+  handleToggleRecipesToShop,
 }) {
   const {
     data: recipes,
@@ -39,6 +41,8 @@ export default function HomePage({
           recipes={recipes}
           favoriteRecipes={favoriteRecipes}
           handleToggleFavoriteRecipe={handleToggleFavoriteRecipe}
+          recipesToShop={recipesToShop}
+          handleToggleRecipesToShop={handleToggleRecipesToShop}
         />
       </PageContent>
 

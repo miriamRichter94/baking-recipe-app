@@ -6,6 +6,8 @@ import useSWR from "swr";
 export default function Favorites({
   favoriteRecipes,
   handleToggleFavoriteRecipe,
+  recipesToShop,
+  handleToggleRecipesToShop,
 }) {
   const {
     data: recipes,
@@ -31,6 +33,8 @@ export default function Favorites({
             recipes={favorites}
             favoriteRecipes={favoriteRecipes}
             handleToggleFavoriteRecipe={handleToggleFavoriteRecipe}
+            recipesToShop={recipesToShop}
+            handleToggleRecipesToShop={handleToggleRecipesToShop}
           />
         ) : (
           <EmptyFavoritesHint>
