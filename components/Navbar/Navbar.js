@@ -7,6 +7,7 @@ export default function Navbar() {
   const router = useRouter();
   const isHome = router.pathname === "/";
   const isFavorite = router.pathname === "/favorites";
+  const isShoppingList = router.pathname === "/shopping-list";
   const title = getTitle(router.pathname, router.query);
   const [mounted, setMounted] = useState(false);
 
@@ -26,7 +27,7 @@ export default function Navbar() {
   if (!mounted) return null;
   return (
     <Nav>
-      {!isHome && !isFavorite ? (
+      {!isHome && !isFavorite && !isShoppingList ? (
         <>
           <NavBackButton
             onClick={() => router.back()}
@@ -47,6 +48,9 @@ export default function Navbar() {
             </NavLink>
             <NavLink href="/favorites" $active={isFavorite}>
               Favorites
+            </NavLink>
+            <NavLink href="/shopping-list" $active={isShoppingList}>
+              Shopping
             </NavLink>
           </NavLinks>
         </>

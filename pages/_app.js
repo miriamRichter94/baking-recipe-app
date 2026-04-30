@@ -21,8 +21,16 @@ export default function App({ Component, pageProps }) {
     "favoriteRecipes",
     { defaultValue: [] }
   );
+  const [shoppingList, setShoppingList] = useLocalStorageState("shoppingList", {
+    defaultValue: [],
+  });
+  const [checkedItems, setCheckedItems] = useLocalStorageState("checkedItems", {
+    defaultValue: [],
+  });
 
   const safeFavorites = Array.isArray(favoriteRecipes) ? favoriteRecipes : [];
+  const safeShoppingList = Array.isArray(shoppingList) ? shoppingList : [];
+  const safeCheckedItems = Array.isArray(checkedItems) ? checkedItems : [];
 
   function handleToggleFavoriteRecipe(id) {
     if (!safeFavorites.includes(id)) {
@@ -32,6 +40,45 @@ export default function App({ Component, pageProps }) {
         safeFavorites.filter((bookmarkedId) => bookmarkedId !== id)
       );
     }
+  }
+
+  function handleAddToShoppingList(recipe) {
+    const ingredients = recipe.ingredients.map((ing) => ({
+      id: ing._id,
+      name: ing.ingredient.name,
+      amount: ing.amount,
+      unit: ing.unit.name,
+    }));
+    const entry = {
+      recipeId: recipe._id,
+      recipeTitle: recipe.title,
+      ingredients,
+    };
+    const filtered = safeShoppingList.filter(
+      (item) => item.recipeId !== recipe._id
+    );
+    setShoppingList([...filtered, entry]);
+  }
+
+  function handleRemoveFromShoppingList(recipeId) {
+    setShoppingList(
+      safeShoppingList.filter((item) => item.recipeId !== recipeId)
+    );
+    setCheckedItems(
+      safeCheckedItems.filter((key) => !key.startsWith(recipeId + "_"))
+    );
+  }
+
+  function handleToggleCheckedItem(key) {
+    if (safeCheckedItems.includes(key)) {
+      setCheckedItems(safeCheckedItems.filter((k) => k !== key));
+    } else {
+      setCheckedItems([...safeCheckedItems, key]);
+    }
+  }
+
+  function handleClearChecked() {
+    setCheckedItems([]);
   }
 
   return (
@@ -44,6 +91,12 @@ export default function App({ Component, pageProps }) {
           {...pageProps}
           favoriteRecipes={safeFavorites}
           handleToggleFavoriteRecipe={handleToggleFavoriteRecipe}
+          shoppingList={safeShoppingList}
+          checkedItems={safeCheckedItems}
+          handleAddToShoppingList={handleAddToShoppingList}
+          handleRemoveFromShoppingList={handleRemoveFromShoppingList}
+          handleToggleCheckedItem={handleToggleCheckedItem}
+          handleClearChecked={handleClearChecked}
         />
       </SWRConfig>
     </>
