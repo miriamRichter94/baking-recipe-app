@@ -54,7 +54,10 @@ export default function App({ Component, pageProps }) {
     <>
       <GlobalStyle />
       <Toaster />
-      <Navbar favoriteRecipes={favoriteRecipes} recipesToShop={recipesToShop} />
+      <Navbar
+        favoriteRecipes={safeFavorites}
+        recipesToShop={safeRecipesToShop}
+      />
       <SWRConfig value={{ fetcher }}>
         <Component
           {...pageProps}

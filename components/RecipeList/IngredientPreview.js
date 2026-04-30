@@ -16,7 +16,6 @@ export default function IngredientPreview({ ingredients }) {
 const IngredientsWrapper = styled.div`
   display: none;
   flex-wrap: wrap;
-  flex-direction: ri;
   gap: 8px;
   margin-top: 8px;
   width: 70%;

@@ -1,11 +1,11 @@
 import { useState } from "react";
 import useSWR from "swr";
 import styled from "styled-components";
-import { getRecipesByIds } from "@/services/recipeServices";
+import { getAllRecipes } from "@/services/recipeServices";
 import { calculateShoppingList } from "@/lib/helper";
 import Link from "next/link";
 
-export default function ShoppingList({ recipesToShop, onToggleRecipesToShop }) {
+export default function ShoppingList({ recipesToShop }) {
   const [checked, setChecked] = useState([]);
 
   const swrKey =
@@ -13,7 +13,7 @@ export default function ShoppingList({ recipesToShop, onToggleRecipesToShop }) {
       ? `/api/recipes?ids=${recipesToShop.join(",")}`
       : null;
 
-  const { data: recipes, isLoading, error } = useSWR(swrKey, getRecipesByIds);
+  const { data: recipes, isLoading, error } = useSWR(swrKey, getAllRecipes);
 
   if (recipesToShop.length === 0) return <EmptyState />;
   if (isLoading || !recipes) return <h1>Loading...</h1>;

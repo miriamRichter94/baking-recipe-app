@@ -17,7 +17,7 @@ export default function RecipePreview({
         <RecipeInformation>
           <ImageWrapper>
             <StyledImage
-              $imageAvailible={recipe.image.length > 0}
+              $imageavailable={!!recipe.image}
               src={recipe.image || "/assets/no-image.png"}
               alt={`Picture of a ${recipe.title}`}
             />
@@ -131,8 +131,8 @@ const StyledImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  ${({ $imageAvailible }) =>
-    !$imageAvailible &&
+  ${({ $imageavailable }) =>
+    !$imageavailable &&
     css`
       opacity: 30%;
     `}
