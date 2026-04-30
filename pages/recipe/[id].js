@@ -7,6 +7,8 @@ import useSWR from "swr";
 export default function DetailsPage({
   favoriteRecipes,
   handleToggleFavoriteRecipe,
+  recipesToShop,
+  handleToggleRecipesToShop,
 }) {
   const router = useRouter();
   const { id } = router.query;
@@ -26,6 +28,8 @@ export default function DetailsPage({
         recipe={recipe}
         favoriteRecipes={favoriteRecipes}
         onToggleFavoriteRecipe={handleToggleFavoriteRecipe}
+        recipesToShop={recipesToShop}
+        onToggleRecipesToShop={handleToggleRecipesToShop}
       />
     </DesktopWrapper>
   );

@@ -12,6 +12,8 @@ export default function RecipeDetails({
   recipe,
   favoriteRecipes,
   onToggleFavoriteRecipe,
+  recipesToShop,
+  onToggleRecipesToShop,
 }) {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("Ingredients");
@@ -47,6 +49,23 @@ export default function RecipeDetails({
           <HeroFavorite onClick={() => onToggleFavoriteRecipe(recipe._id)}>
             {favoriteRecipes.includes(recipe._id) ? "♥️" : "🤍"}
           </HeroFavorite>
+          <HeroShoppingList onClick={() => onToggleRecipesToShop(recipe._id)}>
+            {recipesToShop.includes(recipe._id) ? (
+              <Image
+                src="/assets/shopping-cart-added.png"
+                width={30}
+                height={30}
+                alt="Shopping Card with plus symbol"
+              />
+            ) : (
+              <Image
+                src="/assets/shopping-cart-add.png"
+                width={30}
+                height={30}
+                alt="Shopping Card with green tick"
+              />
+            )}
+          </HeroShoppingList>
         </ImageWrapper>
         <DesktopMetaDataWrapper>
           <RecipeMetaData
@@ -63,6 +82,23 @@ export default function RecipeDetails({
             </StyledButton>
             <StyledButton onClick={() => onToggleFavoriteRecipe(recipe._id)}>
               {favoriteRecipes.includes(recipe._id) ? "♥️" : "🤍"}
+            </StyledButton>
+            <StyledButton onClick={() => onToggleRecipesToShop(recipe._id)}>
+              {recipesToShop.includes(recipe._id) ? (
+                <Image
+                  src="/assets/shopping-cart-added.png"
+                  width={30}
+                  height={30}
+                  alt="Shopping Card with plus symbol"
+                />
+              ) : (
+                <Image
+                  src="/assets/shopping-cart-add.png"
+                  width={30}
+                  height={30}
+                  alt="Shopping Card with green tick"
+                />
+              )}
             </StyledButton>
             <StyledButton as="div">
               <ModalBox type="delete" recipeId={recipe._id} />
@@ -200,10 +236,16 @@ const HeroDelete = styled(HeroIconBtn)`
 
 const HeroFavorite = styled(HeroIconBtn)`
   right: 14px;
-  top: 110px;
+  top: 105px;
   padding: 3px;
   font-size: 24px;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+`;
+
+const HeroShoppingList = styled(HeroIconBtn)`
+  right: 14px;
+  top: 150px;
+  padding: 3px;
 `;
 
 const DesktopMetaDataWrapper = styled.div`

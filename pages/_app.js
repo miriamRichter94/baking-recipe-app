@@ -22,7 +22,13 @@ export default function App({ Component, pageProps }) {
     { defaultValue: [] }
   );
 
+  const [recipesToShop, setRecipesToShop] = useLocalStorageState(
+    "recipesToShop",
+    { defaultValue: [] }
+  );
+
   const safeFavorites = Array.isArray(favoriteRecipes) ? favoriteRecipes : [];
+  const safeRecipesToShop = Array.isArray(recipesToShop) ? recipesToShop : [];
 
   function handleToggleFavoriteRecipe(id) {
     if (!safeFavorites.includes(id)) {
@@ -34,16 +40,28 @@ export default function App({ Component, pageProps }) {
     }
   }
 
+  function handleToggleRecipesToShop(id) {
+    if (!safeRecipesToShop.includes(id)) {
+      setRecipesToShop([...safeRecipesToShop, id]);
+    } else {
+      setRecipesToShop(
+        safeRecipesToShop.filter((bookmarkedId) => bookmarkedId !== id)
+      );
+    }
+  }
+
   return (
     <>
       <GlobalStyle />
       <Toaster />
-      <Navbar />
+      <Navbar favoriteRecipes={favoriteRecipes} recipesToShop={recipesToShop} />
       <SWRConfig value={{ fetcher }}>
         <Component
           {...pageProps}
           favoriteRecipes={safeFavorites}
           handleToggleFavoriteRecipe={handleToggleFavoriteRecipe}
+          recipesToShop={safeRecipesToShop}
+          handleToggleRecipesToShop={handleToggleRecipesToShop}
         />
       </SWRConfig>
     </>

@@ -8,6 +8,8 @@ export default function RecipePreview({
   recipe,
   favoriteRecipes,
   onToggleFavoriteRecipe,
+  recipesToShop,
+  onToggleRecipesToShop,
 }) {
   return (
     <RecipeCard>
@@ -15,7 +17,7 @@ export default function RecipePreview({
         <RecipeInformation>
           <ImageWrapper>
             <StyledImage
-              $imageAvailable={!!!recipe.image}
+              $imageAvailible={recipe.image.length > 0}
               src={recipe.image || "/assets/no-image.png"}
               alt={`Picture of a ${recipe.title}`}
             />
@@ -29,13 +31,33 @@ export default function RecipePreview({
       </StyledLink>
 
       <ActionDiv>
-        <StyledActionLink
+        <StyledAction
+          as="button"
+          onClick={() => onToggleRecipesToShop(recipe._id)}
+        >
+          {recipesToShop.includes(recipe._id) ? (
+            <Image
+              src="/assets/shopping-cart-added.png"
+              width={25}
+              height={25}
+              alt="Shopping Card with plus symbol"
+            />
+          ) : (
+            <Image
+              src="/assets/shopping-cart-add.png"
+              width={25}
+              height={25}
+              alt="Shopping Card with green tick"
+            />
+          )}
+        </StyledAction>
+        <StyledAction
           as="button"
           onClick={() => onToggleFavoriteRecipe(recipe._id)}
         >
           {favoriteRecipes.includes(recipe._id) ? "♥️" : "🤍"}
-        </StyledActionLink>
-        <StyledActionLink
+        </StyledAction>
+        <StyledAction
           href={`/form/edit-${recipe._id}`}
           aria-label="Edit Recipe"
         >
@@ -45,12 +67,14 @@ export default function RecipePreview({
             height={25}
             alt="Edit Pencil"
           ></Image>
-        </StyledActionLink>
-        <ModalBox
-          type="delete"
-          recipeId={recipe._id}
-          aria-label="Delete Recipe"
-        />
+        </StyledAction>
+        <StyledAction as="div">
+          <ModalBox
+            type="delete"
+            recipeId={recipe._id}
+            aria-label="Delete Recipe"
+          />
+        </StyledAction>
       </ActionDiv>
     </RecipeCard>
   );
@@ -59,6 +83,7 @@ export default function RecipePreview({
 const RecipeCard = styled.li`
   position: relative;
   list-style: none;
+  align-self: start;
 `;
 
 const StyledLink = styled(Link)`
@@ -107,7 +132,7 @@ const StyledImage = styled.img`
   height: 100%;
   object-fit: cover;
   ${({ $imageAvailible }) =>
-    $imageAvailible &&
+    !$imageAvailible &&
     css`
       opacity: 30%;
     `}
@@ -156,10 +181,11 @@ const ActionDiv = styled.div`
   align-items: center;
 `;
 
-const StyledActionLink = styled(Link)`
+const StyledAction = styled(Link)`
   width: 30px;
   height: 30px;
   border-radius: 8px;
+  border: 1px solid black;
   display: flex;
   align-items: center;
   justify-content: center;

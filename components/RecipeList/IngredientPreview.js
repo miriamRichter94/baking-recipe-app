@@ -14,13 +14,14 @@ export default function IngredientPreview({ ingredients }) {
 }
 
 const IngredientsWrapper = styled.div`
-  display: flex;
+  display: none;
   flex-wrap: wrap;
-  gap: 6px;
+  flex-direction: ri;
+  gap: 8px;
   margin-top: 8px;
-  width: 50%;
+  width: 70%;
   @media (min-width: 900px) {
-    width: auto;
+    display: flex;
   }
 `;
 

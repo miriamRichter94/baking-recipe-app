@@ -5,6 +5,8 @@ export default function RecipeList({
   recipes,
   favoriteRecipes,
   handleToggleFavoriteRecipe,
+  recipesToShop,
+  handleToggleRecipesToShop,
 }) {
   return (
     <ListGrid>
@@ -14,6 +16,8 @@ export default function RecipeList({
           recipe={recipe}
           favoriteRecipes={favoriteRecipes}
           onToggleFavoriteRecipe={handleToggleFavoriteRecipe}
+          recipesToShop={recipesToShop}
+          onToggleRecipesToShop={handleToggleRecipesToShop}
         />
       ))}
     </ListGrid>
