@@ -27,8 +27,17 @@ export default function App({ Component, pageProps }) {
     { defaultValue: [] }
   );
 
+  const [recalculatedRecipes, setRecalculatedRecipes] = useLocalStorageState(
+    "recalculatedRecipes",
+    { defaultValue: {} }
+  );
+
   const safeFavorites = Array.isArray(favoriteRecipes) ? favoriteRecipes : [];
   const safeRecipesToShop = Array.isArray(recipesToShop) ? recipesToShop : [];
+  const safeRecalculatedRecipes =
+    typeof recalculatedRecipes === "object" && recalculatedRecipes !== null
+      ? recalculatedRecipes
+      : {};
 
   function handleToggleFavoriteRecipe(id) {
     if (!safeFavorites.includes(id)) {
@@ -50,6 +59,26 @@ export default function App({ Component, pageProps }) {
     }
   }
 
+  function handleAddRecalculatedRecipe(
+    id,
+    shape,
+    diameter = null,
+    width = null,
+    length = null,
+    scalingFactor
+  ) {
+    setRecalculatedRecipes({
+      ...safeRecalculatedRecipes,
+      [id]: { shape, diameter, width, length, scalingFactor },
+    });
+  }
+
+  function handleRemoveRecalculatedRecipe(id) {
+    setRecalculatedRecipes(
+      safeRecalculatedRecipes.filter((recipeId) => recipeId !== id)
+    );
+  }
+
   return (
     <>
       <GlobalStyle />
@@ -65,6 +94,9 @@ export default function App({ Component, pageProps }) {
           handleToggleFavoriteRecipe={handleToggleFavoriteRecipe}
           recipesToShop={safeRecipesToShop}
           handleToggleRecipesToShop={handleToggleRecipesToShop}
+          recalculatedRecipes={safeRecalculatedRecipes}
+          handleAddRecalculatedRecipe={handleAddRecalculatedRecipe}
+          handleRemoveRecalculatedRecipe={handleRemoveRecalculatedRecipe}
         />
       </SWRConfig>
     </>

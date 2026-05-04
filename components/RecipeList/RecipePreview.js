@@ -73,7 +73,14 @@ export default function RecipePreview({
             type="delete"
             recipeId={recipe._id}
             aria-label="Delete Recipe"
-          />
+          >
+            <Image
+              src="/assets/garbage.png"
+              width={25}
+              height={25}
+              alt="Trash Can"
+            ></Image>
+          </ModalBox>
         </StyledAction>
       </ActionDiv>
     </RecipeCard>

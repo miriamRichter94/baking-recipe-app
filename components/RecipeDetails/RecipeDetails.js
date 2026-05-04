@@ -44,7 +44,14 @@ export default function RecipeDetails({
             />
           </HeroEditBtn>
           <HeroDelete as="div">
-            <ModalBox type="delete" recipeId={recipe._id} />
+            <ModalBox type="delete" recipeId={recipe._id}>
+              <Image
+                src="/assets/garbage.png"
+                width={25}
+                height={25}
+                alt="Trash Can"
+              ></Image>
+            </ModalBox>
           </HeroDelete>
           <HeroFavorite onClick={() => onToggleFavoriteRecipe(recipe._id)}>
             {favoriteRecipes.includes(recipe._id) ? "♥️" : "🤍"}
@@ -101,7 +108,14 @@ export default function RecipeDetails({
               )}
             </StyledButton>
             <StyledButton as="div">
-              <ModalBox type="delete" recipeId={recipe._id} />
+              <ModalBox type="delete" recipeId={recipe._id}>
+                <Image
+                  src="/assets/garbage.png"
+                  width={25}
+                  height={25}
+                  alt="Trash Can"
+                ></Image>
+              </ModalBox>
             </StyledButton>
           </DesktopActionRow>
         </DesktopMetaDataWrapper>
@@ -126,7 +140,8 @@ export default function RecipeDetails({
         />
 
         <IngredientsSidebar $activeTab={activeTab}>
-          <SectionHeading>Ingredients</SectionHeading>
+          <SectionHeading>Ingredients</SectionHeading>{" "}
+          <ModalBox type="recalculate">Recalculate</ModalBox>
           {recipe.ingredients.map((ing, i) => (
             <IngredientRow
               key={ing._id}

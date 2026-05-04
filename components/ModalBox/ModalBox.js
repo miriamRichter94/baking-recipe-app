@@ -1,10 +1,9 @@
-import Image from "next/image";
 import DeleteConfirmation from "../DeleteConfirmation/DeleteConfirmation";
 import styled from "styled-components";
 import { useState } from "react";
-import { StyledBtn } from "../Button/StyledButton";
+import RecalculateBakingform from "../RecalculateBakingForm/RecalculateBakingForm";
 
-export default function ModalBox({ type, recipeId }) {
+export default function ModalBox({ type, recipeId, children }) {
   const [showModalBox, setShowModalBox] = useState(false);
 
   return (
@@ -13,12 +12,7 @@ export default function ModalBox({ type, recipeId }) {
         aria-label="delete recipe"
         onClick={() => setShowModalBox(true)}
       >
-        <Image
-          src="/assets/garbage.png"
-          width={25}
-          height={25}
-          alt="Trash Can"
-        ></Image>
+        {children}
       </OpenButton>
 
       {showModalBox && (
@@ -30,6 +24,8 @@ export default function ModalBox({ type, recipeId }) {
                 recipeId={recipeId}
               />
             )}
+
+            {type === "recalculate" && <RecalculateBakingform />}
           </Modal>
         </Overlay>
       )}

@@ -12,6 +12,7 @@ import {
 import { addRecipe, editRecipe } from "@/services/recipeServices";
 import { uploadImage } from "@/services/imageService";
 import styled from "styled-components";
+import BakingFormFields from "./BakingFormFields";
 
 export default function RecipeForm({ ingredients, units, recipe }) {
   const router = useRouter();
@@ -160,48 +161,12 @@ export default function RecipeForm({ ingredients, units, recipe }) {
       <StyledFieldset>
         <StyledLegend>Baking Form</StyledLegend>
 
-        <ShapeToggleRow>
-          {["round", "rect"].map((s) => (
-            <ShapeToggleBtn
-              key={s}
-              type="button"
-              $active={selectedShape === s}
-              onClick={() => setSelectedShape(s)}
-            >
-              {s === "rect" ? "Rectangular" : "Round"}
-            </ShapeToggleBtn>
-          ))}
-        </ShapeToggleRow>
-        <input type="hidden" name="shape" value={selectedShape} />
-        {selectedShape === "round" ? (
-          <InputField
-            label="Diameter (cm)"
-            type="number"
-            placeholder="26"
-            name="diameter"
-            id="diameter"
-            defaultValue={recipe?.bakingForm?.diameter}
-          />
-        ) : (
-          <div style={{ display: "flex", gap: 12 }}>
-            <InputField
-              label="Width (cm)"
-              type="number"
-              placeholder="30"
-              name="width"
-              id="width"
-              defaultValue={recipe?.bakingForm?.width}
-            />
-            <InputField
-              label="length (cm)"
-              type="number"
-              placeholder="40"
-              name="length"
-              id="length"
-              defaultValue={recipe?.bakingForm?.length}
-            />
-          </div>
-        )}
+        <BakingFormFields
+          shape={recipe?.bakingForm?.shape}
+          diameter={recipe?.bakingForm?.diameter}
+          width={recipe?.bakingForm?.widht}
+          length={recipe?.bakingForm?.length}
+        />
       </StyledFieldset>
 
       {/* Ingredients card */}
@@ -314,6 +279,7 @@ const RemoveImagePreviewBtn = styled.button`
   cursor: pointer;
   padding: 0;
   margin-top: 4px;
+  margin-bottom: 15px;
   display: inline-block;
 `;
 
