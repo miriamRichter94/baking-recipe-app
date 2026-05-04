@@ -1,9 +1,9 @@
 import DeleteConfirmation from "../DeleteConfirmation/DeleteConfirmation";
 import styled from "styled-components";
 import { useState } from "react";
-import RecalculateBakingform from "../RecalculateBakingForm/RecalculateBakingForm";
+import RecalculateBakingform from "../RecalculateBakingform/RecalculateBakingform";
 
-export default function ModalBox({ type, recipeId, children }) {
+export default function ModalBox({ type, children, ...restValues }) {
   const [showModalBox, setShowModalBox] = useState(false);
 
   return (
@@ -21,11 +21,13 @@ export default function ModalBox({ type, recipeId, children }) {
             {type === "delete" && (
               <DeleteConfirmation
                 onCancel={() => setShowModalBox(false)}
-                recipeId={recipeId}
+                {...restValues}
               />
             )}
 
-            {type === "recalculate" && <RecalculateBakingform />}
+            {type === "recalculate" && (
+              <RecalculateBakingform {...restValues} />
+            )}
           </Modal>
         </Overlay>
       )}
@@ -35,6 +37,7 @@ export default function ModalBox({ type, recipeId, children }) {
 
 const OpenButton = styled.button`
   background-color: transparent;
+  color: white;
   border: none;
   padding: 0;
   cursor: pointer;

@@ -14,9 +14,14 @@ export default function RecipeDetails({
   onToggleFavoriteRecipe,
   recipesToShop,
   onToggleRecipesToShop,
+  recalculatedRecipes,
+  handleAddRecalculatedRecipe,
+  handleRemoveRecalculatedRecipe,
 }) {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("Ingredients");
+  const isRecipeRecalculated = !!recalculatedRecipes[recipe._id];
+  console.log(recalculatedRecipes);
 
   return (
     <>
@@ -140,8 +145,15 @@ export default function RecipeDetails({
         />
 
         <IngredientsSidebar $activeTab={activeTab}>
-          <SectionHeading>Ingredients</SectionHeading>{" "}
-          <ModalBox type="recalculate">Recalculate</ModalBox>
+          <SectionHeading>Ingredients</SectionHeading>
+          {isRecipeRecalculated && (
+            <p>
+              Recipe is Recalculated as {recalculatedRecipes[recipe._id].shape}{" "}
+              {recalculatedRecipes[recipe._id].shape === "round"
+                ? recalculatedRecipes[recipe._id].diameter
+                : `${recalculatedRecipes[recipe._id].width} x ${recalculatedRecipes[recipe._id].length}`}
+            </p>
+          )}
           {recipe.ingredients.map((ing, i) => (
             <IngredientRow
               key={ing._id}
@@ -149,10 +161,23 @@ export default function RecipeDetails({
             >
               <span>{ing.ingredient.name}</span>
               <IngredientAmount>
-                {ing.amount} {ing.unit.name}
+                {isRecipeRecalculated
+                  ? ing.amount * recalculatedRecipes[recipe._id].scalingFactor
+                  : ing.amount}
+                {" " + ing.unit.name}
               </IngredientAmount>
             </IngredientRow>
           ))}
+          <StyledButton as="div">
+            <ModalBox
+              type="recalculate"
+              recipeId={recipe._id}
+              bakingform={recipe.bakingForm}
+              onAddRecalculatedRecipe={handleAddRecalculatedRecipe}
+            >
+              Recalculate
+            </ModalBox>
+          </StyledButton>
         </IngredientsSidebar>
 
         <BakingStepWrapper $activeTab={activeTab}>

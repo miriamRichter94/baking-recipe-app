@@ -9,6 +9,9 @@ export default function DetailsPage({
   handleToggleFavoriteRecipe,
   recipesToShop,
   handleToggleRecipesToShop,
+  recalculatedRecipes,
+  handleAddRecalculatedRecipe,
+  handleRemoveRecalculatedRecipe,
 }) {
   const router = useRouter();
   const { id } = router.query;
@@ -30,6 +33,9 @@ export default function DetailsPage({
         onToggleFavoriteRecipe={handleToggleFavoriteRecipe}
         recipesToShop={recipesToShop}
         onToggleRecipesToShop={handleToggleRecipesToShop}
+        recalculatedRecipes={recalculatedRecipes}
+        handleAddRecalculatedRecipe={handleAddRecalculatedRecipe}
+        handleRemoveRecalculatedRecipe={handleRemoveRecalculatedRecipe}
       />
     </DesktopWrapper>
   );
