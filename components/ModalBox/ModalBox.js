@@ -1,6 +1,7 @@
 import DeleteConfirmation from "../DeleteConfirmation/DeleteConfirmation";
 import styled, { css } from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import RecalculateBakingform from "../RecalculateBakingform/RecalculateBakingform";
 import { StyledBtn } from "../Button/StyledButton";
 
@@ -11,7 +12,29 @@ export default function ModalBox({
   ...restValues
 }) {
   const [showModalBox, setShowModalBox] = useState(false);
-  console.log(transparent);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const modal = showModalBox && (
+    <Overlay onClick={() => setShowModalBox(false)}>
+      <Modal onClick={(e) => e.stopPropagation()}>
+        <CancelBtn onClick={() => setShowModalBox(false)}>❌</CancelBtn>
+        {type === "delete" && (
+          <DeleteConfirmation
+            onCancel={() => setShowModalBox(false)}
+            {...restValues}
+          />
+        )}
+        {type === "recalculate" && (
+          <RecalculateBakingform {...restValues} />
+        )}
+      </Modal>
+    </Overlay>
+  );
+
   return (
     <>
       <OpenButton
@@ -22,26 +45,7 @@ export default function ModalBox({
         {children}
       </OpenButton>
 
-      {showModalBox && (
-        <Overlay
-          $transparent={transparent}
-          onClick={() => setShowModalBox(false)}
-        >
-          <Modal onClick={(e) => e.stopPropagation()}>
-            <CancelBtn onClick={() => setShowModalBox(false)}>❌</CancelBtn>
-            {type === "delete" && (
-              <DeleteConfirmation
-                onCancel={() => setShowModalBox(false)}
-                {...restValues}
-              />
-            )}
-
-            {type === "recalculate" && (
-              <RecalculateBakingform {...restValues} />
-            )}
-          </Modal>
-        </Overlay>
-      )}
+      {mounted && createPortal(modal, document.body)}
     </>
   );
 }
