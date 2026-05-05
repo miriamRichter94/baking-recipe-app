@@ -247,7 +247,6 @@ const HeroIconBtn = styled.button`
   height: 38px;
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(8px);
   border: none;
   display: flex;
   align-items: center;

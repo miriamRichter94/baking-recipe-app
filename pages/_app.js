@@ -74,9 +74,8 @@ export default function App({ Component, pageProps }) {
   }
 
   function handleRemoveRecalculatedRecipe(id) {
-    setRecalculatedRecipes(
-      safeRecalculatedRecipes.filter((recipeId) => recipeId !== id)
-    );
+    const { [id]: _, ...rest } = safeRecalculatedRecipes;
+    setRecalculatedRecipes(rest);
   }
 
   return (
