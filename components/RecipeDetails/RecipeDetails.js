@@ -21,7 +21,6 @@ export default function RecipeDetails({
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("Ingredients");
   const isRecipeRecalculated = !!recalculatedRecipes[recipe._id];
-  console.log(recalculatedRecipes);
 
   return (
     <>

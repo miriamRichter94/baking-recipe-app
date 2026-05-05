@@ -11,7 +11,6 @@ export default function ModalBox({
   ...restValues
 }) {
   const [showModalBox, setShowModalBox] = useState(false);
-  console.log(transparent);
   return (
     <>
       <OpenButton
@@ -37,7 +36,10 @@ export default function ModalBox({
             )}
 
             {type === "recalculate" && (
-              <RecalculateBakingform {...restValues} />
+              <RecalculateBakingform
+                closeModal={() => setShowModalBox(false)}
+                {...restValues}
+              />
             )}
           </Modal>
         </Overlay>
