@@ -11,7 +11,6 @@ export default function ModalBox({
   ...restValues
 }) {
   const [showModalBox, setShowModalBox] = useState(false);
-  console.log(transparent);
   return (
     <>
       <OpenButton
