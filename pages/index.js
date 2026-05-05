@@ -4,6 +4,8 @@ import StyledButton from "@/components/Button/StyledButton";
 import styled from "styled-components";
 import useSWR from "swr";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import Fuse from "fuse.js";
 
 export default function HomePage({
   favoriteRecipes,
@@ -17,9 +19,19 @@ export default function HomePage({
     error,
   } = useSWR("/api/recipes", getAllRecipes);
   const router = useRouter();
+  const [search, setSearch] = useState("");
 
   if (isLoading || !recipes) return <h1>Loading...</h1>;
   if (error) return <h1>ERROR</h1>;
+
+  const fueseSearch = new Fuse(recipes, {
+    keys: ["title", "ingredients.ingredient.name"],
+    threshold: 0.3,
+  });
+
+  const filteredRecipes = search
+    ? fueseSearch.search(search).map((result) => result.item)
+    : recipes;
 
   return (
     <>
@@ -28,6 +40,20 @@ export default function HomePage({
           <PageTitle>Baking Recipes</PageTitle>
           <PageSubtitle>Simple recipes, made with love</PageSubtitle>
         </PageHeader>
+
+        <SearchWrapper>
+          <SearchLabel htmlFor="search">
+            Search for Title or Ingredient
+          </SearchLabel>
+          <SearchInput
+            type="text"
+            id="search"
+            placeholder="Search..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </SearchWrapper>
+
         {/* Add button (desktop) */}
         <AddRecipeButtonWrapper>
           <StyledButton
@@ -38,7 +64,7 @@ export default function HomePage({
           </StyledButton>
         </AddRecipeButtonWrapper>
         <RecipeList
-          recipes={recipes}
+          recipes={filteredRecipes}
           favoriteRecipes={favoriteRecipes}
           handleToggleFavoriteRecipe={handleToggleFavoriteRecipe}
           recipesToShop={recipesToShop}
@@ -132,4 +158,43 @@ const FAB = styled.button`
   @media (min-width: 641px) {
     display: none;
   }
+`;
+
+const SearchWrapper = styled.div`
+  max-width: 100%;
+  margin: 0 0 20px;
+
+  @media (min-width: 641px) {
+    max-width: 480px;
+    margin: 0 auto 32px;
+  }
+`;
+
+const SearchInput = styled.input`
+  width: 100%;
+  padding: 12px 18px;
+  border: 1px solid #e8ddd2;
+  border-radius: 40px;
+  font-size: 15px;
+  font-family: var(--font-body), sans-serif;
+  background: #ffffff;
+  outline: none;
+  box-sizing: border-box;
+  color: #3d2b1f;
+
+  &::placeholder {
+    color: #8c7b6b;
+  }
+
+  @media (min-width: 641px) {
+    padding: 14px 20px;
+  }
+`;
+
+const SearchLabel = styled.label`
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #8c7b6b;
 `;
