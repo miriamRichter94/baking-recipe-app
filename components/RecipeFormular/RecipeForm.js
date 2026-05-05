@@ -18,9 +18,6 @@ export default function RecipeForm({ ingredients, units, recipe }) {
   const router = useRouter();
   const isEdit = !!recipe;
 
-  const [selectedShape, setSelectedShape] = useState(
-    recipe?.bakingForm?.shape ?? "round"
-  );
   const [recipeIngredients, setRecipeIngredients] = useState(
     setRecipeIngredientsForForm(recipe?.ingredients)
   );
@@ -64,14 +61,14 @@ export default function RecipeForm({ ingredients, units, recipe }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    let urlRecipePicture;
+    let imageData = {};
     const formDataObject = new FormData(event.target);
     const formData = Object.fromEntries(formDataObject);
 
     if (formData.image && formData.image.size > 0) {
-      ({ url: urlRecipePicture } = await uploadImage(formData.image));
+      imageData = await uploadImage(formData.image);
     } else {
-      urlRecipePicture = recipe?.image ?? "";
+      imageData = recipe?.image ?? {};
     }
 
     const updatedSteps = await uploadRecipeStepImages(recipeSteps);
@@ -79,7 +76,7 @@ export default function RecipeForm({ ingredients, units, recipe }) {
       formData,
       recipeIngredients,
       updatedSteps,
-      urlRecipePicture
+      imageData
     );
 
     if (!isEdit) {

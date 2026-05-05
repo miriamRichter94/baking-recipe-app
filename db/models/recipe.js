@@ -5,7 +5,7 @@ const { Schema } = mongoose;
 const recipeSchema = new Schema({
   title: { type: String, required: true },
   description: { type: String },
-  image: { type: String },
+  image: { url: String, publicId: String },
   bakingForm: {
     shape: { type: String, enum: ["round", "rect"] },
     diameter: Number,
@@ -17,7 +17,7 @@ const recipeSchema = new Schema({
     {
       order: Number,
       instruction: String,
-      image: String,
+      image: { url: String, publicId: String },
     },
   ],
 
