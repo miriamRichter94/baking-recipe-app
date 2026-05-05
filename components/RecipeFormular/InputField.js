@@ -9,6 +9,7 @@ export default function InputField({
   name,
   id,
   required = false,
+  readOnly = false,
 }) {
   const inputId = id || name;
   return (
@@ -22,6 +23,7 @@ export default function InputField({
           placeholder={placeholder}
           defaultValue={defaultValue}
           required={required}
+          readOnly={readOnly}
         />
       ) : (
         <StyledInput
@@ -31,6 +33,7 @@ export default function InputField({
           placeholder={placeholder}
           defaultValue={defaultValue}
           required={required}
+          readOnly={readOnly}
         />
       )}
     </FieldWrapper>
@@ -78,6 +81,11 @@ const inputBase = css`
 
 export const StyledInput = styled.input`
   ${inputBase}
+
+  &:read-only {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 `;
 
 export const StyledTextarea = styled.textarea`
