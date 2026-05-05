@@ -49,7 +49,7 @@ export default function RecipeDetails({
             />
           </HeroEditBtn>
           <HeroDelete as="div">
-            <ModalBox type="delete" recipeId={recipe._id}>
+            <ModalBox type="delete" transparent={true} recipeId={recipe._id}>
               <Image
                 src="/assets/garbage.png"
                 width={25}
@@ -112,16 +112,14 @@ export default function RecipeDetails({
                 />
               )}
             </StyledButton>
-            <StyledButton as="div">
-              <ModalBox type="delete" recipeId={recipe._id}>
-                <Image
-                  src="/assets/garbage.png"
-                  width={25}
-                  height={25}
-                  alt="Trash Can"
-                ></Image>
-              </ModalBox>
-            </StyledButton>
+            <ModalBox type="delete" recipeId={recipe._id}>
+              <Image
+                src="/assets/garbage.png"
+                width={25}
+                height={25}
+                alt="Trash Can"
+              ></Image>
+            </ModalBox>
           </DesktopActionRow>
         </DesktopMetaDataWrapper>
       </RecipeTopDetails>
@@ -168,15 +166,19 @@ export default function RecipeDetails({
               </IngredientAmount>
             </IngredientRow>
           ))}
-          <StyledButton as="div">
-            <ModalBox
-              type="recalculate"
-              recipeId={recipe._id}
-              bakingform={recipe.bakingForm}
-              onAddRecalculatedRecipe={handleAddRecalculatedRecipe}
-            >
-              Recalculate
-            </ModalBox>
+          <ModalBox
+            type="recalculate"
+            recipeId={recipe._id}
+            bakingform={recipe.bakingForm}
+            onAddRecalculatedRecipe={handleAddRecalculatedRecipe}
+          >
+            Recalculate
+          </ModalBox>
+          <StyledButton
+            onClick={() => handleRemoveRecalculatedRecipe(recipe._id)}
+            style={{ marginLeft: "5px" }}
+          >
+            Reset Recipe
           </StyledButton>
         </IngredientsSidebar>
 

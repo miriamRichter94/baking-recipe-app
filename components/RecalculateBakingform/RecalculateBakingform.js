@@ -10,6 +10,7 @@ export default function RecalculateBakingform({
 }) {
   function handleSubmit(event) {
     event.preventDefault();
+
     const formDataObject = new FormData(event.target);
     const formData = Object.fromEntries(formDataObject);
     const scalingFactor = calculateScalingFactor(
@@ -22,6 +23,7 @@ export default function RecalculateBakingform({
       formData?.width,
       formData?.length
     );
+
     onAddRecalculatedRecipe(
       recipeId,
       formData.shape,

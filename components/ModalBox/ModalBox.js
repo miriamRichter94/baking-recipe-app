@@ -1,14 +1,21 @@
 import DeleteConfirmation from "../DeleteConfirmation/DeleteConfirmation";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useState } from "react";
 import RecalculateBakingform from "../RecalculateBakingform/RecalculateBakingform";
+import { StyledBtn } from "../Button/StyledButton";
 
-export default function ModalBox({ type, children, ...restValues }) {
+export default function ModalBox({
+  type,
+  transparent = false,
+  children,
+  ...restValues
+}) {
   const [showModalBox, setShowModalBox] = useState(false);
-
+  console.log(transparent);
   return (
     <>
       <OpenButton
+        $transparent={transparent}
         aria-label="delete recipe"
         onClick={() => setShowModalBox(true)}
       >
@@ -16,8 +23,12 @@ export default function ModalBox({ type, children, ...restValues }) {
       </OpenButton>
 
       {showModalBox && (
-        <Overlay onClick={() => setShowModalBox(false)}>
+        <Overlay
+          $transparent={transparent}
+          onClick={() => setShowModalBox(false)}
+        >
           <Modal onClick={(e) => e.stopPropagation()}>
+            <CancelBtn onClick={() => setShowModalBox(false)}>❌</CancelBtn>
             {type === "delete" && (
               <DeleteConfirmation
                 onCancel={() => setShowModalBox(false)}
@@ -35,12 +46,17 @@ export default function ModalBox({ type, children, ...restValues }) {
   );
 }
 
-const OpenButton = styled.button`
-  background-color: transparent;
-  color: white;
-  border: none;
-  padding: 0;
-  cursor: pointer;
+const OpenButton = styled(StyledBtn)`
+  ${({ $transparent }) =>
+    $transparent &&
+    css`
+      background-color: transparent;
+      font-weight: bold;
+      color: white;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+    `}
 `;
 
 const Overlay = styled.div`
@@ -63,4 +79,13 @@ const Modal = styled.div`
   position: relative;
   z-index: 10000;
   box-shadow: 0 8px 32px rgba(60, 40, 20, 0.18);
+`;
+
+const CancelBtn = styled.button`
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
 `;
