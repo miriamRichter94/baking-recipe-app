@@ -4,6 +4,7 @@ import BakingFormFields from "../RecipeFormular/BakingFormFields";
 import { calculateScalingFactor } from "@/lib/helper";
 
 export default function RecalculateBakingform({
+  closeModal,
   recipeId,
   bakingform,
   onAddRecalculatedRecipe,
@@ -16,7 +17,7 @@ export default function RecalculateBakingform({
     const scalingFactor = calculateScalingFactor(
       bakingform.shape,
       bakingform.diameter,
-      bakingform.widht,
+      bakingform.width,
       bakingform.length,
       formData.shape,
       formData?.diameter,
@@ -32,6 +33,8 @@ export default function RecalculateBakingform({
       formData?.length,
       scalingFactor.toFixed(2)
     );
+
+    closeModal();
   }
 
   return (

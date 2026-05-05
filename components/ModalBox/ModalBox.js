@@ -36,7 +36,10 @@ export default function ModalBox({
             )}
 
             {type === "recalculate" && (
-              <RecalculateBakingform {...restValues} />
+              <RecalculateBakingform
+                closeModal={() => setShowModalBox(false)}
+                {...restValues}
+              />
             )}
           </Modal>
         </Overlay>

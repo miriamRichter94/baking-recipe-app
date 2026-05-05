@@ -23,6 +23,9 @@ export default function ShoppingList({ recipesToShop, recalculatedRecipes }) {
   const shoppingList = calculateShoppingList(recipes, recalculatedRecipes);
   const recipeNames = recipes.map((r) => r.title).join(", ");
   const collectedCount = checked.length;
+  const recalculatedRecipes_inList = recipes.filter(
+    (recipe) => recalculatedRecipes[recipe._id]
+  );
 
   function handleCheck(key) {
     setChecked((prev) =>
@@ -46,7 +49,22 @@ export default function ShoppingList({ recipesToShop, recalculatedRecipes }) {
       <MetaRow>
         <GhostBtn onClick={handleClearChecked}>Clear checked</GhostBtn>
       </MetaRow>
-
+      {recalculatedRecipes_inList.length > 0 && (
+        <RecalculationHint>
+          {recalculatedRecipes_inList.map((recipe) => {
+            const recalc = recalculatedRecipes[recipe._id];
+            const panSize =
+              recalc.shape === "round"
+                ? `${recalc.diameter}cm round`
+                : `${recalc.width}x${recalc.length}cm rectangular`;
+            return (
+              <HintItem key={recipe._id}>
+                ⚠️ <strong>{recipe.title}</strong> is scaled for a {panSize} pan
+              </HintItem>
+            );
+          })}
+        </RecalculationHint>
+      )}
       <RecipeShoppingList
         shoppingList={shoppingList}
         recipeNames={recipeNames}
@@ -139,6 +157,23 @@ const EmptyTitle = styled.h2`
 `;
 
 const EmptyText = styled.p`
+  color: #8c7b6b;
+  margin: 0;
+`;
+
+const RecalculationHint = styled.div`
+  background: #fff8f0;
+  border: 1px solid #e8d5c4;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+`;
+
+const HintItem = styled.p`
+  font-size: 13px;
   color: #8c7b6b;
   margin: 0;
 `;
