@@ -25,7 +25,9 @@ export default function RecipeForm({ ingredients, units, recipe }) {
     recipe?.steps ?? [{ order: 1, instruction: "", image: "" }]
   );
 
-  const [recipeMainImage, setRecipeMainImage] = useState(recipe?.image ?? null);
+  const [recipeMainImage, setRecipeMainImage] = useState(
+    recipe?.image?.url ?? null
+  );
 
   function handleAddIngredient() {
     setRecipeIngredients([

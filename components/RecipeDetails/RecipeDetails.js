@@ -28,7 +28,7 @@ export default function RecipeDetails({
       <RecipeTopDetails>
         <ImageWrapper>
           <img
-            src={recipe.image || "/assets/no-image.png"}
+            src={recipe.image?.url || "/assets/no-image.png"}
             alt={recipe.title}
           />
 
@@ -189,9 +189,9 @@ export default function RecipeDetails({
                 <StepBadge>{step.order}</StepBadge>
                 <StepText>{step.instruction}</StepText>
               </StepItem>
-              {step.image && (
+              {step.image?.url && (
                 <StepImageWrap>
-                  <img src={step.image} alt={`Step ${step.order}`} />
+                  <img src={step.image.url} alt={`Step ${step.order}`} />
                 </StepImageWrap>
               )}
             </StepBlock>
