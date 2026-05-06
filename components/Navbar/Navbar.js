@@ -3,8 +3,14 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import DarkModeSwitch from "../DarkModeSwitch/DarkModeSwitch";
 
-export default function Navbar({ favoriteRecipes, recipesToShop }) {
+export default function Navbar({
+  favoriteRecipes,
+  recipesToShop,
+  isDarkMode,
+  handleToggleIsDarkMode,
+}) {
   const router = useRouter();
   const isHome = router.pathname === "/";
   const isFavorite = router.pathname === "/favorites";
@@ -38,8 +44,11 @@ export default function Navbar({ favoriteRecipes, recipesToShop }) {
             ← Back
           </NavBackButton>
           <NavTitle>{title}</NavTitle>
-          {/* spacer keeps the back button left-aligned */}
-          <div style={{ width: 60 }} />
+
+          <DarkModeSwitch
+            isDarkMode={isDarkMode}
+            onToggleDarkMode={handleToggleIsDarkMode}
+          />
         </>
       ) : (
         <>
@@ -91,6 +100,10 @@ export default function Navbar({ favoriteRecipes, recipesToShop }) {
               )}
               ShoppingList
             </NavLink>
+            <DarkModeSwitch
+              isDarkMode={isDarkMode}
+              onToggleDarkMode={handleToggleIsDarkMode}
+            />
           </NavLinks>
         </>
       )}
@@ -183,13 +196,16 @@ const NavLink = styled(Link)`
 
 // Back button shown on detail / form pages instead of the brand
 const NavBackButton = styled.button`
-  background: none;
-  border: none;
-  color: var(--color-brand);
-  font-size: 15px;
-  cursor: pointer;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  display: none;
+  @media (min-width: 641px) {
+    background: none;
+    border: none;
+    color: var(--color-brand);
+    font-size: 15px;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
 `;

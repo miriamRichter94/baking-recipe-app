@@ -13,6 +13,12 @@ export default createGlobalStyle`
   --color-border-alt: #c49a6c;
   --color-danger: #b5473a;
   --color-image-bg: #ede5da;
+  --color-overlay: rgba(61, 43, 31, 0.5);      /* modal backdrop */
+  --color-shadow: rgba(60, 40, 20, 0.07);       /* default card shadow */
+  --color-shadow-hover: rgba(60, 40, 20, 0.13); /* hover card shadow */
+  --color-shadow-strong: rgba(60, 40, 20, 0.18);/* modal shadow */
+  --color-brand-shadow: rgba(139, 94, 60, 0.35);/* FAB shadow */
+  --color-background-action-btn:rgba(255, 255, 255, 0.92);
   --heading-font: var(--font-heading), serif;
   --body-font: var(--font-body), system-ui, sans-serif;
 }
@@ -28,6 +34,12 @@ export default createGlobalStyle`
   --color-border-alt: #8b5e3c;
   --color-danger: #d4645a;
   --color-image-bg: #302a24;
+  --color-overlay: rgba(0, 0, 0, 0.65);          /* modal backdrop */
+  --color-shadow: rgba(0, 0, 0, 0.35);           /* default card shadow */
+  --color-shadow-hover: rgba(0, 0, 0, 0.5);      /* hover card shadow */
+  --color-shadow-strong: rgba(0, 0, 0, 0.65);    /* modal shadow */
+  --color-brand-shadow: rgba(196, 154, 108, 0.4);/* FAB shadow */
+  --color-background-action-btn: #c49a6c;
 }
 
   *,

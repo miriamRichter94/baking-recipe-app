@@ -249,7 +249,7 @@ const HeroIconBtn = styled.button`
   width: 38px;
   height: 38px;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.92);
+  background: var(--color-background-action-btn);
   border: none;
   display: flex;
   align-items: center;
@@ -343,22 +343,29 @@ const SectionHeading = styled.h2`
 `;
 
 const IngredientsSidebar = styled.div`
+  background: var(--color-surface-alt);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 12px var(--color-shadow);
+  align-self: start;
+  display: block;
   ${({ $activeTab }) =>
     $activeTab !== "Ingredients" &&
     css`
       display: none;
     `}
   @media (min-width: 641px) {
-    background: var(--recipe-card-background);
-    border-radius: 12px;
-    padding: 24px;
-    box-shadow: 0 2px 12px rgba(60, 40, 20, 0.07);
-    align-self: start;
     display: block;
   }
 `;
 
 const BakingStepWrapper = styled.div`
+  background: var(--color-surface-alt);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 12px var(--color-shadow);
+  align-self: start;
+  display: block;
   ${({ $activeTab }) =>
     $activeTab !== "Steps" &&
     css`

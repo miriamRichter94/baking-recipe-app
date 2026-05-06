@@ -36,7 +36,7 @@ const RecipeGroup = styled.div`
   background: var(--color-surface-alt);
   border-radius: 12px;
   padding: 20px 22px;
-  box-shadow: 0 2px 12px rgba(60, 40, 20, 0.07);
+  box-shadow: 0 2px 12px var(--color-shadow);
 `;
 
 const ForLabel = styled.p`

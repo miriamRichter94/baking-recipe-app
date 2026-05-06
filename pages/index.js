@@ -151,7 +151,7 @@ const FAB = styled.button`
   justify-content: center;
   font-size: 28px;
   font-weight: 300;
-  box-shadow: 0 4px 16px rgba(139, 94, 60, 0.35);
+  box-shadow: 0 4px 16px var(--color-brand-shadow);
   cursor: pointer;
   z-index: 20;
 

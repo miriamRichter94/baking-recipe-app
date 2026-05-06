@@ -100,10 +100,10 @@ const StyledLink = styled(Link)`
   display: block;
 `;
 const RecipeInformation = styled.div`
-  background: var(--recipe-card-background);
+  background: var(--color-surface-alt);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 2px 12px rgba(60, 40, 20, 0.07);
+  box-shadow: 0 2px 12px var(--color-shadow);
   cursor: pointer;
   display: flex;
   flex-direction: row;
@@ -112,7 +112,7 @@ const RecipeInformation = styled.div`
     transform 0.2s;
 
   &:hover {
-    box-shadow: 0 4px 20px rgba(60, 40, 20, 0.13);
+    box-shadow: 0 4px 20px var(--color-shadow-hover);
     transform: translateY(-2px);
   }
 
@@ -193,12 +193,13 @@ const StyledAction = styled(Link)`
   width: 30px;
   height: 30px;
   border-radius: 8px;
-  border: 1px solid black;
+  border: 1px solid var(--color-border);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 14px;
   text-decoration: none;
+  background-color: var(--color-brand);
 
   &:hover {
     box-shadow: 0 2px 8px rgba(60, 40, 20, 0.12);

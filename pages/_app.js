@@ -3,6 +3,7 @@ import GlobalStyle from "../styles/global-styles";
 import { Toaster } from "react-hot-toast";
 import Navbar from "@/components/Navbar/Navbar";
 import useLocalStorageState from "use-local-storage-state";
+import { useEffect } from "react";
 
 const fetcher = async (url) => {
   const res = await fetch(url);
@@ -31,6 +32,17 @@ export default function App({ Component, pageProps }) {
     "recalculatedRecipes",
     { defaultValue: {} }
   );
+  const [isDarkMode, setIsDarkMode] = useLocalStorageState("isDarkMode", {
+    defaultValue: false,
+  });
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark-mode");
+    } else {
+      document.documentElement.classList.remove("dark-mode");
+    }
+  }, [isDarkMode]);
 
   const safeFavorites = Array.isArray(favoriteRecipes) ? favoriteRecipes : [];
   const safeRecipesToShop = Array.isArray(recipesToShop) ? recipesToShop : [];
@@ -78,6 +90,10 @@ export default function App({ Component, pageProps }) {
     setRecalculatedRecipes(rest);
   }
 
+  function handleToggleIsDarkMode() {
+    setIsDarkMode(!isDarkMode);
+  }
+
   return (
     <>
       <GlobalStyle />
@@ -85,6 +101,8 @@ export default function App({ Component, pageProps }) {
       <Navbar
         favoriteRecipes={safeFavorites}
         recipesToShop={safeRecipesToShop}
+        isDarkMode={isDarkMode}
+        handleToggleIsDarkMode={handleToggleIsDarkMode}
       />
       <SWRConfig value={{ fetcher }}>
         <Component
