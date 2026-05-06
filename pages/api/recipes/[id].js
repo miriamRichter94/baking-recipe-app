@@ -1,5 +1,9 @@
 import dbConnect from "@/db/dbConnect";
 import Recipe from "@/db/models/recipe";
+import {
+  deleteRecipeImages,
+  deleteImageFromCloudinary,
+} from "@/lib/cloudinary";
 
 export default async function handler(request, response) {
   await dbConnect();
@@ -17,6 +21,33 @@ export default async function handler(request, response) {
     }
 
     if (request.method === "PUT") {
+      const existingRecipe = await Recipe.findById(id);
+
+      if (existingRecipe) {
+        // Main image replaced
+        const oldMainId = existingRecipe.image?.publicId;
+        const newMainId = request.body.image?.publicId;
+        if (oldMainId && oldMainId !== newMainId) {
+          await deleteImageFromCloudinary(oldMainId);
+        }
+
+        // Step images replaced
+        const oldSteps = existingRecipe.steps ?? [];
+        const newSteps = request.body.steps ?? [];
+
+        for (const oldStep of oldSteps) {
+          const oldPubId = oldStep.image?.publicId;
+          if (!oldPubId) continue;
+          const matchingNewStep = newSteps.find(
+            (s) => s.order === oldStep.order
+          );
+          const newPubId = matchingNewStep?.image?.publicId;
+          if (oldPubId !== newPubId) {
+            await deleteImageFromCloudinary(oldPubId);
+          }
+        }
+      }
+
       const updatedRecipe = await Recipe.findByIdAndUpdate(id, request.body, {
         new: true,
       });
@@ -29,9 +60,12 @@ export default async function handler(request, response) {
     }
 
     if (request.method === "DELETE") {
+      const recipe = await Recipe.findById(id);
+      if (recipe) {
+        await deleteRecipeImages(recipe);
+      }
       await Recipe.findByIdAndDelete(id);
-
-      response.status(200).json({ message: "Sucess!" });
+      response.status(200).json({ message: "Success!" });
       return;
     }
   } catch (error) {
