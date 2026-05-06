@@ -304,27 +304,6 @@ const StyledLegend = styled.legend`
   font-weight: 400;
 `;
 
-const ShapeToggleRow = styled.div`
-  display: flex;
-  gap: 10px;
-  margin-bottom: 14px;
-`;
-
-const ShapeToggleBtn = styled.button`
-  flex: 1;
-  padding: 10px 0;
-  text-align: center;
-  border-radius: 10px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  text-transform: capitalize;
-
-  background: ${({ $active }) => ($active ? "#8b5e3c" : "transparent")};
-  color: ${({ $active }) => ($active ? "#fff" : "#8c7b6b")};
-  border: ${({ $active }) => ($active ? "none" : "1px solid #e8ddd2")};
-`;
-
 export const AddRowBtn = styled.button`
   width: 100%;
   padding: 11px;
