@@ -1,12 +1,15 @@
 import { useRef } from "react";
 import styled from "styled-components";
+import ModalBox from "../ModalBox/ModalBox";
 
 export default function StepFields({ recipeStep, onChange, onRemove }) {
   const fileRef = useRef(null);
   const imageSrc = recipeStep.image
-    ? typeof recipeStep.image === "string"
-      ? recipeStep.image
-      : URL.createObjectURL(recipeStep.image)
+    ? typeof recipeStep.image === "object" && recipeStep.image.url
+      ? recipeStep.image.url
+      : recipeStep.image instanceof File
+        ? URL.createObjectURL(recipeStep.image)
+        : null
     : null;
 
   return (
@@ -43,12 +46,22 @@ export default function StepFields({ recipeStep, onChange, onRemove }) {
             <StepImagePreview>
               <img src={imageSrc} alt={`Step ${recipeStep.order}`} />
             </StepImagePreview>
-            <StepRemoveImageBtn
-              type="button"
-              onClick={() => onChange("image", "")}
-            >
-              Remove image
-            </StepRemoveImageBtn>
+            {recipeStep.image?.publicId ? (
+              <ModalBox
+                type="imageRemove"
+                styleType="imageRemove"
+                onConfirm={() => onChange("image", {})}
+              >
+                Remove image
+              </ModalBox>
+            ) : (
+              <StepRemoveImageBtn
+                type="button"
+                onClick={() => onChange("image", {})}
+              >
+                Remove image
+              </StepRemoveImageBtn>
+            )}
           </>
         ) : (
           <StepAddPhotoBtn

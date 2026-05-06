@@ -13,14 +13,12 @@ import { addRecipe, editRecipe } from "@/services/recipeServices";
 import { uploadImage } from "@/services/imageService";
 import styled from "styled-components";
 import BakingFormFields from "./BakingFormFields";
+import ModalBox from "../ModalBox/ModalBox";
 
 export default function RecipeForm({ ingredients, units, recipe }) {
   const router = useRouter();
   const isEdit = !!recipe;
 
-  const [selectedShape, setSelectedShape] = useState(
-    recipe?.bakingForm?.shape ?? "round"
-  );
   const [recipeIngredients, setRecipeIngredients] = useState(
     setRecipeIngredientsForForm(recipe?.ingredients)
   );
@@ -28,7 +26,9 @@ export default function RecipeForm({ ingredients, units, recipe }) {
     recipe?.steps ?? [{ order: 1, instruction: "", image: "" }]
   );
 
-  const [recipeMainImage, setRecipeMainImage] = useState(recipe?.image ?? null);
+  const [recipeMainImage, setRecipeMainImage] = useState(
+    recipe?.image?.url ?? null
+  );
 
   function handleAddIngredient() {
     setRecipeIngredients([
@@ -64,14 +64,14 @@ export default function RecipeForm({ ingredients, units, recipe }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    let urlRecipePicture;
+    let imageData = {};
     const formDataObject = new FormData(event.target);
     const formData = Object.fromEntries(formDataObject);
 
     if (formData.image && formData.image.size > 0) {
-      ({ url: urlRecipePicture } = await uploadImage(formData.image));
+      imageData = await uploadImage(formData.image);
     } else {
-      urlRecipePicture = recipe?.image ?? "";
+      imageData = recipe?.image ?? {};
     }
 
     const updatedSteps = await uploadRecipeStepImages(recipeSteps);
@@ -79,7 +79,7 @@ export default function RecipeForm({ ingredients, units, recipe }) {
       formData,
       recipeIngredients,
       updatedSteps,
-      urlRecipePicture
+      imageData
     );
 
     if (!isEdit) {
@@ -87,7 +87,7 @@ export default function RecipeForm({ ingredients, units, recipe }) {
       router.push("/");
     } else {
       await editRecipe(recipeData, recipe._id);
-      router.push(`/recipe/${recipe._id}`);
+      router.replace(`/recipe/${recipe._id}`);
     }
   }
 
@@ -130,12 +130,22 @@ export default function RecipeForm({ ingredients, units, recipe }) {
           <ImagePreview>
             <img src={recipeMainImage} alt="Recipe Image" />
           </ImagePreview>
-          <RemoveImagePreviewBtn
-            type="button"
-            onClick={() => setRecipeMainImage(null)}
-          >
-            Remove image
-          </RemoveImagePreviewBtn>
+          {recipe?.image?.publicId && recipeMainImage === recipe.image.url ? (
+            <ModalBox
+              type="imageRemove"
+              styleType="imageRemove"
+              onConfirm={() => setRecipeMainImage(null)}
+            >
+              Remove image
+            </ModalBox>
+          ) : (
+            <RemoveImagePreviewBtn
+              type="button"
+              onClick={() => setRecipeMainImage(null)}
+            >
+              Remove image
+            </RemoveImagePreviewBtn>
+          )}
         </>
       ) : (
         <>
@@ -305,27 +315,6 @@ const StyledLegend = styled.legend`
   font-size: 18px;
   padding: 0 8px;
   font-weight: 400;
-`;
-
-const ShapeToggleRow = styled.div`
-  display: flex;
-  gap: 10px;
-  margin-bottom: 14px;
-`;
-
-const ShapeToggleBtn = styled.button`
-  flex: 1;
-  padding: 10px 0;
-  text-align: center;
-  border-radius: 10px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  text-transform: capitalize;
-
-  background: ${({ $active }) => ($active ? "#8b5e3c" : "transparent")};
-  color: ${({ $active }) => ($active ? "#fff" : "#8c7b6b")};
-  border: ${({ $active }) => ($active ? "none" : "1px solid #e8ddd2")};
 `;
 
 export const AddRowBtn = styled.button`

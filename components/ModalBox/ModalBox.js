@@ -3,10 +3,11 @@ import styled, { css } from "styled-components";
 import { useState } from "react";
 import RecalculateBakingform from "../RecalculateBakingform/RecalculateBakingform";
 import { StyledBtn } from "../Button/StyledButton";
+import ImageReplaceConfirmation from "../ImageReplaceConfirmation/ImageReplaceConfirmation";
 
 export default function ModalBox({
   type,
-  transparent = false,
+  styleType = "",
   children,
   ...restValues
 }) {
@@ -14,18 +15,15 @@ export default function ModalBox({
   return (
     <>
       <OpenButton
-        $transparent={transparent}
-        aria-label="delete recipe"
+        type="button"
+        $styleType={styleType}
         onClick={() => setShowModalBox(true)}
       >
         {children}
       </OpenButton>
 
       {showModalBox && (
-        <Overlay
-          $transparent={transparent}
-          onClick={() => setShowModalBox(false)}
-        >
+        <Overlay onClick={() => setShowModalBox(false)}>
           <Modal onClick={(e) => e.stopPropagation()}>
             <CancelBtn onClick={() => setShowModalBox(false)}>❌</CancelBtn>
             {type === "delete" && (
@@ -41,6 +39,13 @@ export default function ModalBox({
                 {...restValues}
               />
             )}
+
+            {type === "imageRemove" && (
+              <ImageReplaceConfirmation
+                onCancel={() => setShowModalBox(false)}
+                {...restValues}
+              />
+            )}
           </Modal>
         </Overlay>
       )}
@@ -49,8 +54,8 @@ export default function ModalBox({
 }
 
 const OpenButton = styled(StyledBtn)`
-  ${({ $transparent }) =>
-    $transparent &&
+  ${({ $styleType }) =>
+    $styleType === "transparent" &&
     css`
       background-color: transparent;
       font-weight: bold;
@@ -58,6 +63,20 @@ const OpenButton = styled(StyledBtn)`
       border: none;
       padding: 0;
       cursor: pointer;
+    `}
+
+  ${({ $styleType }) =>
+    $styleType === "imageRemove" &&
+    css`
+      background: none;
+      border: none;
+      font-size: 12px;
+      color: #b5473a;
+      cursor: pointer;
+      padding: 0;
+      margin-top: 4px;
+      margin-bottom: 15px;
+      display: inline-block;
     `}
 `;
 

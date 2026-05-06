@@ -11,5 +11,6 @@ export async function uploadImage(image) {
   if (!response.ok) throw new Error("Failed to upload Image");
 
   toast.success("Image successfully saved!");
-  return response.json();
+  const data = await response.json();
+  return { url: data.secure_url, publicId: data.public_id };
 }

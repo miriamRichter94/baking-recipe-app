@@ -28,7 +28,7 @@ export default function RecipeDetails({
       <RecipeTopDetails>
         <ImageWrapper>
           <img
-            src={recipe.image || "/assets/no-image.png"}
+            src={recipe.image?.url || "/assets/no-image.png"}
             alt={recipe.title}
           />
 
@@ -48,7 +48,11 @@ export default function RecipeDetails({
             />
           </HeroEditBtn>
           <HeroDelete as="div">
-            <ModalBox type="delete" transparent={true} recipeId={recipe._id}>
+            <ModalBox
+              type="delete"
+              styleType="transparent"
+              recipeId={recipe._id}
+            >
               <Image
                 src="/assets/garbage.png"
                 width={25}
@@ -189,9 +193,9 @@ export default function RecipeDetails({
                 <StepBadge>{step.order}</StepBadge>
                 <StepText>{step.instruction}</StepText>
               </StepItem>
-              {step.image && (
+              {step.image?.url && (
                 <StepImageWrap>
-                  <img src={step.image} alt={`Step ${step.order}`} />
+                  <img src={step.image.url} alt={`Step ${step.order}`} />
                 </StepImageWrap>
               )}
             </StepBlock>

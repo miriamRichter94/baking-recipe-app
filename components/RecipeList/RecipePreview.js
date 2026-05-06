@@ -17,8 +17,8 @@ export default function RecipePreview({
         <RecipeInformation>
           <ImageWrapper>
             <StyledImage
-              $imageavailable={!!recipe.image}
-              src={recipe.image || "/assets/no-image.png"}
+              $imageavailable={!!recipe.image?.url}
+              src={recipe.image?.url || "/assets/no-image.png"}
               alt={`Picture of a ${recipe.title}`}
             />
           </ImageWrapper>
@@ -71,7 +71,7 @@ export default function RecipePreview({
         <StyledAction as="div">
           <ModalBox
             type="delete"
-            transparent={true}
+            styleType="transparent"
             recipeId={recipe._id}
             aria-label="Delete Recipe"
           >
