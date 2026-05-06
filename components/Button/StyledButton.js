@@ -25,35 +25,35 @@ export default function StyledButton({
 
 const variantStyles = {
   primary: css`
-    background: #8b5e3c;
-    color: #fff;
+    background: var(--color-brand);
+    color: var(--color-surface-alt);
     border-radius: 8px;
     padding: 10px 20px;
     border: none;
   `,
   secondary: css`
     background: none;
-    border: 1px solid #e8ddd2;
-    color: #3d2b1f;
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
     border-radius: 8px;
     padding: 10px 20px;
   `,
   danger: css`
     background: none;
-    border: 1px solid #b5473a;
-    color: #b5473a;
+    border: 1px solid var(--color-danger);
+    color: var(--color-danger);
     border-radius: 8px;
     padding: 10px 20px;
   `,
   ghost: css`
     background: none;
     border: none;
-    color: #8b5e3c;
+    color: var(--color-brand);
     padding: 0;
   `,
   pill: css`
-    background: #8b5e3c;
-    color: #fff;
+    background: var(--color-brand);
+    color: var(--color-surface-alt);
     border-radius: 40px;
     padding: 12px 28px;
     border: none;

@@ -219,7 +219,7 @@ const RecipeTopDetails = styled.div`
 const ImageWrapper = styled.div`
   width: 100%;
   height: 260px;
-  background: #ede5da;
+  background: var(--color-image-bg);
   overflow: hidden;
 
   img {
@@ -231,7 +231,7 @@ const ImageWrapper = styled.div`
   @media (min-width: 641px) {
     width: 100%;
     height: 340px;
-    background: #ede5da;
+    background: var(--color-image-bg);
     border-radius: 12px;
     overflow: hidden;
 
@@ -249,7 +249,7 @@ const HeroIconBtn = styled.button`
   width: 38px;
   height: 38px;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.92);
+  background: var(--color-background-action-btn);
   border: none;
   display: flex;
   align-items: center;
@@ -314,7 +314,7 @@ const MobileMetaDataWrapper = styled.div`
 const RecipeBottomDetails = styled.div`
   padding: 20px 20px 32px;
   margin-top: -20px;
-  background: #faf6f1;
+  background: var(--color-surface);
   border-radius: 20px 20px 0 0;
   position: relative;
 
@@ -343,22 +343,29 @@ const SectionHeading = styled.h2`
 `;
 
 const IngredientsSidebar = styled.div`
+  background: var(--color-surface-alt);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 12px var(--color-shadow);
+  align-self: start;
+  display: block;
   ${({ $activeTab }) =>
     $activeTab !== "Ingredients" &&
     css`
       display: none;
     `}
   @media (min-width: 641px) {
-    background: var(--recipe-card-background);
-    border-radius: 12px;
-    padding: 24px;
-    box-shadow: 0 2px 12px rgba(60, 40, 20, 0.07);
-    align-self: start;
     display: block;
   }
 `;
 
 const BakingStepWrapper = styled.div`
+  background: var(--color-surface-alt);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 12px var(--color-shadow);
+  align-self: start;
+  display: block;
   ${({ $activeTab }) =>
     $activeTab !== "Steps" &&
     css`
@@ -374,12 +381,13 @@ const IngredientRow = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 14px 0;
-  border-bottom: ${({ $last }) => ($last ? "none" : "1px solid #e8ddd2")};
+  border-bottom: ${({ $last }) =>
+    $last ? "none" : "1px solid var(--color-border)"};
   font-size: 15px;
 `;
 
 const IngredientAmount = styled.span`
-  color: #8b5e3c;
+  color: var(--color-brand);
   font-weight: 600;
 `;
 
@@ -399,8 +407,8 @@ const StepBadge = styled.div`
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: #e8d5c4;
-  color: #8b5e3c;
+  background: var(--color-brand-light);
+  color: var(--color-brand);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -411,8 +419,8 @@ const StepBadge = styled.div`
   @media (min-width: 641px) {
     width: 36px;
     height: 36px;
-    background: #8b5e3c;
-    color: #fff;
+    background: var(--color-brand);
+    color: var(--color-surface-alt);
     font-size: 15px;
     font-weight: 600;
   }

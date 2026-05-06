@@ -108,7 +108,7 @@ const PageTitle = styled.h1`
   font-size: 28px;
   margin: 0 0 8px;
   font-weight: 400;
-  color: #3d2b1f;
+  color: var(--color-text);
   white-space: pre-line;
 
   @media (min-width: 641px) {
@@ -117,7 +117,7 @@ const PageTitle = styled.h1`
 `;
 
 const PageSubtitle = styled.p`
-  color: #8c7b6b;
+  color: var(--color-text-muted);
   font-size: 15px;
   margin: 0;
 
@@ -143,15 +143,15 @@ const FAB = styled.button`
   width: 56px;
   height: 56px;
   border-radius: 16px;
-  background: #8b5e3c;
-  color: #fff;
+  background: var(--color-brand);
+  color: var(--color-surface-alt);
   border: none;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 28px;
   font-weight: 300;
-  box-shadow: 0 4px 16px rgba(139, 94, 60, 0.35);
+  box-shadow: 0 4px 16px var(--color-brand-shadow);
   cursor: pointer;
   z-index: 20;
 
@@ -173,17 +173,17 @@ const SearchWrapper = styled.div`
 const SearchInput = styled.input`
   width: 100%;
   padding: 12px 18px;
-  border: 1px solid #e8ddd2;
+  border: 1px solid var(--color-border);
   border-radius: 40px;
   font-size: 15px;
   font-family: var(--font-body), sans-serif;
-  background: #ffffff;
+  background: var(--color-surface-alt);
   outline: none;
   box-sizing: border-box;
-  color: #3d2b1f;
+  color: var(--color-text);
 
   &::placeholder {
-    color: #8c7b6b;
+    color: var(--color-text-muted);
   }
 
   @media (min-width: 641px) {
@@ -196,5 +196,5 @@ const SearchLabel = styled.label`
   font-size: 13px;
   font-weight: 600;
   margin-bottom: 8px;
-  color: #8c7b6b;
+  color: var(--color-text-muted);
 `;

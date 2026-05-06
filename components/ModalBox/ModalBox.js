@@ -71,7 +71,7 @@ const OpenButton = styled(StyledBtn)`
       background: none;
       border: none;
       font-size: 12px;
-      color: #b5473a;
+      color: var(--color-danger);
       cursor: pointer;
       padding: 0;
       margin-top: 4px;
@@ -83,7 +83,7 @@ const OpenButton = styled(StyledBtn)`
 const Overlay = styled.div`
   position: fixed;
   inset: 0;
-  background: rgba(61, 43, 31, 0.5);
+  background: var(--color-overlay);
   z-index: 9999;
   display: flex;
   justify-content: center;
@@ -91,7 +91,7 @@ const Overlay = styled.div`
 `;
 
 const Modal = styled.div`
-  background: #ffffff;
+  background: var(--color-surface-alt);
   padding: 28px 24px;
   width: 380px;
   max-height: 90vh;
@@ -99,7 +99,7 @@ const Modal = styled.div`
   border-radius: 16px;
   position: relative;
   z-index: 10000;
-  box-shadow: 0 8px 32px rgba(60, 40, 20, 0.18);
+  box-shadow: 0 8px 32px var(--color-shadow-strong);
 `;
 
 const CancelBtn = styled.button`
