@@ -3,7 +3,7 @@ import styled from "styled-components";
 export default function ImageReplaceConfirmation({ onCancel, onConfirm }) {
   return (
     <ConfirmationWrapper>
-      <ConfirmTitle>Delete recipe?</ConfirmTitle>
+      <ConfirmTitle>Delete / Replace Image?</ConfirmTitle>
       <ConfirmText>
         Are you sure you want to delete / replace that image? This action cannot
         be undone.

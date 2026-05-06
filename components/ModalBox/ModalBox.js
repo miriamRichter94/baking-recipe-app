@@ -17,7 +17,6 @@ export default function ModalBox({
       <OpenButton
         type="button"
         $styleType={styleType}
-        aria-label="delete recipe"
         onClick={() => setShowModalBox(true)}
       >
         {children}
