@@ -33,7 +33,7 @@ export default function RecipeShoppingList({
 }
 
 const RecipeGroup = styled.div`
-  background: #ffffff;
+  background: var(--color-surface-alt);
   border-radius: 12px;
   padding: 20px 22px;
   box-shadow: 0 2px 12px rgba(60, 40, 20, 0.07);
@@ -67,7 +67,7 @@ const Checkbox = styled.input`
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  border: 1.5px solid #c49a6c;
+  border: 1.5px solid var(--color-border-alt);
   cursor: pointer;
   accent-color: var(--color-brand);
   flex-shrink: 0;

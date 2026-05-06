@@ -64,6 +64,6 @@ const MetaTag = styled.span`
   border-radius: 40px;
   font-size: 12px;
   font-weight: 600;
-  background: #e8d5c4;
+  background: var(--color-brand-light);
   color: var(--color-brand);
 `;

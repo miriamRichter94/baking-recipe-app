@@ -10,10 +10,24 @@ export default createGlobalStyle`
   --color-surface: #faf6f1;
   --color-surface-alt: #fdfdfd;
   --color-border: #e8ddd2;
+  --color-border-alt: #c49a6c;
   --color-danger: #b5473a;
-  --radius: 12px;
+  --color-image-bg: #ede5da;
   --heading-font: var(--font-heading), serif;
   --body-font: var(--font-body), system-ui, sans-serif;
+}
+
+:root.dark-mode{
+    --color-brand: #c49a6c;
+  --color-brand-light: #3d3028;
+  --color-text: #ede5da;
+  --color-text-muted: #9b8a7e;
+  --color-surface: #1c1815;
+  --color-surface-alt: #282320;
+  --color-border: #3a332c;
+  --color-border-alt: #8b5e3c;
+  --color-danger: #d4645a;
+  --color-image-bg: #302a24;
 }
 
   *,

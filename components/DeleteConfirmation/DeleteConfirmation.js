@@ -56,7 +56,7 @@ const ConfirmActions = styled.div`
 
 const DeleteBtn = styled.button`
   background: var(--color-danger);
-  color: #fff;
+  color: var(--color-surface-alt);
   border: none;
   border-radius: 8px;
   padding: 12px 20px;

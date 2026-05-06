@@ -117,7 +117,7 @@ const StepAddPhotoBtn = styled.button`
   border: 1px dashed var(--color-border);
   border-radius: 8px;
   padding: 8px 14px;
-  color: #c49a6c;
+  color: var(--color-border-alt);
   font-size: 13px;
   cursor: pointer;
   margin-top: 8px;
@@ -140,7 +140,7 @@ const StepBadge = styled.div`
   width: 26px;
   height: 26px;
   border-radius: 50%;
-  background: #e8d5c4;
+  background: var(--color-brand-light);
   color: var(--color-brand);
   display: flex;
   align-items: center;
@@ -154,7 +154,7 @@ const StepBadge = styled.div`
     width: 30px;
     height: 30px;
     background: var(--color-brand);
-    color: #fff;
+    color: var(--color-surface-alt);
     font-size: 13px;
     margin-top: 6px;
   }
@@ -166,7 +166,7 @@ const StepTextarea = styled.textarea`
   border: 1px solid var(--color-border);
   border-radius: 8px;
   font-size: 14px;
-  background: #fff;
+  background: var(--color-surface-alt);
   resize: vertical;
   outline: none;
   color: var(--color-text);

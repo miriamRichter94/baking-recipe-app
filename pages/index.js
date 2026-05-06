@@ -144,7 +144,7 @@ const FAB = styled.button`
   height: 56px;
   border-radius: 16px;
   background: var(--color-brand);
-  color: #fff;
+  color: var(--color-surface-alt);
   border: none;
   display: flex;
   align-items: center;
@@ -177,7 +177,7 @@ const SearchInput = styled.input`
   border-radius: 40px;
   font-size: 15px;
   font-family: var(--font-body), sans-serif;
-  background: #ffffff;
+  background: var(--color-surface-alt);
   outline: none;
   box-sizing: border-box;
   color: var(--color-text);

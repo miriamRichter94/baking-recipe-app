@@ -116,7 +116,7 @@ const PageTitle = styled.h1`
 `;
 
 const CounterPill = styled.span`
-  background: #e8d5c4;
+  background: var(--color-brand-light);
   color: var(--color-brand);
   font-size: 13px;
   font-weight: 600;
@@ -162,8 +162,8 @@ const EmptyText = styled.p`
 `;
 
 const RecalculationHint = styled.div`
-  background: #fff8f0;
-  border: 1px solid #e8d5c4;
+  background: var(--color-surface-alt) 8f0;
+  border: 1px solid var(--color-brand-light);
   border-radius: 10px;
   padding: 12px 16px;
   margin-bottom: 20px;

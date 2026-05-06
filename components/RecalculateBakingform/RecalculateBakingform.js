@@ -76,7 +76,7 @@ const HintText = styled.p`
 
 const StyledFieldset = styled.fieldset`
   min-width: 0;
-  background: #ffffff;
+  background: var(--color-surface-alt);
   border-radius: 12px;
   padding: 18px;
   margin-bottom: 20px;

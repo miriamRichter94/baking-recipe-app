@@ -26,7 +26,7 @@ export default function StyledButton({
 const variantStyles = {
   primary: css`
     background: var(--color-brand);
-    color: #fff;
+    color: var(--color-surface-alt);
     border-radius: 8px;
     padding: 10px 20px;
     border: none;
@@ -53,7 +53,7 @@ const variantStyles = {
   `,
   pill: css`
     background: var(--color-brand);
-    color: #fff;
+    color: var(--color-surface-alt);
     border-radius: 40px;
     padding: 12px 28px;
     border: none;

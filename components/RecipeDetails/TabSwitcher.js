@@ -36,7 +36,8 @@ export const Tab = styled.div`
   transition: all 0.2s;
 
   font-weight: ${({ $active }) => ($active ? 600 : 400)};
-  background: ${({ $active }) => ($active ? "#ffffff" : "transparent")};
+  background: ${({ $active }) =>
+    $active ? "var(--color-surface-alt)" : "transparent"};
   color: ${({ $active }) =>
     $active ? "var(--color-text)" : "var(--color-text-muted)"};
   box-shadow: ${({ $active }) =>

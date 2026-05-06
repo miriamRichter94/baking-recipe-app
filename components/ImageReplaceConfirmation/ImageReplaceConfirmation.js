@@ -51,7 +51,7 @@ const ConfirmActions = styled.div`
 
 const ConfirmBtn = styled.button`
   background: var(--color-danger);
-  color: #fff;
+  color: var(--color-surface-alt);
   border: none;
   border-radius: 8px;
   padding: 12px 20px;

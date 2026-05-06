@@ -64,7 +64,7 @@ const inputBase = css`
   border: 1px solid var(--color-border);
   border-radius: 8px;
   font-size: 15px;
-  background: #ffffff;
+  background: var(--color-surface-alt);
   box-sizing: border-box;
   outline: none;
   color: var(--color-text);

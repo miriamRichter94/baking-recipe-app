@@ -91,7 +91,7 @@ const Overlay = styled.div`
 `;
 
 const Modal = styled.div`
-  background: #ffffff;
+  background: var(--color-surface-alt);
   padding: 28px 24px;
   width: 380px;
   max-height: 90vh;

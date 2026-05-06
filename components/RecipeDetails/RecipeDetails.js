@@ -219,7 +219,7 @@ const RecipeTopDetails = styled.div`
 const ImageWrapper = styled.div`
   width: 100%;
   height: 260px;
-  background: #ede5da;
+  background: var(--color-image-bg);
   overflow: hidden;
 
   img {
@@ -231,7 +231,7 @@ const ImageWrapper = styled.div`
   @media (min-width: 641px) {
     width: 100%;
     height: 340px;
-    background: #ede5da;
+    background: var(--color-image-bg);
     border-radius: 12px;
     overflow: hidden;
 
@@ -374,7 +374,8 @@ const IngredientRow = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 14px 0;
-  border-bottom: ${({ $last }) => ($last ? "none" : "1px solid #e8ddd2")};
+  border-bottom: ${({ $last }) =>
+    $last ? "none" : "1px solid var(--color-border)"};
   font-size: 15px;
 `;
 
@@ -399,7 +400,7 @@ const StepBadge = styled.div`
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: #e8d5c4;
+  background: var(--color-brand-light);
   color: var(--color-brand);
   display: flex;
   align-items: center;
@@ -412,7 +413,7 @@ const StepBadge = styled.div`
     width: 36px;
     height: 36px;
     background: var(--color-brand);
-    color: #fff;
+    color: var(--color-surface-alt);
     font-size: 15px;
     font-weight: 600;
   }

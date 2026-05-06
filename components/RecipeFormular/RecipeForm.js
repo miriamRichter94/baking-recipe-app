@@ -234,7 +234,7 @@ const PhotoUploadMobile = styled.div`
   border-radius: 12px;
   padding: 36px;
   text-align: center;
-  background: #ffffff;
+  background: var(--color-surface-alt);
   color: var(--color-text-muted);
   font-size: 14px;
   margin-bottom: 28px;
@@ -295,7 +295,7 @@ const RemoveImagePreviewBtn = styled.button`
 
 const StyledFieldset = styled.fieldset`
   min-width: 0;
-  background: #ffffff;
+  background: var(--color-surface-alt);
   border-radius: 12px;
   padding: 18px;
   margin-bottom: 20px;
@@ -318,7 +318,7 @@ export const AddRowBtn = styled.button`
   width: 100%;
   padding: 11px;
   border-radius: 10px;
-  border: 1.5px dashed #c49a6c;
+  border: 1.5px dashed var(--color-border-alt);
   background: transparent;
   color: var(--color-brand);
   font-size: 14px;
@@ -328,7 +328,7 @@ export const AddRowBtn = styled.button`
   @media (min-width: 641px) {
     width: auto;
     background: none;
-    border: 1px dashed #c49a6c;
+    border: 1px dashed var(--color-border-alt);
     border-radius: 8px;
     padding: 10px 16px;
     color: var(--color-brand);

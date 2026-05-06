@@ -29,6 +29,6 @@ const Ingredient = styled.span`
   font-weight: 500;
   padding: 3px 10px;
   border-radius: 40px;
-  background: #e8d5c4;
+  background: var(--color-brand-light);
   color: var(--color-brand);
 `;
