@@ -71,7 +71,7 @@ const OpenButton = styled(StyledBtn)`
       background: none;
       border: none;
       font-size: 12px;
-      color: #b5473a;
+      color: var(--color-danger);
       cursor: pointer;
       padding: 0;
       margin-top: 4px;

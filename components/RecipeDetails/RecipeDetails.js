@@ -314,7 +314,7 @@ const MobileMetaDataWrapper = styled.div`
 const RecipeBottomDetails = styled.div`
   padding: 20px 20px 32px;
   margin-top: -20px;
-  background: #faf6f1;
+  background: var(--color-surface);
   border-radius: 20px 20px 0 0;
   position: relative;
 
@@ -379,7 +379,7 @@ const IngredientRow = styled.div`
 `;
 
 const IngredientAmount = styled.span`
-  color: #8b5e3c;
+  color: var(--color-brand);
   font-weight: 600;
 `;
 
@@ -400,7 +400,7 @@ const StepBadge = styled.div`
   height: 32px;
   border-radius: 50%;
   background: #e8d5c4;
-  color: #8b5e3c;
+  color: var(--color-brand);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -411,7 +411,7 @@ const StepBadge = styled.div`
   @media (min-width: 641px) {
     width: 36px;
     height: 36px;
-    background: #8b5e3c;
+    background: var(--color-brand);
     color: #fff;
     font-size: 15px;
     font-weight: 600;

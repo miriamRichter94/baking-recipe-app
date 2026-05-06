@@ -2,20 +2,19 @@ import { createGlobalStyle } from "styled-components";
 
 export default createGlobalStyle`
 
-:root{
-  --background: #FAF6F1;
-  --text-muted: #8C7B6B;
-  --text-color: #3d2b1f;
-  --border: #E8DDD2;
-  --danger: #B5473A;
+:root {
+  --color-brand: #8b5e3c;
+  --color-brand-light: #e8d5c4;
+  --color-text: #3d2b1f;
+  --color-text-muted: #8c7b6b;
+  --color-surface: #faf6f1;
+  --color-surface-alt: #fdfdfd;
+  --color-border: #e8ddd2;
+  --color-danger: #b5473a;
   --radius: 12px;
   --heading-font: var(--font-heading), serif;
   --body-font: var(--font-body), system-ui, sans-serif;
-  --nav-font-color: #8b5e3c;
-  --recipe-card-background: #fdfdfd;
-
 }
-
 
   *,
   *::before,
@@ -25,9 +24,9 @@ export default createGlobalStyle`
 
   body {
     font-family: var(--body-font);
-    background: var(--background);
-    color: var(--text-color);
-  min-height: 100vh;
+    background: var(--color-surface);
+    color: var(--color-text);
+    min-height: 100vh;
   }
 
   button, input, select, textarea {

@@ -55,23 +55,23 @@ export const FieldLabel = styled.label`
   font-size: 13px;
   font-weight: 600;
   margin-bottom: 8px;
-  color: #8c7b6b;
+  color: var(--color-text-muted);
 `;
 
 const inputBase = css`
   width: 100%;
   padding: 12px 14px;
-  border: 1px solid #e8ddd2;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   font-size: 15px;
   background: #ffffff;
   box-sizing: border-box;
   outline: none;
-  color: #3d2b1f;
+  color: var(--color-text);
   transition: border-color 0.2s;
 
   &:focus {
-    border-color: #8b5e3c;
+    border-color: var(--color-brand);
   }
 
   @media (min-width: 641px) {

@@ -120,7 +120,7 @@ export default function RecipeForm({ ingredients, units, recipe }) {
           fontSize: 13,
           fontWeight: 600,
           marginBottom: 8,
-          color: "#8c7b6b",
+          color: "var(--color-text-muted)",
         }}
       >
         Recipe Image
@@ -230,12 +230,12 @@ const StyledForm = styled.form`
 `;
 
 const PhotoUploadMobile = styled.div`
-  border: 2px dashed #e8ddd2;
+  border: 2px dashed var(--color-border);
   border-radius: 12px;
   padding: 36px;
   text-align: center;
   background: #ffffff;
-  color: #8c7b6b;
+  color: var(--color-text-muted);
   font-size: 14px;
   margin-bottom: 28px;
   cursor: pointer;
@@ -258,7 +258,7 @@ const PhotoIconBox = styled.div`
 
 const PhotoUploadLabel = styled.span`
   font-size: 13px;
-  color: #8b5e3c;
+  color: var(--color-brand);
   font-weight: 500;
 `;
 
@@ -285,7 +285,7 @@ const RemoveImagePreviewBtn = styled.button`
   background: none;
   border: none;
   font-size: 12px;
-  color: #b5473a;
+  color: var(--color-danger);
   cursor: pointer;
   padding: 0;
   margin-top: 4px;
@@ -299,14 +299,11 @@ const StyledFieldset = styled.fieldset`
   border-radius: 12px;
   padding: 18px;
   margin-bottom: 20px;
-  border: 1px solid #e8ddd2;
+  border: 1px solid var(--color-border);
 
   @media (min-width: 641px) {
-    border: 1px solid #e8ddd2;
-    border-radius: 12px;
     padding: 22px;
     margin-bottom: 28px;
-    background: #ffffff;
   }
 `;
 
@@ -321,9 +318,9 @@ export const AddRowBtn = styled.button`
   width: 100%;
   padding: 11px;
   border-radius: 10px;
-  border: 1.5px dashed #e8d5c4;
+  border: 1.5px dashed #c49a6c;
   background: transparent;
-  color: #8b5e3c;
+  color: var(--color-brand);
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
@@ -334,7 +331,7 @@ export const AddRowBtn = styled.button`
     border: 1px dashed #c49a6c;
     border-radius: 8px;
     padding: 10px 16px;
-    color: #8b5e3c;
+    color: var(--color-brand);
     font-size: 14px;
     cursor: pointer;
   }

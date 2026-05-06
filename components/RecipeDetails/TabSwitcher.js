@@ -16,7 +16,7 @@ export default function TabSwitcher({ tabs, active, onChange }) {
 
 export const TabTrack = styled.div`
   display: flex;
-  background: #e8ddd2;
+  background: var(--color-border);
   border-radius: 12px;
   padding: 4px;
   margin-bottom: 20px;
@@ -37,7 +37,8 @@ export const Tab = styled.div`
 
   font-weight: ${({ $active }) => ($active ? 600 : 400)};
   background: ${({ $active }) => ($active ? "#ffffff" : "transparent")};
-  color: ${({ $active }) => ($active ? "#3d2b1f" : "#8c7b6b")};
+  color: ${({ $active }) =>
+    $active ? "var(--color-text)" : "var(--color-text-muted)"};
   box-shadow: ${({ $active }) =>
     $active ? "0 1px 4px rgba(0,0,0,0.06)" : "none"};
 `;

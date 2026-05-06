@@ -108,7 +108,7 @@ const PageTitle = styled.h1`
   font-size: 28px;
   margin: 0 0 8px;
   font-weight: 400;
-  color: #3d2b1f;
+  color: var(--color-text);
   white-space: pre-line;
 
   @media (min-width: 641px) {
@@ -117,7 +117,7 @@ const PageTitle = styled.h1`
 `;
 
 const PageSubtitle = styled.p`
-  color: #8c7b6b;
+  color: var(--color-text-muted);
   font-size: 15px;
   margin: 0;
 
@@ -143,7 +143,7 @@ const FAB = styled.button`
   width: 56px;
   height: 56px;
   border-radius: 16px;
-  background: #8b5e3c;
+  background: var(--color-brand);
   color: #fff;
   border: none;
   display: flex;
@@ -173,17 +173,17 @@ const SearchWrapper = styled.div`
 const SearchInput = styled.input`
   width: 100%;
   padding: 12px 18px;
-  border: 1px solid #e8ddd2;
+  border: 1px solid var(--color-border);
   border-radius: 40px;
   font-size: 15px;
   font-family: var(--font-body), sans-serif;
   background: #ffffff;
   outline: none;
   box-sizing: border-box;
-  color: #3d2b1f;
+  color: var(--color-text);
 
   &::placeholder {
-    color: #8c7b6b;
+    color: var(--color-text-muted);
   }
 
   @media (min-width: 641px) {
@@ -196,5 +196,5 @@ const SearchLabel = styled.label`
   font-size: 13px;
   font-weight: 600;
   margin-bottom: 8px;
-  color: #8c7b6b;
+  color: var(--color-text-muted);
 `;

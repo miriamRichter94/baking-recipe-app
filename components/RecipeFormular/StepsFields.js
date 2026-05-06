@@ -83,7 +83,7 @@ const StepWrapper = styled.div`
 const RemoveStepButton = styled.button`
   background: none;
   border: none;
-  color: #8c7b6b;
+  color: var(--color-text-muted);
   cursor: pointer;
   font-size: 18px;
   padding: 0;
@@ -114,7 +114,7 @@ const StepImagePreview = styled.div`
 // "+ Add photo" or "📷 Add step image (optional)" button
 const StepAddPhotoBtn = styled.button`
   background: none;
-  border: 1px dashed #e8ddd2;
+  border: 1px dashed var(--color-border);
   border-radius: 8px;
   padding: 8px 14px;
   color: #c49a6c;
@@ -129,7 +129,7 @@ const StepRemoveImageBtn = styled.button`
   background: none;
   border: none;
   font-size: 12px;
-  color: #b5473a;
+  color: var(--color-danger);
   cursor: pointer;
   padding: 0;
   margin-top: 4px;
@@ -141,7 +141,7 @@ const StepBadge = styled.div`
   height: 26px;
   border-radius: 50%;
   background: #e8d5c4;
-  color: #8b5e3c;
+  color: var(--color-brand);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -153,7 +153,7 @@ const StepBadge = styled.div`
   @media (min-width: 641px) {
     width: 30px;
     height: 30px;
-    background: #8b5e3c;
+    background: var(--color-brand);
     color: #fff;
     font-size: 13px;
     margin-top: 6px;
@@ -163,16 +163,16 @@ const StepBadge = styled.div`
 const StepTextarea = styled.textarea`
   flex: 1;
   padding: 10px 12px;
-  border: 1px solid #e8ddd2;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   font-size: 14px;
   background: #fff;
   resize: vertical;
   outline: none;
-  color: #3d2b1f;
+  color: var(--color-text);
 
   &:focus {
-    border-color: #8b5e3c;
+    border-color: var(--color-brand);
   }
 `;
 

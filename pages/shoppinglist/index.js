@@ -117,7 +117,7 @@ const PageTitle = styled.h1`
 
 const CounterPill = styled.span`
   background: #e8d5c4;
-  color: #8b5e3c;
+  color: var(--color-brand);
   font-size: 13px;
   font-weight: 600;
   padding: 4px 12px;
@@ -133,7 +133,7 @@ const MetaRow = styled.div`
 const GhostBtn = styled.button`
   background: none;
   border: none;
-  color: #8b5e3c;
+  color: var(--color-brand);
   font-size: 14px;
   cursor: pointer;
   padding: 0;
@@ -157,7 +157,7 @@ const EmptyTitle = styled.h2`
 `;
 
 const EmptyText = styled.p`
-  color: #8c7b6b;
+  color: var(--color-text-muted);
   margin: 0;
 `;
 
@@ -174,6 +174,6 @@ const RecalculationHint = styled.div`
 
 const HintItem = styled.p`
   font-size: 13px;
-  color: #8c7b6b;
+  color: var(--color-text-muted);
   margin: 0;
 `;

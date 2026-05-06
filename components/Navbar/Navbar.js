@@ -105,8 +105,8 @@ const Nav = styled.nav`
   justify-content: space-between;
   align-items: center;
   padding: 16px 20px;
-  border-bottom: 1px solid #e8ddd2;
-  background: #faf6f1;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
   position: sticky;
   top: 0;
   z-index: 10;
@@ -119,7 +119,7 @@ const Nav = styled.nav`
 const NavTitle = styled.div`
   font-family: var(--heading-font);
   font-size: 22px;
-  color: var(--nav-font-color);
+  color: var(--color-brand);
 
   @media (min-width: 641px) {
     font-size: 26px;
@@ -131,7 +131,7 @@ const HamburgerBtn = styled.button`
   border: none;
   font-size: 22px;
   cursor: pointer;
-  color: var(--nav-font-color);
+  color: var(--color-brand);
   padding: 0;
   display: flex;
 
@@ -147,8 +147,8 @@ const NavLinks = styled.div`
   position: absolute;
   top: 100%;
   right: 0;
-  background: #faf6f1;
-  border-bottom: 1px solid #e8ddd2;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
   padding: 16px 20px;
   gap: 16px;
   width: 100%;
@@ -173,10 +173,11 @@ const NavLink = styled(Link)`
   align-items: center;
   gap: 4px;
   font-weight: ${({ $active }) => ($active ? 600 : 400)};
-  color: ${({ $active }) => ($active ? "var(--nav-font-color)" : "#8c7b6b")};
+  color: ${({ $active }) =>
+    $active ? "var(--color-brand)" : "var(--color-text-muted)"};
 
   &:hover {
-    color: var(--nav-font-color);
+    color: var(--color-brand);
   }
 `;
 
@@ -184,7 +185,7 @@ const NavLink = styled(Link)`
 const NavBackButton = styled.button`
   background: none;
   border: none;
-  color: var(--nav-font-color);
+  color: var(--color-brand);
   font-size: 15px;
   cursor: pointer;
   padding: 0;

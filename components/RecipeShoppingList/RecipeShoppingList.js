@@ -40,14 +40,14 @@ const RecipeGroup = styled.div`
 `;
 
 const ForLabel = styled.p`
-  color: #8c7b6b;
+  color: var(--color-text-muted);
   margin: 0 0 14px;
   font-style: italic;
 `;
 
 const Divider = styled.hr`
   border: none;
-  border-top: 1px solid #e8ddd2;
+  border-top: 1px solid var(--color-border);
   margin: 0 0 14px;
 `;
 
@@ -56,7 +56,7 @@ const IngredientRow = styled.div`
   align-items: center;
   gap: 12px;
   padding: 14px 0;
-  border-bottom: 1px solid #e8ddd2;
+  border-bottom: 1px solid var(--color-border);
 
   &:last-child {
     border-bottom: none;
@@ -69,19 +69,21 @@ const Checkbox = styled.input`
   border-radius: 50%;
   border: 1.5px solid #c49a6c;
   cursor: pointer;
-  accent-color: #8b5e3c;
+  accent-color: var(--color-brand);
   flex-shrink: 0;
 `;
 
 const IngredientName = styled.span`
   flex: 1;
   font-size: 15px;
-  color: ${({ $checked }) => ($checked ? "#8c7b6b" : "#3d2b1f")};
+  color: ${({ $checked }) =>
+    $checked ? "var(--color-text-muted)" : "var(--color-text)"};
   text-decoration: ${({ $checked }) => ($checked ? "line-through" : "none")};
 `;
 
 const IngredientAmount = styled.span`
   font-size: 15px;
   font-weight: 600;
-  color: ${({ $checked }) => ($checked ? "#8c7b6b" : "#8b5e3c")};
+  color: ${({ $checked }) =>
+    $checked ? "var(--color-text-muted)" : "var(--color-brand)"};
 `;

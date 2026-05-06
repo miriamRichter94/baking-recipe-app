@@ -30,5 +30,5 @@ const Ingredient = styled.span`
   padding: 3px 10px;
   border-radius: 40px;
   background: #e8d5c4;
-  color: #8b5e3c;
+  color: var(--color-brand);
 `;

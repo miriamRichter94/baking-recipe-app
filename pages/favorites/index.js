@@ -71,7 +71,7 @@ const PageTitle = styled.h1`
   font-size: 28px;
   margin: 0 0 8px;
   font-weight: 400;
-  color: #3d2b1f;
+  color: var(--color-text);
   white-space: pre-line;
 
   @media (min-width: 641px) {
@@ -83,5 +83,5 @@ const EmptyFavoritesHint = styled.p`
   font-size: 28px;
   text-align: center;
   font-weight: bold;
-  color: var(--danger);
+  color: var(--color-danger);
 `;
