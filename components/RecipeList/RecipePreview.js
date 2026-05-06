@@ -71,7 +71,7 @@ export default function RecipePreview({
         <StyledAction as="div">
           <ModalBox
             type="delete"
-            transparent={true}
+            styleType="transparent"
             recipeId={recipe._id}
             aria-label="Delete Recipe"
           >

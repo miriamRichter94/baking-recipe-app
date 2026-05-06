@@ -48,7 +48,11 @@ export default function RecipeDetails({
             />
           </HeroEditBtn>
           <HeroDelete as="div">
-            <ModalBox type="delete" transparent={true} recipeId={recipe._id}>
+            <ModalBox
+              type="delete"
+              styleType="transparent"
+              recipeId={recipe._id}
+            >
               <Image
                 src="/assets/garbage.png"
                 width={25}

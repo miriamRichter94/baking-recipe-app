@@ -13,6 +13,7 @@ import { addRecipe, editRecipe } from "@/services/recipeServices";
 import { uploadImage } from "@/services/imageService";
 import styled from "styled-components";
 import BakingFormFields from "./BakingFormFields";
+import ModalBox from "../ModalBox/ModalBox";
 
 export default function RecipeForm({ ingredients, units, recipe }) {
   const router = useRouter();
@@ -129,12 +130,22 @@ export default function RecipeForm({ ingredients, units, recipe }) {
           <ImagePreview>
             <img src={recipeMainImage} alt="Recipe Image" />
           </ImagePreview>
-          <RemoveImagePreviewBtn
-            type="button"
-            onClick={() => setRecipeMainImage(null)}
-          >
-            Remove image
-          </RemoveImagePreviewBtn>
+          {recipe?.image?.publicId && recipeMainImage === recipe.image.url ? (
+            <ModalBox
+              type="imageRemove"
+              styleType="imageRemove"
+              onConfirm={() => setRecipeMainImage(null)}
+            >
+              Remove image
+            </ModalBox>
+          ) : (
+            <RemoveImagePreviewBtn
+              type="button"
+              onClick={() => setRecipeMainImage(null)}
+            >
+              Remove image
+            </RemoveImagePreviewBtn>
+          )}
         </>
       ) : (
         <>
