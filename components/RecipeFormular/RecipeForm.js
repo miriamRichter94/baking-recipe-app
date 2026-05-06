@@ -87,7 +87,7 @@ export default function RecipeForm({ ingredients, units, recipe }) {
       router.push("/");
     } else {
       await editRecipe(recipeData, recipe._id);
-      router.push(`/recipe/${recipe._id}`);
+      router.replace(`/recipe/${recipe._id}`);
     }
   }
 
