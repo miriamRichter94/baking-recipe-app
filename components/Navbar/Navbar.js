@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import DarkModeSwitch from "../DarkModeSwitch/DarkModeSwitch";
+import Login from "../Login/Login";
 
 export default function Navbar({
   favoriteRecipes,
@@ -46,11 +47,13 @@ export default function Navbar({
             ← Back
           </NavBackButton>
           <NavTitle>{title}</NavTitle>
-
-          <DarkModeSwitch
-            isDarkMode={isDarkMode}
-            onToggleDarkMode={handleToggleIsDarkMode}
-          />
+          <RightGroup>
+            <Login />
+            <DarkModeSwitch
+              isDarkMode={isDarkMode}
+              onToggleDarkMode={handleToggleIsDarkMode}
+            />
+          </RightGroup>
         </>
       ) : (
         <>
@@ -104,6 +107,7 @@ export default function Navbar({
                 ShoppingList
               </NavLink>
             )}
+            <Login />
             <DarkModeSwitch
               isDarkMode={isDarkMode}
               onToggleDarkMode={handleToggleIsDarkMode}
@@ -155,6 +159,12 @@ const HamburgerBtn = styled.button`
   @media (min-width: 641px) {
     display: none;
   }
+`;
+
+const RightGroup = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 16px;
 `;
 
 const NavLinks = styled.div`

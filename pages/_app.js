@@ -5,7 +5,6 @@ import Navbar from "@/components/Navbar/Navbar";
 import useLocalStorageState from "use-local-storage-state";
 import { useEffect } from "react";
 import { SessionProvider } from "next-auth/react";
-import Login from "@/components/Login/Login";
 
 const fetcher = async (url) => {
   const res = await fetch(url);
@@ -105,7 +104,6 @@ export default function App({
       <SessionProvider session={session}>
         <GlobalStyle />
         <Toaster />
-        <Login />
         <Navbar
           favoriteRecipes={safeFavorites}
           recipesToShop={safeRecipesToShop}

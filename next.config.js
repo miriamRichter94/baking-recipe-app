@@ -1,9 +1,11 @@
-/** @type {import('next').NextConfig} */
 const nextConfig = {
   compiler: {
     styledComponents: true,
   },
   reactStrictMode: true,
+  images: {
+    domains: ["cdn.discordapp.com"],
+  },
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/i,
