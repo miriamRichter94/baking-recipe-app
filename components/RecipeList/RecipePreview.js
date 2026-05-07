@@ -3,6 +3,7 @@ import IngredientPreview from "./IngredientPreview";
 import Link from "next/link";
 import Image from "next/image";
 import ModalBox from "../ModalBox/ModalBox";
+import { useSession } from "next-auth/react";
 
 export default function RecipePreview({
   recipe,
@@ -11,6 +12,8 @@ export default function RecipePreview({
   recipesToShop,
   onToggleRecipesToShop,
 }) {
+  const { data: session } = useSession();
+
   return (
     <RecipeCard>
       <StyledLink href={`/recipe/${recipe._id}`}>
@@ -31,58 +34,64 @@ export default function RecipePreview({
       </StyledLink>
 
       <ActionDiv>
-        <StyledAction
-          as="button"
-          onClick={() => onToggleRecipesToShop(recipe._id)}
-        >
-          {recipesToShop.includes(recipe._id) ? (
-            <Image
-              src="/assets/shopping-cart-added.png"
-              width={25}
-              height={25}
-              alt="Shopping Card with plus symbol"
-            />
-          ) : (
-            <Image
-              src="/assets/shopping-cart-add.png"
-              width={25}
-              height={25}
-              alt="Shopping Card with green tick"
-            />
-          )}
-        </StyledAction>
+        {session && (
+          <StyledAction
+            as="button"
+            onClick={() => onToggleRecipesToShop(recipe._id)}
+          >
+            {recipesToShop.includes(recipe._id) ? (
+              <Image
+                src="/assets/shopping-cart-added.png"
+                width={25}
+                height={25}
+                alt="Shopping Card with plus symbol"
+              />
+            ) : (
+              <Image
+                src="/assets/shopping-cart-add.png"
+                width={25}
+                height={25}
+                alt="Shopping Card with green tick"
+              />
+            )}
+          </StyledAction>
+        )}
         <StyledAction
           as="button"
           onClick={() => onToggleFavoriteRecipe(recipe._id)}
         >
           {favoriteRecipes.includes(recipe._id) ? "♥️" : "🤍"}
         </StyledAction>
-        <StyledAction
-          href={`/form/edit-${recipe._id}`}
-          aria-label="Edit Recipe"
-        >
-          <Image
-            src="/assets/pencil.png"
-            width={25}
-            height={25}
-            alt="Edit Pencil"
-          ></Image>
-        </StyledAction>
-        <StyledAction as="div">
-          <ModalBox
-            type="delete"
-            styleType="transparent"
-            recipeId={recipe._id}
-            aria-label="Delete Recipe"
-          >
-            <Image
-              src="/assets/garbage.png"
-              width={25}
-              height={25}
-              alt="Trash Can"
-            ></Image>
-          </ModalBox>
-        </StyledAction>
+        {session && (
+          <>
+            <StyledAction
+              href={`/form/edit-${recipe._id}`}
+              aria-label="Edit Recipe"
+            >
+              <Image
+                src="/assets/pencil.png"
+                width={25}
+                height={25}
+                alt="Edit Pencil"
+              ></Image>
+            </StyledAction>
+            <StyledAction as="div">
+              <ModalBox
+                type="delete"
+                styleType="transparent"
+                recipeId={recipe._id}
+                aria-label="Delete Recipe"
+              >
+                <Image
+                  src="/assets/garbage.png"
+                  width={25}
+                  height={25}
+                  alt="Trash Can"
+                ></Image>
+              </ModalBox>
+            </StyledAction>
+          </>
+        )}
       </ActionDiv>
     </RecipeCard>
   );
