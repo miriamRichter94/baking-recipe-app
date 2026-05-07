@@ -5,6 +5,8 @@ import { getAllRecipes } from "@/services/recipeServices";
 import { calculateShoppingList } from "@/lib/helper";
 import Link from "next/link";
 import RecipeShoppingList from "@/components/RecipeShoppingList/RecipeShoppingList";
+import { useSession } from "next-auth/react";
+import AccessDenied from "@/components/AccessDenied/AccessDenied";
 
 export default function ShoppingList({ recipesToShop, recalculatedRecipes }) {
   const [checked, setChecked] = useState([]);
@@ -15,6 +17,7 @@ export default function ShoppingList({ recipesToShop, recalculatedRecipes }) {
       : null;
 
   const { data: recipes, isLoading, error } = useSWR(swrKey, getAllRecipes);
+  const { status } = useSession();
 
   if (recipesToShop.length === 0) return <EmptyState />;
   if (isLoading || !recipes) return <h1>Loading...</h1>;
@@ -35,6 +38,10 @@ export default function ShoppingList({ recipesToShop, recalculatedRecipes }) {
 
   function handleClearChecked() {
     setChecked([]);
+  }
+
+  if (status !== "authenticated") {
+    return <AccessDenied />;
   }
 
   return (

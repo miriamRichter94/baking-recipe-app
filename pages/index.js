@@ -6,6 +6,7 @@ import useSWR from "swr";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import Fuse from "fuse.js";
+import { useSession } from "next-auth/react";
 
 export default function HomePage({
   favoriteRecipes,
@@ -20,6 +21,7 @@ export default function HomePage({
   } = useSWR("/api/recipes", getAllRecipes);
   const router = useRouter();
   const [search, setSearch] = useState("");
+  const { data: session } = useSession();
 
   if (isLoading || !recipes) return <h1>Loading...</h1>;
   if (error) return <h1>ERROR</h1>;
@@ -55,14 +57,16 @@ export default function HomePage({
         </SearchWrapper>
 
         {/* Add button (desktop) */}
-        <AddRecipeButtonWrapper>
-          <StyledButton
-            variant="pill"
-            onClick={() => router.push("/form/create")}
-          >
-            + Add New Recipe
-          </StyledButton>
-        </AddRecipeButtonWrapper>
+        {session && (
+          <AddRecipeButtonWrapper>
+            <StyledButton
+              variant="pill"
+              onClick={() => router.push("/form/create")}
+            >
+              + Add New Recipe
+            </StyledButton>
+          </AddRecipeButtonWrapper>
+        )}
         <RecipeList
           recipes={filteredRecipes}
           favoriteRecipes={favoriteRecipes}
@@ -73,12 +77,14 @@ export default function HomePage({
       </PageContent>
 
       {/* Mobile FAB */}
-      <FAB
-        onClick={() => router.push("/form/create")}
-        aria-label="Add new recipe"
-      >
-        +
-      </FAB>
+      {session && (
+        <FAB
+          onClick={() => router.push("/form/create")}
+          aria-label="Add new recipe"
+        >
+          +
+        </FAB>
+      )}
     </>
   );
 }

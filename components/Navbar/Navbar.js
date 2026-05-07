@@ -1,9 +1,11 @@
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import DarkModeSwitch from "../DarkModeSwitch/DarkModeSwitch";
+import Login from "../Login/Login";
 
 export default function Navbar({
   favoriteRecipes,
@@ -18,6 +20,7 @@ export default function Navbar({
   const title = getTitle(router.pathname, router.query);
   const [mounted, setMounted] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { data: session } = useSession();
 
   function getTitle(pathname, query) {
     if (pathname === "/recipe/[id]") return "Recipe";
@@ -44,11 +47,13 @@ export default function Navbar({
             ← Back
           </NavBackButton>
           <NavTitle>{title}</NavTitle>
-
-          <DarkModeSwitch
-            isDarkMode={isDarkMode}
-            onToggleDarkMode={handleToggleIsDarkMode}
-          />
+          <RightGroup>
+            <Login />
+            <DarkModeSwitch
+              isDarkMode={isDarkMode}
+              onToggleDarkMode={handleToggleIsDarkMode}
+            />
+          </RightGroup>
         </>
       ) : (
         <>
@@ -78,28 +83,31 @@ export default function Navbar({
             >
               {favoriteRecipes.length === 0 ? "🤍" : "♥️"} Favorites
             </NavLink>
-            <NavLink
-              href="/shoppinglist"
-              $active={isShoppinglist}
-              onClick={() => setMenuOpen(false)}
-            >
-              {recipesToShop.length === 0 ? (
-                <Image
-                  src="/assets/shopping-cart-basic.png"
-                  width={20}
-                  height={20}
-                  alt="Empty Shopping cart"
-                />
-              ) : (
-                <Image
-                  src="/assets/shopping-cart-filled.png"
-                  width={20}
-                  height={20}
-                  alt="filled shopping cart"
-                />
-              )}
-              ShoppingList
-            </NavLink>
+            {session && (
+              <NavLink
+                href="/shoppinglist"
+                $active={isShoppinglist}
+                onClick={() => setMenuOpen(false)}
+              >
+                {recipesToShop.length === 0 ? (
+                  <Image
+                    src="/assets/shopping-cart-basic.png"
+                    width={20}
+                    height={20}
+                    alt="Empty Shopping cart"
+                  />
+                ) : (
+                  <Image
+                    src="/assets/shopping-cart-filled.png"
+                    width={20}
+                    height={20}
+                    alt="filled shopping cart"
+                  />
+                )}
+                ShoppingList
+              </NavLink>
+            )}
+            <Login />
             <DarkModeSwitch
               isDarkMode={isDarkMode}
               onToggleDarkMode={handleToggleIsDarkMode}
@@ -153,6 +161,12 @@ const HamburgerBtn = styled.button`
   }
 `;
 
+const RightGroup = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 16px;
+`;
+
 const NavLinks = styled.div`
   /* Mobile: hidden dropdown */
   display: ${({ $open }) => ($open ? "flex" : "none")};
@@ -196,16 +210,13 @@ const NavLink = styled(Link)`
 
 // Back button shown on detail / form pages instead of the brand
 const NavBackButton = styled.button`
-  display: none;
-  @media (min-width: 641px) {
-    background: none;
-    border: none;
-    color: var(--color-brand);
-    font-size: 15px;
-    cursor: pointer;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
+  background: none;
+  border: none;
+  color: var(--nav-font-color);
+  font-size: 15px;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 `;

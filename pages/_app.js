@@ -4,6 +4,7 @@ import { Toaster } from "react-hot-toast";
 import Navbar from "@/components/Navbar/Navbar";
 import useLocalStorageState from "use-local-storage-state";
 import { useEffect } from "react";
+import { SessionProvider } from "next-auth/react";
 
 const fetcher = async (url) => {
   const res = await fetch(url);
@@ -17,7 +18,10 @@ const fetcher = async (url) => {
   return res.json();
 };
 
-export default function App({ Component, pageProps }) {
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+}) {
   const [favoriteRecipes, setFavoriteRecipes] = useLocalStorageState(
     "favoriteRecipes",
     { defaultValue: [] }
@@ -32,6 +36,7 @@ export default function App({ Component, pageProps }) {
     "recalculatedRecipes",
     { defaultValue: {} }
   );
+
   const [isDarkMode, setIsDarkMode] = useLocalStorageState("isDarkMode", {
     defaultValue: false,
   });
@@ -96,26 +101,28 @@ export default function App({ Component, pageProps }) {
 
   return (
     <>
-      <GlobalStyle />
-      <Toaster />
-      <Navbar
-        favoriteRecipes={safeFavorites}
-        recipesToShop={safeRecipesToShop}
-        isDarkMode={isDarkMode}
-        handleToggleIsDarkMode={handleToggleIsDarkMode}
-      />
-      <SWRConfig value={{ fetcher }}>
-        <Component
-          {...pageProps}
+      <SessionProvider session={session}>
+        <GlobalStyle />
+        <Toaster />
+        <Navbar
           favoriteRecipes={safeFavorites}
-          handleToggleFavoriteRecipe={handleToggleFavoriteRecipe}
           recipesToShop={safeRecipesToShop}
-          handleToggleRecipesToShop={handleToggleRecipesToShop}
-          recalculatedRecipes={safeRecalculatedRecipes}
-          handleAddRecalculatedRecipe={handleAddRecalculatedRecipe}
-          handleRemoveRecalculatedRecipe={handleRemoveRecalculatedRecipe}
+          isDarkMode={isDarkMode}
+          handleToggleIsDarkMode={handleToggleIsDarkMode}
         />
-      </SWRConfig>
+        <SWRConfig value={{ fetcher }}>
+          <Component
+            {...pageProps}
+            favoriteRecipes={safeFavorites}
+            handleToggleFavoriteRecipe={handleToggleFavoriteRecipe}
+            recipesToShop={safeRecipesToShop}
+            handleToggleRecipesToShop={handleToggleRecipesToShop}
+            recalculatedRecipes={safeRecalculatedRecipes}
+            handleAddRecalculatedRecipe={handleAddRecalculatedRecipe}
+            handleRemoveRecalculatedRecipe={handleRemoveRecalculatedRecipe}
+          />
+        </SWRConfig>
+      </SessionProvider>
     </>
   );
 }
