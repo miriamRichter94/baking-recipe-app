@@ -3,6 +3,7 @@ import GlobalStyle from "../styles/global-styles";
 import { Toaster } from "react-hot-toast";
 import Navbar from "@/components/Navbar/Navbar";
 import useLocalStorageState from "use-local-storage-state";
+import { useEffect } from "react";
 import { SessionProvider } from "next-auth/react";
 import Login from "@/components/Login/Login";
 
@@ -36,6 +37,17 @@ export default function App({
     "recalculatedRecipes",
     { defaultValue: {} }
   );
+  const [isDarkMode, setIsDarkMode] = useLocalStorageState("isDarkMode", {
+    defaultValue: false,
+  });
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark-mode");
+    } else {
+      document.documentElement.classList.remove("dark-mode");
+    }
+  }, [isDarkMode]);
 
   const safeFavorites = Array.isArray(favoriteRecipes) ? favoriteRecipes : [];
   const safeRecipesToShop = Array.isArray(recipesToShop) ? recipesToShop : [];
@@ -83,6 +95,10 @@ export default function App({
     setRecalculatedRecipes(rest);
   }
 
+  function handleToggleIsDarkMode() {
+    setIsDarkMode(!isDarkMode);
+  }
+
   return (
     <>
       <SessionProvider session={session}>
@@ -92,6 +108,8 @@ export default function App({
         <Navbar
           favoriteRecipes={safeFavorites}
           recipesToShop={safeRecipesToShop}
+          isDarkMode={isDarkMode}
+          handleToggleIsDarkMode={handleToggleIsDarkMode}
         />
         <SWRConfig value={{ fetcher }}>
           <Component

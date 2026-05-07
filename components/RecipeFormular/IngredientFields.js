@@ -83,69 +83,27 @@ const AmmountInput = styled.input`
   width: 56px;
   box-sizing: border-box;
   padding: 10px 12px;
-  background: #faf6f1;
+  background: var(--color-surface);
   border-radius: 10px;
-  border: 1px solid #e8ddd2;
+  border: 1px solid var(--color-border);
   font-size: 14px;
-  color: #3d2b1f;
+  color: var(--color-text);
   outline: none;
 
   @media (min-width: 641px) {
-    padding: 10px 12px;
-    border: 1px solid #e8ddd2;
     border-radius: 8px;
-    font-size: 14px;
-    outline: none;
-    color: #3d2b1f;
     flex: 1;
-    box-sizing: border-box;
   }
 
   &:focus {
-    border-color: #8b5e3c;
-  }
-`;
-
-const IngredientSelect = styled.select`
-  flex: 2;
-  min-width: 0;
-  padding: 10px 4px;
-  background: #faf6f1;
-  border-radius: 10px;
-  border: 1px solid #e8ddd2;
-  font-size: 14px;
-  color: #3d2b1f;
-  overflow: hidden;
-
-  @media (min-width: 641px) {
-    flex: 2;
-    padding: 10px 8px;
-    border-radius: 8px;
-    background: #ffffff;
-  }
-`;
-
-const UnitSelect = styled.select`
-  width: 58px;
-  padding: 10px 4px;
-  background: #faf6f1;
-  border-radius: 10px;
-  border: 1px solid #e8ddd2;
-  font-size: 14px;
-  color: #3d2b1f;
-
-  @media (min-width: 641px) {
-    width: 70px;
-    padding: 10px 8px;
-    border-radius: 8px;
-    background: #ffffff;
+    border-color: var(--color-brand);
   }
 `;
 
 const RemoveBtn = styled.button`
   background: none;
   border: none;
-  color: #8c7b6b;
+  color: var(--color-text-muted);
   cursor: pointer;
   font-size: 16px;
   padding: 0;

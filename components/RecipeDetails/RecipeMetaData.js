@@ -39,7 +39,7 @@ const Title = styled.h1`
 `;
 
 const Description = styled.p`
-  color: var(--text-muted);
+  color: var(--color-text-muted);
   font-size: 15px;
   line-height: 1.6;
   margin: 0 0 24px;
@@ -64,6 +64,6 @@ const MetaTag = styled.span`
   border-radius: 40px;
   font-size: 12px;
   font-weight: 600;
-  background: #e8d5c4;
-  color: #8b5e3c;
+  background: var(--color-brand-light);
+  color: var(--color-brand);
 `;

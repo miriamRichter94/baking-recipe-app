@@ -66,29 +66,26 @@ export default function RecalculateBakingform({
 }
 
 const Title = styled.h1`
-  color: var(--text-color);
+  color: var(--color-text);
 `;
 
 const HintText = styled.p`
   font-style: italic;
-  color: var(--text-color);
+  color: var(--color-text);
 `;
 
 const StyledFieldset = styled.fieldset`
   min-width: 0;
-  background: #ffffff;
+  background: var(--color-surface-alt);
   border-radius: 12px;
   padding: 18px;
   margin-bottom: 20px;
-  border: 1px solid #e8ddd2;
-  color: var(--text-color);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
 
   @media (min-width: 641px) {
-    border: 1px solid #e8ddd2;
-    border-radius: 12px;
     padding: 22px;
     margin-bottom: 28px;
-    background: #ffffff;
   }
 `;
 

@@ -84,9 +84,12 @@ const ShapeToggleBtn = styled.button`
   cursor: pointer;
   text-transform: capitalize;
 
-  background: ${({ $active }) => ($active ? "#8b5e3c" : "transparent")};
-  color: ${({ $active }) => ($active ? "#fff" : "#8c7b6b")};
-  border: ${({ $active }) => ($active ? "none" : "1px solid #e8ddd2")};
+  background: ${({ $active }) =>
+    $active ? "var(--color-brand)" : "transparent"};
+  color: ${({ $active }) =>
+    $active ? "var(--color-surface-alt)" : "var(--color-text-muted)"};
+  border: ${({ $active }) =>
+    $active ? "none" : "1px solid var(--color-border)"};
 
   &:disabled {
     opacity: 0.5;

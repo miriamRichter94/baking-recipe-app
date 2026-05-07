@@ -30,14 +30,14 @@ const ConfirmationWrapper = styled.div`
 const ConfirmTitle = styled.h2`
   font-family: var(--heading-font);
   font-size: 22px;
-  color: #3d2b1f;
+  color: var(--color-text);
   margin: 0;
   font-weight: 400;
 `;
 
 const ConfirmText = styled.p`
   font-size: 15px;
-  color: #8c7b6b;
+  color: var(--color-text-muted);
   margin: 0;
   line-height: 1.5;
 `;
@@ -50,8 +50,8 @@ const ConfirmActions = styled.div`
 `;
 
 const ConfirmBtn = styled.button`
-  background: #b5473a;
-  color: #fff;
+  background: var(--color-danger);
+  color: var(--color-surface-alt);
   border: none;
   border-radius: 8px;
   padding: 12px 20px;
@@ -63,12 +63,12 @@ const ConfirmBtn = styled.button`
 
 const CancelBtn = styled.button`
   background: none;
-  border: 1px solid #e8ddd2;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   padding: 12px 20px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  color: #3d2b1f;
+  color: var(--color-text);
   width: 100%;
 `;
