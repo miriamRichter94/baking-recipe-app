@@ -1,3 +1,4 @@
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -12,6 +13,7 @@ export default function Navbar({ favoriteRecipes, recipesToShop }) {
   const title = getTitle(router.pathname, router.query);
   const [mounted, setMounted] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { data: session } = useSession();
 
   function getTitle(pathname, query) {
     if (pathname === "/recipe/[id]") return "Recipe";
@@ -69,28 +71,30 @@ export default function Navbar({ favoriteRecipes, recipesToShop }) {
             >
               {favoriteRecipes.length === 0 ? "🤍" : "♥️"} Favorites
             </NavLink>
-            <NavLink
-              href="/shoppinglist"
-              $active={isShoppinglist}
-              onClick={() => setMenuOpen(false)}
-            >
-              {recipesToShop.length === 0 ? (
-                <Image
-                  src="/assets/shopping-cart-basic.png"
-                  width={20}
-                  height={20}
-                  alt="Empty Shopping cart"
-                />
-              ) : (
-                <Image
-                  src="/assets/shopping-cart-filled.png"
-                  width={20}
-                  height={20}
-                  alt="filled shopping cart"
-                />
-              )}
-              ShoppingList
-            </NavLink>
+            {session && (
+              <NavLink
+                href="/shoppinglist"
+                $active={isShoppinglist}
+                onClick={() => setMenuOpen(false)}
+              >
+                {recipesToShop.length === 0 ? (
+                  <Image
+                    src="/assets/shopping-cart-basic.png"
+                    width={20}
+                    height={20}
+                    alt="Empty Shopping cart"
+                  />
+                ) : (
+                  <Image
+                    src="/assets/shopping-cart-filled.png"
+                    width={20}
+                    height={20}
+                    alt="filled shopping cart"
+                  />
+                )}
+                ShoppingList
+              </NavLink>
+            )}
           </NavLinks>
         </>
       )}
@@ -182,13 +186,17 @@ const NavLink = styled(Link)`
 
 // Back button shown on detail / form pages instead of the brand
 const NavBackButton = styled.button`
-  background: none;
-  border: none;
-  color: var(--nav-font-color);
-  font-size: 15px;
-  cursor: pointer;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  visibility: hidden;
+  @media (min-width: 641px) {
+    visibility: visible;
+    background: none;
+    border: none;
+    color: var(--nav-font-color);
+    font-size: 15px;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
 `;

@@ -7,6 +7,7 @@ import TabSwitcher from "@/components/RecipeDetails/TabSwitcher";
 import StyledButton from "@/components/Button/StyledButton";
 import RecipeMetaData from "./RecipeMetaData";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 
 export default function RecipeDetails({
   recipe,
@@ -21,6 +22,7 @@ export default function RecipeDetails({
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("Ingredients");
   const isRecipeRecalculated = !!recalculatedRecipes[recipe._id];
+  const { data: session } = useSession();
 
   return (
     <>
@@ -35,52 +37,65 @@ export default function RecipeDetails({
           <HeroBackBtn onClick={() => router.push("/")} aria-label="Back">
             ←
           </HeroBackBtn>
-          <HeroEditBtn
-            as={Link}
-            href={`/form/edit-${recipe._id}`}
-            aria-label="Edit"
-          >
-            <Image
-              src="/assets/pencil.png"
-              width={35}
-              height={35}
-              alt="Edit pencil"
-            />
-          </HeroEditBtn>
-          <HeroDelete as="div">
-            <ModalBox
-              type="delete"
-              styleType="transparent"
-              recipeId={recipe._id}
-            >
-              <Image
-                src="/assets/garbage.png"
-                width={25}
-                height={25}
-                alt="Trash Can"
-              ></Image>
-            </ModalBox>
-          </HeroDelete>
-          <HeroFavorite onClick={() => onToggleFavoriteRecipe(recipe._id)}>
-            {favoriteRecipes.includes(recipe._id) ? "♥️" : "🤍"}
-          </HeroFavorite>
-          <HeroShoppingList onClick={() => onToggleRecipesToShop(recipe._id)}>
-            {recipesToShop.includes(recipe._id) ? (
-              <Image
-                src="/assets/shopping-cart-added.png"
-                width={30}
-                height={30}
-                alt="Shopping Card with plus symbol"
-              />
-            ) : (
-              <Image
-                src="/assets/shopping-cart-add.png"
-                width={30}
-                height={30}
-                alt="Shopping Card with green tick"
-              />
+
+          <HeroActions>
+            {session && (
+              <HeroEditBtn
+                as={Link}
+                href={`/form/edit-${recipe._id}`}
+                aria-label="Edit"
+              >
+                <Image
+                  src="/assets/pencil.png"
+                  width={35}
+                  height={35}
+                  alt="Edit pencil"
+                />
+              </HeroEditBtn>
             )}
-          </HeroShoppingList>
+
+            {session && (
+              <HeroDelete as="div">
+                <ModalBox
+                  type="delete"
+                  styleType="transparent"
+                  recipeId={recipe._id}
+                >
+                  <Image
+                    src="/assets/garbage.png"
+                    width={25}
+                    height={25}
+                    alt="Trash Can"
+                  ></Image>
+                </ModalBox>
+              </HeroDelete>
+            )}
+
+            <HeroFavorite onClick={() => onToggleFavoriteRecipe(recipe._id)}>
+              {favoriteRecipes.includes(recipe._id) ? "♥️" : "🤍"}
+            </HeroFavorite>
+            {session && (
+              <HeroShoppingList
+                onClick={() => onToggleRecipesToShop(recipe._id)}
+              >
+                {recipesToShop.includes(recipe._id) ? (
+                  <Image
+                    src="/assets/shopping-cart-added.png"
+                    width={30}
+                    height={30}
+                    alt="Shopping Card with plus symbol"
+                  />
+                ) : (
+                  <Image
+                    src="/assets/shopping-cart-add.png"
+                    width={30}
+                    height={30}
+                    alt="Shopping Card with green tick"
+                  />
+                )}
+              </HeroShoppingList>
+            )}
+          </HeroActions>
         </ImageWrapper>
         <DesktopMetaDataWrapper>
           <RecipeMetaData
@@ -92,37 +107,43 @@ export default function RecipeDetails({
           />
 
           <DesktopActionRow>
-            <StyledButton as={Link} href={`/form/edit-${recipe._id}`}>
-              Edit Recipe
-            </StyledButton>
+            {session && (
+              <StyledButton as={Link} href={`/form/edit-${recipe._id}`}>
+                Edit Recipe
+              </StyledButton>
+            )}
             <StyledButton onClick={() => onToggleFavoriteRecipe(recipe._id)}>
               {favoriteRecipes.includes(recipe._id) ? "♥️" : "🤍"}
             </StyledButton>
-            <StyledButton onClick={() => onToggleRecipesToShop(recipe._id)}>
-              {recipesToShop.includes(recipe._id) ? (
-                <Image
-                  src="/assets/shopping-cart-added.png"
-                  width={30}
-                  height={30}
-                  alt="Shopping Card with plus symbol"
-                />
-              ) : (
-                <Image
-                  src="/assets/shopping-cart-add.png"
-                  width={30}
-                  height={30}
-                  alt="Shopping Card with green tick"
-                />
-              )}
-            </StyledButton>
-            <ModalBox type="delete" recipeId={recipe._id}>
-              <Image
-                src="/assets/garbage.png"
-                width={25}
-                height={25}
-                alt="Trash Can"
-              ></Image>
-            </ModalBox>
+            {session && (
+              <>
+                <StyledButton onClick={() => onToggleRecipesToShop(recipe._id)}>
+                  {recipesToShop.includes(recipe._id) ? (
+                    <Image
+                      src="/assets/shopping-cart-added.png"
+                      width={30}
+                      height={30}
+                      alt="Shopping Card with plus symbol"
+                    />
+                  ) : (
+                    <Image
+                      src="/assets/shopping-cart-add.png"
+                      width={30}
+                      height={30}
+                      alt="Shopping Card with green tick"
+                    />
+                  )}
+                </StyledButton>
+                <ModalBox type="delete" recipeId={recipe._id}>
+                  <Image
+                    src="/assets/garbage.png"
+                    width={25}
+                    height={25}
+                    alt="Trash Can"
+                  ></Image>
+                </ModalBox>
+              </>
+            )}
           </DesktopActionRow>
         </DesktopMetaDataWrapper>
       </RecipeTopDetails>
@@ -244,8 +265,6 @@ const ImageWrapper = styled.div`
 `;
 
 const HeroIconBtn = styled.button`
-  position: absolute;
-  top: 14px;
   width: 38px;
   height: 38px;
   border-radius: 12px;
@@ -263,32 +282,40 @@ const HeroIconBtn = styled.button`
 `;
 
 const HeroBackBtn = styled(HeroIconBtn)`
+  position: absolute;
+  top: 14px;
   left: 14px;
+`;
+
+const HeroActions = styled.div`
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  @media (min-width: 641px) {
+    display: none;
+  }
 `;
 
 const HeroEditBtn = styled(HeroIconBtn)`
   padding: 3px;
-  right: 14px;
   font-size: 14px;
 `;
 
 const HeroDelete = styled(HeroIconBtn)`
-  right: 14px;
-  top: 60px;
   padding: 3px;
 `;
 
 const HeroFavorite = styled(HeroIconBtn)`
-  right: 14px;
-  top: 105px;
   padding: 3px;
   font-size: 24px;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
 `;
 
 const HeroShoppingList = styled(HeroIconBtn)`
-  right: 14px;
-  top: 150px;
   padding: 3px;
 `;
 

@@ -2,6 +2,7 @@ import RecipeForm from "@/components/RecipeFormular/RecipeForm";
 import { getAllIngredients } from "@/services/ingredientServices";
 import { getRecipeById } from "@/services/recipeServices";
 import { getAllUnits } from "@/services/unitServices";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 
@@ -21,9 +22,14 @@ export default function RecipeFormular() {
     recipeId ? `/api/recipes/${recipeId}` : null,
     getRecipeById
   );
+  const { status } = useSession();
 
   if (isLoading || !ingredients || !units || !slug) return <h1>Loading...</h1>;
   if (error) return <h1>ERROR</h1>;
+
+  if (status !== "authenticated") {
+    return <h2>Access denied!</h2>;
+  }
 
   return <RecipeForm ingredients={ingredients} units={units} recipe={recipe} />;
 }

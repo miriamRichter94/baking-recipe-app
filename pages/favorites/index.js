@@ -18,6 +18,8 @@ export default function Favorites({
   if (isLoading || !recipes) return <h1>Loading...</h1>;
   if (error) return <h1>ERROR</h1>;
 
+  console.log(status);
+
   const favorites = recipes.filter((recipe) =>
     favoriteRecipes.includes(recipe._id)
   );
