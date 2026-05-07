@@ -37,6 +37,7 @@ export default function App({
     "recalculatedRecipes",
     { defaultValue: {} }
   );
+
   const [isDarkMode, setIsDarkMode] = useLocalStorageState("isDarkMode", {
     defaultValue: false,
   });
