@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import IngredientFields from "./IngredientFields";
 import StepFields from "./StepsFields";
@@ -29,6 +29,17 @@ export default function RecipeForm({ ingredients, units, recipe }) {
   const [recipeMainImage, setRecipeMainImage] = useState(
     recipe?.image?.url ?? null
   );
+
+  //This watches for when recipe "arrives" and populates the state then.
+  useEffect(() => {
+    if (recipe) {
+      setRecipeIngredients(setRecipeIngredientsForForm(recipe.ingredients));
+      setRecipeSteps(
+        recipe.steps ?? [{ order: 1, instruction: "", image: "" }]
+      );
+      setRecipeMainImage(recipe.image?.url ?? null);
+    }
+  }, [recipe]);
 
   function handleAddIngredient() {
     setRecipeIngredients([
