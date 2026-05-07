@@ -6,6 +6,7 @@ import { calculateShoppingList } from "@/lib/helper";
 import Link from "next/link";
 import RecipeShoppingList from "@/components/RecipeShoppingList/RecipeShoppingList";
 import { useSession } from "next-auth/react";
+import AccessDenied from "@/components/AccessDenied/AccessDenied";
 
 export default function ShoppingList({ recipesToShop, recalculatedRecipes }) {
   const [checked, setChecked] = useState([]);
@@ -40,7 +41,7 @@ export default function ShoppingList({ recipesToShop, recalculatedRecipes }) {
   }
 
   if (status !== "authenticated") {
-    return <h2>Access denied!</h2>;
+    return <AccessDenied />;
   }
 
   return (

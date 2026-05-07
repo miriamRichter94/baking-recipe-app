@@ -1,3 +1,4 @@
+import AccessDenied from "@/components/AccessDenied/AccessDenied";
 import RecipeForm from "@/components/RecipeFormular/RecipeForm";
 import { getAllIngredients } from "@/services/ingredientServices";
 import { getRecipeById } from "@/services/recipeServices";
@@ -28,7 +29,7 @@ export default function RecipeFormular() {
   if (error) return <h1>ERROR</h1>;
 
   if (status !== "authenticated") {
-    return <h2>Access denied!</h2>;
+    return <AccessDenied />;
   }
 
   return <RecipeForm ingredients={ingredients} units={units} recipe={recipe} />;
