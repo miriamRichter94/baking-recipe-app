@@ -28,6 +28,7 @@ const recipeSchema = new Schema({
       unit: { type: Schema.Types.ObjectId, ref: "Unit" },
     },
   ],
+  createdBy: { type: String },
 });
 
 const Recipe = mongoose.models.Recipe || mongoose.model("Recipe", recipeSchema);

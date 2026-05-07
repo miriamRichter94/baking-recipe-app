@@ -2,6 +2,7 @@ import dbConnect from "@/db/dbConnect";
 import Recipe from "@/db/models/recipe";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../auth/[...nextauth]";
+import { getToken } from "next-auth/jwt";
 
 export default async function handler(request, response) {
   const session = await getServerSession(request, response, authOptions);
@@ -23,7 +24,11 @@ export default async function handler(request, response) {
     if (request.method === "POST") {
       if (!session)
         return response.status(401).json({ status: "Not authorized" });
-      const recipe = await Recipe.create(request.body);
+      const token = await getToken({ req: request });
+      const recipe = await Recipe.create({
+        ...request.body,
+        createdBy: token?.sub,
+      });
       return response.status(201).json(recipe);
     }
   } catch (error) {
