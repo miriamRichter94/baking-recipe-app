@@ -76,7 +76,6 @@ function AppContent({ Component, pageProps }) {
 
   useEffect(() => {
     if (userSession && safeFavorites.length > 0) {
-      console.log("merging favorites:", safeFavorites);
       async function mergeFavorites() {
         await Promise.all(
           safeFavorites.map((id) =>

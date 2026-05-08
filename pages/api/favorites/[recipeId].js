@@ -6,10 +6,9 @@ import { getToken } from "next-auth/jwt";
 
 export default async function handler(request, response) {
   const session = await getServerSession(request, response, authOptions);
-  await dbConnect();
-
   if (!session) return response.status(401).json({ status: "Not authorized" });
 
+  await dbConnect();
   const token = await getToken({ req: request });
   const userId = token?.sub;
   const { recipeId } = request.query;
@@ -38,7 +37,7 @@ export default async function handler(request, response) {
       return response.status(200).json(user.favorites);
     }
   } catch (error) {
-    return response.status(400).json({ error: error.message });
+    return response.status(500).json({ error: error.message });
   }
 
   return response.status(405).json({ status: "Method not allowed." });
