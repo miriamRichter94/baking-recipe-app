@@ -1,5 +1,7 @@
 import formidable from "formidable";
 import cloudinary from "cloudinary";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../auth/[...nextauth]";
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -13,18 +15,31 @@ export const config = {
   },
 };
 
+const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+const MAX_FILE_SIZE_MB = 10;
+
 export default async function handler(request, response) {
+  const session = await getServerSession(request, response, authOptions);
+  if (!session) return response.status(401).json({ status: "Not authorized" });
+
   try {
     if (request.method === "POST") {
-      const form = formidable({});
+      const form = formidable({ maxFileSize: MAX_FILE_SIZE_MB * 1024 * 1024 });
 
       // we have access to a .parse() method that allows us to access the fields
       // and more importantly the files
       const [fields, files] = await form.parse(request);
 
-      //  refers to the first file in the array of files uploaded through the form input with the "name "attribute set to "image".
+      if (!files.image?.[0]) {
+        return response.status(400).json({ error: "No image file provided" });
+      }
+
       const file = files.image[0];
-      const { newFilename, filepath } = file;
+      const { newFilename, filepath, mimetype } = file;
+
+      if (!ALLOWED_MIME_TYPES.includes(mimetype)) {
+        return response.status(400).json({ error: "Invalid file type. Only JPEG, PNG, WebP, and GIF are allowed." });
+      }
 
       // now we have the information about the image, we can send it to Cloudinary
 

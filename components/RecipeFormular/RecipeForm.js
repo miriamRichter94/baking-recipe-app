@@ -185,7 +185,7 @@ export default function RecipeForm({ ingredients, units, recipe }) {
         <BakingFormFields
           shape={recipe?.bakingForm?.shape}
           diameter={recipe?.bakingForm?.diameter}
-          width={recipe?.bakingForm?.widht}
+          width={recipe?.bakingForm?.width}
           length={recipe?.bakingForm?.length}
         />
       </StyledFieldset>

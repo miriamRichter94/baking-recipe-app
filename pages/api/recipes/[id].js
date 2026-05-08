@@ -6,11 +6,13 @@ import {
 } from "@/lib/cloudinary";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../auth/[...nextauth]";
+import { getToken } from "next-auth/jwt";
 
 export default async function handler(request, response) {
   const session = await getServerSession(request, response, authOptions);
   await dbConnect();
   const { id } = request.query;
+  const token = await getToken({ req: request });
 
   try {
     if (request.method === "GET") {
@@ -27,6 +29,10 @@ export default async function handler(request, response) {
       if (!session)
         return response.status(401).json({ status: "Not authorized" });
       const existingRecipe = await Recipe.findById(id);
+
+      if (existingRecipe?.createdBy && existingRecipe.createdBy !== token?.sub) {
+        return response.status(403).json({ status: "Forbidden" });
+      }
 
       if (existingRecipe) {
         // Main image replaced
@@ -68,6 +74,9 @@ export default async function handler(request, response) {
       if (!session)
         return response.status(401).json({ status: "Not authorized" });
       const recipe = await Recipe.findById(id);
+      if (recipe?.createdBy && recipe.createdBy !== token?.sub) {
+        return response.status(403).json({ status: "Forbidden" });
+      }
       if (recipe) {
         await deleteRecipeImages(recipe);
       }

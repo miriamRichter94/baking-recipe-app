@@ -15,26 +15,25 @@ export default async function handler(request, response) {
 
   try {
     if (request.method === "POST") {
-      const user = await User.findOneAndUpdate(
+      const existingUser = await User.findOneAndUpdate(
         { discordId: userId },
         {},
         { upsert: true, new: true }
       );
 
-      const alreadyFavorited = user.favorites.some(
+      const alreadyFavorited = existingUser.favorites.some(
         (id) => id.toString() === recipeId
       );
 
-      if (alreadyFavorited) {
-        user.favorites = user.favorites.filter(
-          (id) => id.toString() !== recipeId
-        );
-      } else {
-        user.favorites.push(recipeId);
-      }
+      const updatedUser = await User.findByIdAndUpdate(
+        existingUser._id,
+        alreadyFavorited
+          ? { $pull: { favorites: recipeId } }
+          : { $addToSet: { favorites: recipeId } },
+        { new: true }
+      );
 
-      await user.save();
-      return response.status(200).json(user.favorites);
+      return response.status(200).json(updatedUser.favorites);
     }
   } catch (error) {
     return response.status(500).json({ error: error.message });
