@@ -1,5 +1,6 @@
 import RecipeList from "@/components/RecipeList/RecipeList";
 import { getAllRecipes } from "@/services/recipeServices";
+import { signIn, useSession } from "next-auth/react";
 import styled from "styled-components";
 import useSWR from "swr";
 
@@ -14,6 +15,7 @@ export default function Favorites({
     isLoading,
     error,
   } = useSWR("/api/recipes", getAllRecipes);
+  const { data: userSession } = useSession();
 
   if (isLoading || !recipes) return <h1>Loading...</h1>;
   if (error) return <h1>ERROR</h1>;
@@ -27,6 +29,12 @@ export default function Favorites({
       <PageContent>
         <PageHeader>
           <PageTitle>Your Favorite Baking Recipes</PageTitle>
+          {!userSession && (
+            <LoginHint>
+              💡 <span>Log in to save your favorites across devices.</span>
+              <SignInLink onClick={() => signIn("discord")}>Sign in</SignInLink>
+            </LoginHint>
+          )}
         </PageHeader>
         {favorites.length > 0 ? (
           <RecipeList
@@ -84,4 +92,27 @@ const EmptyFavoritesHint = styled.p`
   text-align: center;
   font-weight: bold;
   color: var(--color-danger);
+`;
+
+const LoginHint = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-brand-light);
+  color: var(--color-text);
+  font-size: 14px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+`;
+
+const SignInLink = styled.button`
+  background: none;
+  border: none;
+  color: var(--color-brand);
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  font-size: 14px;
+  text-decoration: underline;
 `;
