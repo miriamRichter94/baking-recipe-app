@@ -3,7 +3,7 @@ import GlobalStyle from "../styles/global-styles";
 import { Toaster } from "react-hot-toast";
 import Navbar from "@/components/Navbar/Navbar";
 import useLocalStorageState from "use-local-storage-state";
-import { useEffect } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { SessionProvider, useSession } from "next-auth/react";
 
 const fetcher = async (url) => {
@@ -63,7 +63,10 @@ function AppContent({ Component, pageProps }) {
     }
   }, [isDarkMode]);
 
-  const safeFavorites = Array.isArray(favoriteRecipes) ? favoriteRecipes : [];
+  const safeFavorites = useMemo(
+    () => (Array.isArray(favoriteRecipes) ? favoriteRecipes : []),
+    [favoriteRecipes]
+  );
   const safeRecipesToShop = Array.isArray(recipesToShop) ? recipesToShop : [];
   const safeRecalculatedRecipes =
     typeof recalculatedRecipes === "object" && recalculatedRecipes !== null
@@ -74,8 +77,11 @@ function AppContent({ Component, pageProps }) {
     ? (dbFavorites?.map((recipe) => recipe._id) ?? [])
     : safeFavorites;
 
+  const hasMerged = useRef(false);
+
   useEffect(() => {
-    if (userSession && safeFavorites.length > 0) {
+    if (userSession && safeFavorites.length > 0 && !hasMerged.current) {
+      hasMerged.current = true;
       async function mergeFavorites() {
         await Promise.all(
           safeFavorites.map((id) =>
