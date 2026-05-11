@@ -44,12 +44,10 @@ export default async function handler(request, response) {
       const { newFilename, filepath, mimetype } = file;
 
       if (!ALLOWED_MIME_TYPES.includes(mimetype)) {
-        return response
-          .status(400)
-          .json({
-            error:
-              "Invalid file type. Only JPEG, PNG, WebP, and GIF are allowed.",
-          });
+        return response.status(400).json({
+          error:
+            "Invalid file type. Only JPEG, PNG, WebP, and GIF are allowed.",
+        });
       }
 
       // now we have the information about the image, we can send it to Cloudinary
@@ -61,7 +59,6 @@ export default async function handler(request, response) {
       return response.status(200).json(result);
     }
   } catch (error) {
-    console.log("ERROR:", error.message);
     return response.status(400).json({ error: error.message });
   }
 
