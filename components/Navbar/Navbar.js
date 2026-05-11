@@ -41,8 +41,18 @@ export default function Navbar({
       {!isHome && !isFavorite && !isShoppinglist ? (
         <>
           <NavBackButton
-            onClick={() => router.back()}
-            aria-label="Back to previous Page"
+            onClick={() => {
+              const referrer = document.referrer;
+              if (
+                referrer &&
+                !referrer.includes("discord.com") &&
+                !referrer.includes("/api/auth")
+              ) {
+                router.back();
+              } else {
+                router.push("/");
+              }
+            }}
           >
             ← Back
           </NavBackButton>

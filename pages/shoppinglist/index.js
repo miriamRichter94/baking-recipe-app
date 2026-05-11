@@ -169,7 +169,7 @@ const EmptyText = styled.p`
 `;
 
 const RecalculationHint = styled.div`
-  background: var(--color-surface-alt) 8f0;
+  background: var(--color-surface-alt);
   border: 1px solid var(--color-brand-light);
   border-radius: 10px;
   padding: 12px 16px;

@@ -21,7 +21,13 @@ export default function Login() {
     );
   }
 
-  return <SignInBtn onClick={() => signIn("discord")}>Sign in</SignInBtn>;
+  return (
+    <SignInBtn
+      onClick={() => signIn("discord", { callbackUrl: window.location.href })}
+    >
+      Sign in
+    </SignInBtn>
+  );
 }
 
 const LoginWrapper = styled.div`

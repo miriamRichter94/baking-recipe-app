@@ -4,7 +4,7 @@ import StyledButton from "@/components/Button/StyledButton";
 import styled from "styled-components";
 import useSWR from "swr";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Fuse from "fuse.js";
 import { useSession } from "next-auth/react";
 
@@ -22,17 +22,25 @@ export default function HomePage({
   const router = useRouter();
   const [search, setSearch] = useState("");
   const { data: session } = useSession();
-
-  if (isLoading || !recipes) return <h1>Loading...</h1>;
-  if (error) return <h1>ERROR</h1>;
-
   const fueseSearch = new Fuse(recipes, {
     keys: ["title", "ingredients.ingredient.name"],
     threshold: 0.3,
   });
 
+  const fuseSearch = useMemo(
+    () =>
+      new Fuse(recipes, {
+        keys: ["title", "ingredients.ingredient.name"],
+        threshold: 0.3,
+      }),
+    [recipes]
+  );
+
+  if (isLoading || !recipes) return <h1>Loading...</h1>;
+  if (error) return <h1>ERROR</h1>;
+
   const filteredRecipes = search
-    ? fueseSearch.search(search).map((result) => result.item)
+    ? fuseSearch.search(search).map((result) => result.item)
     : recipes;
 
   return (
