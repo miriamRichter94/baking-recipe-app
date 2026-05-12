@@ -19,6 +19,8 @@ export default function ShoppingList({ recipesToShop, recalculatedRecipes }) {
   const { data: recipes, isLoading, error } = useSWR(swrKey, getAllRecipes);
   const { status } = useSession();
 
+  if (status === "loading") return <h1>Loading...</h1>;
+  if (status !== "authenticated") return <AccessDenied />;
   if (recipesToShop.length === 0) return <EmptyState />;
   if (isLoading || !recipes) return <h1>Loading...</h1>;
   if (error) return <h1>ERROR</h1>;
@@ -26,7 +28,7 @@ export default function ShoppingList({ recipesToShop, recalculatedRecipes }) {
   const shoppingList = calculateShoppingList(recipes, recalculatedRecipes);
   const recipeNames = recipes.map((r) => r.title).join(", ");
   const collectedCount = checked.length;
-  const recalculatedRecipes_inList = recipes.filter(
+  const recalculatedRecipesInList = recipes.filter(
     (recipe) => recalculatedRecipes[recipe._id]
   );
 
@@ -38,10 +40,6 @@ export default function ShoppingList({ recipesToShop, recalculatedRecipes }) {
 
   function handleClearChecked() {
     setChecked([]);
-  }
-
-  if (status !== "authenticated") {
-    return <AccessDenied />;
   }
 
   return (
@@ -56,9 +54,9 @@ export default function ShoppingList({ recipesToShop, recalculatedRecipes }) {
       <MetaRow>
         <GhostBtn onClick={handleClearChecked}>Clear checked</GhostBtn>
       </MetaRow>
-      {recalculatedRecipes_inList.length > 0 && (
+      {recalculatedRecipesInList.length > 0 && (
         <RecalculationHint>
-          {recalculatedRecipes_inList.map((recipe) => {
+          {recalculatedRecipesInList.map((recipe) => {
             const recalc = recalculatedRecipes[recipe._id];
             const panSize =
               recalc.shape === "round"

@@ -29,7 +29,7 @@ const recipeSchema = new Schema({
     },
   ],
   createdBy: { type: String },
-});
+}, { timestamps: true });
 
 const Recipe = mongoose.models.Recipe || mongoose.model("Recipe", recipeSchema);
 

@@ -222,7 +222,7 @@ const NavLink = styled(Link)`
 const NavBackButton = styled.button`
   background: none;
   border: none;
-  color: var(--nav-font-color);
+  color: var(--color-text);
   font-size: 15px;
   cursor: pointer;
   padding: 0;

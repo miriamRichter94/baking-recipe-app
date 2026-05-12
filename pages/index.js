@@ -22,11 +22,6 @@ export default function HomePage({
   const router = useRouter();
   const [search, setSearch] = useState("");
   const { data: session } = useSession();
-  const fueseSearch = new Fuse(recipes, {
-    keys: ["title", "ingredients.ingredient.name"],
-    threshold: 0.3,
-  });
-
   const fuseSearch = useMemo(
     () =>
       new Fuse(recipes, {
