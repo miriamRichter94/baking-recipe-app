@@ -17,6 +17,7 @@ export default function Navbar({
   const isHome = router.pathname === "/";
   const isFavorite = router.pathname === "/favorites";
   const isShoppinglist = router.pathname === "/shoppinglist";
+  const isPantry = router.pathname === "/pantry";
   const title = getTitle(router.pathname, router.query);
   const [mounted, setMounted] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -38,7 +39,7 @@ export default function Navbar({
   if (!mounted) return null;
   return (
     <Nav>
-      {!isHome && !isFavorite && !isShoppinglist ? (
+      {!isHome && !isFavorite && !isShoppinglist && !isPantry ? (
         <>
           <NavBackButton
             onClick={() => {
@@ -115,6 +116,15 @@ export default function Navbar({
                   />
                 )}
                 ShoppingList
+              </NavLink>
+            )}
+            {session && (
+              <NavLink
+                href="/pantry"
+                $active={isPantry}
+                onClick={() => setMenuOpen(false)}
+              >
+                Pantry
               </NavLink>
             )}
             <Login />

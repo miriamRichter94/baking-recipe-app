@@ -18,6 +18,9 @@ export default function ShoppingList({ recipesToShop, recalculatedRecipes }) {
 
   const { data: recipes, isLoading, error } = useSWR(swrKey, getAllRecipes);
   const { status } = useSession();
+  const { data: pantry } = useSWR(
+    status === "authenticated" ? "/api/pantry" : null
+  );
 
   if (status === "loading") return <h1>Loading...</h1>;
   if (status !== "authenticated") return <AccessDenied />;
@@ -25,7 +28,11 @@ export default function ShoppingList({ recipesToShop, recalculatedRecipes }) {
   if (isLoading || !recipes) return <h1>Loading...</h1>;
   if (error) return <h1>ERROR</h1>;
 
-  const shoppingList = calculateShoppingList(recipes, recalculatedRecipes);
+  const shoppingList = calculateShoppingList(
+    recipes,
+    recalculatedRecipes,
+    pantry ?? []
+  );
   const recipeNames = recipes.map((r) => r.title).join(", ");
   const collectedCount = checked.length;
   const recalculatedRecipesInList = recipes.filter(
