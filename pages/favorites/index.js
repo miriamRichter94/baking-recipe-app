@@ -1,4 +1,5 @@
 import RecipeList from "@/components/RecipeList/RecipeList";
+import Page from "@/components/Page/Page";
 import { getAllRecipes } from "@/services/recipeServices";
 import { signIn, useSession } from "next-auth/react";
 import styled from "styled-components";
@@ -25,67 +26,30 @@ export default function Favorites({
   );
 
   return (
-    <>
-      <PageContent>
-        <PageHeader>
-          <PageTitle>Your Favorite Baking Recipes</PageTitle>
-          {!userSession && (
-            <LoginHint>
-              💡 <span>Log in to save your favorites across devices.</span>
-              <SignInLink onClick={() => signIn("discord")}>Sign in</SignInLink>
-            </LoginHint>
-          )}
-        </PageHeader>
-        {favorites.length > 0 ? (
-          <RecipeList
-            recipes={favorites}
-            favoriteRecipes={favoriteRecipes}
-            handleToggleFavoriteRecipe={handleToggleFavoriteRecipe}
-            recipesToShop={recipesToShop}
-            handleToggleRecipesToShop={handleToggleRecipesToShop}
-          />
-        ) : (
-          <EmptyFavoritesHint>
-            Add Recipes as your Favorites!
-          </EmptyFavoritesHint>
+    <Page width="wide">
+      <Page.Header align="center">
+        <Page.Title size="hero">Your Favorite Baking Recipes</Page.Title>
+        {!userSession && (
+          <LoginHint>
+            💡 <span>Log in to save your favorites across devices.</span>
+            <SignInLink onClick={() => signIn("discord")}>Sign in</SignInLink>
+          </LoginHint>
         )}
-      </PageContent>
-    </>
+      </Page.Header>
+      {favorites.length > 0 ? (
+        <RecipeList
+          recipes={favorites}
+          favoriteRecipes={favoriteRecipes}
+          handleToggleFavoriteRecipe={handleToggleFavoriteRecipe}
+          recipesToShop={recipesToShop}
+          handleToggleRecipesToShop={handleToggleRecipesToShop}
+        />
+      ) : (
+        <EmptyFavoritesHint>Add Recipes as your Favorites!</EmptyFavoritesHint>
+      )}
+    </Page>
   );
 }
-
-const PageContent = styled.div`
-  padding: 24px 20px;
-  max-width: 960px;
-  margin: 0 auto;
-
-  @media (min-width: 641px) {
-    padding: 40px 32px;
-  }
-`;
-
-const PageHeader = styled.div`
-  text-align: left;
-  margin-bottom: 24px;
-
-  @media (min-width: 641px) {
-    text-align: center;
-    margin-bottom: 40px;
-  }
-`;
-
-const PageTitle = styled.h1`
-  font-family: var(--heading-font);
-  font-size: 28px;
-  margin: 0 0 8px;
-  font-weight: 400;
-  color: var(--color-text);
-  white-space: pre-line;
-
-  @media (min-width: 641px) {
-    font-size: 42px;
-  }
-`;
 
 const EmptyFavoritesHint = styled.p`
   font-size: 28px;

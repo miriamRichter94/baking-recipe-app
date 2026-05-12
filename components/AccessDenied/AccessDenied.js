@@ -1,14 +1,15 @@
 import styled from "styled-components";
 import { signIn } from "next-auth/react";
+import StyledButton from "@/components/Button/StyledButton";
 
 export default function AccessDenied() {
   return (
     <Wrapper>
       <Title>Access Denied</Title>
       <Text>You need to be signed in to view this page.</Text>
-      <SignInBtn onClick={() => signIn("discord")}>
+      <StyledButton variant="primary" onClick={() => signIn("discord")}>
         Sign in with Discord
-      </SignInBtn>
+      </StyledButton>
     </Wrapper>
   );
 }
@@ -35,15 +36,4 @@ const Text = styled.p`
   color: var(--color-text-muted);
   font-size: 15px;
   margin: 0;
-`;
-
-const SignInBtn = styled.button`
-  background: var(--color-brand);
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 12px 24px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
 `;

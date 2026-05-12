@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useRouter } from "next/router";
+import StyledButton from "@/components/Button/StyledButton";
 import { deleteRecipe } from "@/services/recipeServices";
 
 export default function DeleteConfirmation({ onCancel, recipeId }) {
@@ -18,8 +19,12 @@ export default function DeleteConfirmation({ onCancel, recipeId }) {
         undone.
       </ConfirmText>
       <ConfirmActions>
-        <DeleteBtn onClick={handleDelete}>Delete Recipe</DeleteBtn>
-        <CancelBtn onClick={onCancel}>Cancel</CancelBtn>
+        <StyledButton variant="destructive" full onClick={handleDelete}>
+          Delete Recipe
+        </StyledButton>
+        <StyledButton variant="secondary" full onClick={onCancel}>
+          Cancel
+        </StyledButton>
       </ConfirmActions>
     </ConfirmationWrapper>
   );
@@ -52,28 +57,4 @@ const ConfirmActions = styled.div`
   flex-direction: column;
   gap: 10px;
   margin-top: 8px;
-`;
-
-const DeleteBtn = styled.button`
-  background: var(--color-danger);
-  color: var(--color-surface-alt);
-  border: none;
-  border-radius: 8px;
-  padding: 12px 20px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  width: 100%;
-`;
-
-const CancelBtn = styled.button`
-  background: none;
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  padding: 12px 20px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  color: var(--color-text);
-  width: 100%;
 `;

@@ -1,6 +1,7 @@
 import RecipeList from "@/components/RecipeList/RecipeList";
 import { getAllRecipes } from "@/services/recipeServices";
 import StyledButton from "@/components/Button/StyledButton";
+import Page from "@/components/Page/Page";
 import styled from "styled-components";
 import useSWR from "swr";
 import { useRouter } from "next/router";
@@ -40,11 +41,11 @@ export default function HomePage({
 
   return (
     <>
-      <PageContent>
-        <PageHeader>
-          <PageTitle>Baking Recipes</PageTitle>
-          <PageSubtitle>Simple recipes, made with love</PageSubtitle>
-        </PageHeader>
+      <Page width="wide">
+        <Page.Header align="center">
+          <Page.Title size="hero">Baking Recipes</Page.Title>
+          <Page.Subtitle>Simple recipes, made with love</Page.Subtitle>
+        </Page.Header>
 
         <SearchWrapper>
           <SearchLabel htmlFor="search">
@@ -77,7 +78,7 @@ export default function HomePage({
           recipesToShop={recipesToShop}
           handleToggleRecipesToShop={handleToggleRecipesToShop}
         />
-      </PageContent>
+      </Page>
 
       {/* Mobile FAB */}
       {session && (
@@ -91,49 +92,6 @@ export default function HomePage({
     </>
   );
 }
-
-const PageContent = styled.div`
-  padding: 24px 20px;
-  max-width: 960px;
-  margin: 0 auto;
-
-  @media (min-width: 641px) {
-    padding: 40px 32px;
-  }
-`;
-
-const PageHeader = styled.div`
-  text-align: left;
-  margin-bottom: 24px;
-
-  @media (min-width: 641px) {
-    text-align: center;
-    margin-bottom: 40px;
-  }
-`;
-
-const PageTitle = styled.h1`
-  font-family: var(--heading-font);
-  font-size: 28px;
-  margin: 0 0 8px;
-  font-weight: 400;
-  color: var(--color-text);
-  white-space: pre-line;
-
-  @media (min-width: 641px) {
-    font-size: 42px;
-  }
-`;
-
-const PageSubtitle = styled.p`
-  color: var(--color-text-muted);
-  font-size: 15px;
-  margin: 0;
-
-  @media (min-width: 641px) {
-    font-size: 17px;
-  }
-`;
 
 const AddRecipeButtonWrapper = styled.div`
   text-align: center;

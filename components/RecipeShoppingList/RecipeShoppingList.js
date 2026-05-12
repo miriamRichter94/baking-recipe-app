@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Card from "@/components/Card/Card";
 
 export default function RecipeShoppingList({
   shoppingList,
@@ -7,7 +8,7 @@ export default function RecipeShoppingList({
   checked,
 }) {
   return (
-    <RecipeGroup>
+    <Card>
       <ForLabel>For: {recipeNames}</ForLabel>
       <Divider />
 
@@ -28,16 +29,9 @@ export default function RecipeShoppingList({
           </IngredientRow>
         );
       })}
-    </RecipeGroup>
+    </Card>
   );
 }
-
-const RecipeGroup = styled.div`
-  background: var(--color-surface-alt);
-  border-radius: 12px;
-  padding: 20px 22px;
-  box-shadow: 0 2px 12px var(--color-shadow);
-`;
 
 const ForLabel = styled.p`
   color: var(--color-text-muted);

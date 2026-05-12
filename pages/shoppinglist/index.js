@@ -5,6 +5,8 @@ import { getAllRecipes } from "@/services/recipeServices";
 import { calculateShoppingList } from "@/lib/helper";
 import Link from "next/link";
 import RecipeShoppingList from "@/components/RecipeShoppingList/RecipeShoppingList";
+import StyledButton from "@/components/Button/StyledButton";
+import Page from "@/components/Page/Page";
 import { useSession } from "next-auth/react";
 import AccessDenied from "@/components/AccessDenied/AccessDenied";
 
@@ -18,6 +20,9 @@ export default function ShoppingList({ recipesToShop, recalculatedRecipes }) {
 
   const { data: recipes, isLoading, error } = useSWR(swrKey, getAllRecipes);
   const { status } = useSession();
+  const { data: pantry } = useSWR(
+    status === "authenticated" ? "/api/pantry" : null
+  );
 
   if (status === "loading") return <h1>Loading...</h1>;
   if (status !== "authenticated") return <AccessDenied />;
@@ -25,7 +30,11 @@ export default function ShoppingList({ recipesToShop, recalculatedRecipes }) {
   if (isLoading || !recipes) return <h1>Loading...</h1>;
   if (error) return <h1>ERROR</h1>;
 
-  const shoppingList = calculateShoppingList(recipes, recalculatedRecipes);
+  const shoppingList = calculateShoppingList(
+    recipes,
+    recalculatedRecipes,
+    pantry ?? []
+  );
   const recipeNames = recipes.map((r) => r.title).join(", ");
   const collectedCount = checked.length;
   const recalculatedRecipesInList = recipes.filter(
@@ -43,16 +52,18 @@ export default function ShoppingList({ recipesToShop, recalculatedRecipes }) {
   }
 
   return (
-    <PageContent>
-      <PageHeader>
-        <PageTitle>Shopping List</PageTitle>
+    <Page width="narrow">
+      <HeaderRow>
+        <Page.Title>Shopping List</Page.Title>
         <CounterPill>
           {collectedCount} of {shoppingList.length} collected
         </CounterPill>
-      </PageHeader>
+      </HeaderRow>
 
       <MetaRow>
-        <GhostBtn onClick={handleClearChecked}>Clear checked</GhostBtn>
+        <StyledButton variant="ghost" onClick={handleClearChecked}>
+          Clear checked
+        </StyledButton>
       </MetaRow>
       {recalculatedRecipesInList.length > 0 && (
         <RecalculationHint>
@@ -76,7 +87,7 @@ export default function ShoppingList({ recipesToShop, recalculatedRecipes }) {
         handleCheck={handleCheck}
         checked={checked}
       />
-    </PageContent>
+    </Page>
   );
 }
 
@@ -92,32 +103,11 @@ function EmptyState() {
 
 // ─── Styled Components ───────────────────────────────────────────────────────
 
-const PageContent = styled.div`
-  padding: 24px 20px;
-  max-width: 720px;
-  margin: 0 auto;
-
-  @media (min-width: 641px) {
-    padding: 36px 32px;
-  }
-`;
-
-const PageHeader = styled.div`
+const HeaderRow = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 12px;
-`;
-
-const PageTitle = styled.h1`
-  font-family: var(--heading-font);
-  font-size: 28px;
-  font-weight: 400;
-  margin: 0;
-
-  @media (min-width: 641px) {
-    font-size: 36px;
-  }
 `;
 
 const CounterPill = styled.span`
@@ -133,16 +123,6 @@ const MetaRow = styled.div`
   display: flex;
   gap: 12px;
   margin-bottom: 24px;
-`;
-
-const GhostBtn = styled.button`
-  background: none;
-  border: none;
-  color: var(--color-brand);
-  font-size: 14px;
-  cursor: pointer;
-  padding: 0;
-  font-family: var(--body-font);
 `;
 
 const EmptyWrapper = styled.div`
