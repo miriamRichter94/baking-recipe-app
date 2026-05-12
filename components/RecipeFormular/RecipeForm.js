@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import IngredientFields from "./IngredientFields";
 import StepFields from "./StepsFields";
@@ -18,6 +18,7 @@ import ModalBox from "../ModalBox/ModalBox";
 export default function RecipeForm({ ingredients, units, recipe }) {
   const router = useRouter();
   const isEdit = !!recipe;
+  const mainImageBlobRef = useRef(null);
 
   const [recipeIngredients, setRecipeIngredients] = useState(
     setRecipeIngredientsForForm(recipe?.ingredients)
@@ -29,6 +30,12 @@ export default function RecipeForm({ ingredients, units, recipe }) {
   const [recipeMainImage, setRecipeMainImage] = useState(
     recipe?.image?.url ?? null
   );
+
+  useEffect(() => {
+    return () => {
+      if (mainImageBlobRef.current) URL.revokeObjectURL(mainImageBlobRef.current);
+    };
+  }, []);
 
   //This watches for when recipe "arrives" and populates the state then.
   useEffect(() => {
@@ -173,9 +180,12 @@ export default function RecipeForm({ ingredients, units, recipe }) {
         id="image"
         name="image"
         style={{ display: "none" }}
-        onChange={(event) =>
-          setRecipeMainImage(URL.createObjectURL(event.target.files[0]))
-        }
+        onChange={(event) => {
+          if (mainImageBlobRef.current) URL.revokeObjectURL(mainImageBlobRef.current);
+          const url = URL.createObjectURL(event.target.files[0]);
+          mainImageBlobRef.current = url;
+          setRecipeMainImage(url);
+        }}
       />
 
       {/* Baking form */}

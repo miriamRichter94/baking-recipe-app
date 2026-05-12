@@ -11,7 +11,7 @@ export default function RecipeFormular() {
   const router = useRouter();
   const { slug } = router.query;
 
-  const recipeId = slug?.split("-")[1];
+  const recipeId = slug?.startsWith("edit-") ? slug.slice(5) : null;
 
   const {
     data: ingredients,

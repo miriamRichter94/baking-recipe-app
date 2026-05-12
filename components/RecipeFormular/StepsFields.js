@@ -1,16 +1,27 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import ModalBox from "../ModalBox/ModalBox";
 
 export default function StepFields({ recipeStep, onChange, onRemove }) {
   const fileRef = useRef(null);
-  const imageSrc = recipeStep.image
-    ? typeof recipeStep.image === "object" && recipeStep.image.url
-      ? recipeStep.image.url
-      : recipeStep.image instanceof File
-        ? URL.createObjectURL(recipeStep.image)
-        : null
-    : null;
+  const [imageSrc, setImageSrc] = useState(null);
+
+  useEffect(() => {
+    if (!recipeStep.image) {
+      setImageSrc(null);
+      return;
+    }
+    if (typeof recipeStep.image === "object" && recipeStep.image.url) {
+      setImageSrc(recipeStep.image.url);
+      return;
+    }
+    if (recipeStep.image instanceof File) {
+      const url = URL.createObjectURL(recipeStep.image);
+      setImageSrc(url);
+      return () => URL.revokeObjectURL(url);
+    }
+    setImageSrc(null);
+  }, [recipeStep.image]);
 
   return (
     <StepWrapper>
