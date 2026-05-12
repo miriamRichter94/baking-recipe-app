@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Select from "react-select";
 import styled from "styled-components";
+import Card from "@/components/Card/Card";
+import StyledButton from "@/components/Button/StyledButton";
 import { addPantryItem } from "@/services/pantryServices";
 
 export default function PantryAddForm({ ingredients, units, pantry }) {
@@ -40,7 +42,7 @@ export default function PantryAddForm({ ingredients, units, pantry }) {
 
   return (
     <Card>
-      <CardTitle>Add ingredient</CardTitle>
+      <Card.Title>Add ingredient</Card.Title>
       <AddForm onSubmit={handleAdd}>
         <Field>
           <label htmlFor="pantry-ingredient">Ingredient</label>
@@ -77,26 +79,13 @@ export default function PantryAddForm({ ingredients, units, pantry }) {
             required
           />
         </Field>
-        <AddBtn type="submit">Add</AddBtn>
+        <StyledButton variant="primary" type="submit">
+          Add
+        </StyledButton>
       </AddForm>
     </Card>
   );
 }
-
-const Card = styled.section`
-  background: var(--color-surface-alt);
-  border-radius: 12px;
-  padding: 20px 22px;
-  box-shadow: 0 2px 12px var(--color-shadow);
-  margin-bottom: 20px;
-`;
-
-const CardTitle = styled.h2`
-  font-family: var(--heading-font);
-  font-size: 18px;
-  font-weight: 400;
-  margin: 0 0 14px;
-`;
 
 const AddForm = styled.form`
   display: grid;
@@ -131,14 +120,3 @@ const AmountInput = styled.input`
   }
 `;
 
-const AddBtn = styled.button`
-  background: var(--color-brand);
-  color: var(--color-surface-alt);
-  border: none;
-  border-radius: 8px;
-  padding: 12px 20px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  height: 38px;
-`;

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
+import Card from "@/components/Card/Card";
 import {
   deletePantryItem,
   updatePantryItem,
@@ -34,7 +35,7 @@ export default function PantryList({ pantry }) {
 
   return (
     <Card>
-      <CardTitle>Your pantry</CardTitle>
+      <Card.Title>Your pantry</Card.Title>
       {pantry.length === 0 ? (
         <EmptyText>
           Your pantry is empty. Add ingredients above to get started.
@@ -96,21 +97,6 @@ export default function PantryList({ pantry }) {
     </Card>
   );
 }
-
-const Card = styled.section`
-  background: var(--color-surface-alt);
-  border-radius: 12px;
-  padding: 20px 22px;
-  box-shadow: 0 2px 12px var(--color-shadow);
-  margin-bottom: 20px;
-`;
-
-const CardTitle = styled.h2`
-  font-family: var(--heading-font);
-  font-size: 18px;
-  font-weight: 400;
-  margin: 0 0 14px;
-`;
 
 const EmptyText = styled.p`
   color: var(--color-text-muted);

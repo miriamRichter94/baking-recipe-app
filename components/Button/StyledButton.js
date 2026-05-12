@@ -45,6 +45,13 @@ const variantStyles = {
     border-radius: 8px;
     padding: 10px 20px;
   `,
+  destructive: css`
+    background: var(--color-danger);
+    color: var(--color-surface-alt);
+    border-radius: 8px;
+    padding: 10px 20px;
+    border: none;
+  `,
   ghost: css`
     background: none;
     border: none;
