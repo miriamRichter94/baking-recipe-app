@@ -58,13 +58,21 @@ export default function Navbar({
             ← Back
           </NavBackButton>
           <NavTitle>{title}</NavTitle>
-          <RightGroup>
+
+          <HamburgerBtn
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+          >
+            {menuOpen ? "✕" : "☰"}
+          </HamburgerBtn>
+
+          <NavLinks $open={menuOpen}>
             <Login />
             <DarkModeSwitch
               isDarkMode={isDarkMode}
               onToggleDarkMode={handleToggleIsDarkMode}
             />
-          </RightGroup>
+          </NavLinks>
         </>
       ) : (
         <>
@@ -179,12 +187,6 @@ const HamburgerBtn = styled.button`
   @media (min-width: 641px) {
     display: none;
   }
-`;
-
-const RightGroup = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 16px;
 `;
 
 const NavLinks = styled.div`
